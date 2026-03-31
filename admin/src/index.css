@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Apple Style System Colors */
+    --background: 240 5% 96%; /* #F5F5F7 - Light Gray Background */
+    --foreground: 240 6% 10%; /* #1d1d1f - Almost Black Text */
+    
+    --card: 0 0% 100%; /* #FFFFFF - Pure White Cards */
+    --card-foreground: 240 6% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 6% 10%;
+
+    --primary: 211 100% 50%; /* #0071e3 - Apple Blue */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 100%; /* White for secondary elements on gray bg */
+    --secondary-foreground: 240 6% 10%;
+
+    --muted: 240 5% 96%; /* Matches background */
+    --muted-foreground: 240 4% 46%; /* #86868b - Secondary Text */
+
+    --accent: 211 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 90%; /* Subtle border */
+    --input: 240 6% 90%;
+    --ring: 211 100% 50%;
+
+    --radius: 18px; /* Larger, smoother corners */
+  }
+
+  .dark {
+    --background: 0 0% 0%; /* #000000 */
+    --foreground: 0 0% 96%; /* #f5f5f7 */
+
+    --card: 240 6% 10%; /* #1c1c1e */
+    --card-foreground: 0 0% 96%;
+
+    --popover: 240 6% 10%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 211 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 6% 18%; /* #2c2c2e */
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 240 6% 18%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 211 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 18%;
+    --input: 240 6% 18%;
+    --ring: 211 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/20 selection:text-primary;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar - Minimalist */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Utility Classes */
+.glass-panel {
+  @apply bg-white/70 backdrop-blur-md border border-white/20;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.dark .glass-panel {
+  @apply bg-black/70 backdrop-blur-md border border-white/10;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+/* Remove glow effects but keep class names to avoid breaking */
+.text-glow {
+  /* text-shadow: 0 0 10px rgba(0, 113, 227, 0.3); */
+}
+
+.box-glow {
+  /* box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08); */
+}
+
+.border-glow {
+  /* border-color: hsl(var(--primary)); */
+}
