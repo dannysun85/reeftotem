@@ -4,9 +4,8 @@
 
 @layer base {
   :root {
-    /* Apple Style System Colors */
-    --background: 240 5% 96%; /* #F5F5F7 - Light Gray Background */
-    --foreground: 240 6% 10%; /* #1d1d1f - Almost Black Text */
+    --background: 210 20% 98%;
+    --foreground: 222 20% 12%;
     
     --card: 0 0% 100%; /* #FFFFFF - Pure White Cards */
     --card-foreground: 240 6% 10%;
@@ -14,7 +13,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 6% 10%;
 
-    --primary: 211 100% 50%; /* #0071e3 - Apple Blue */
+    --primary: 176 84% 32%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 100%; /* White for secondary elements on gray bg */
@@ -23,7 +22,7 @@
     --muted: 240 5% 96%; /* Matches background */
     --muted-foreground: 240 4% 46%; /* #86868b - Secondary Text */
 
-    --accent: 211 100% 50%;
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -31,9 +30,9 @@
 
     --border: 240 6% 90%; /* Subtle border */
     --input: 240 6% 90%;
-    --ring: 211 100% 50%;
+    --ring: 176 84% 32%;
 
-    --radius: 18px; /* Larger, smoother corners */
+    --radius: 8px;
   }
 
   .dark {
@@ -46,7 +45,7 @@
     --popover: 240 6% 10%;
     --popover-foreground: 0 0% 96%;
 
-    --primary: 211 100% 50%;
+    --primary: 176 84% 38%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 240 6% 18%; /* #2c2c2e */
@@ -55,7 +54,7 @@
     --muted: 240 6% 18%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 211 100% 50%;
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
@@ -63,7 +62,7 @@
 
     --border: 240 6% 18%;
     --input: 240 6% 18%;
-    --ring: 211 100% 50%;
+    --ring: 176 84% 38%;
   }
 }
 

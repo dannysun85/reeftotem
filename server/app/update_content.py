@@ -14,9 +14,9 @@ def update_site_content():
         site_config = get_config(db, "site_info")
         if site_config:
             current_value = site_config.value
-            current_value["banner"]["title"] = "赋予科技以灵魂 重塑数字生命"
-            current_value["banner"]["subtitle"] = "ReefTotem 瑞孚图腾，以情感计算为核心，融合前沿 AI 大模型与极致交互美学。我们不仅创造工具，更创造能理解、会思考、有温度的智能伴侣。"
-            current_value["banner"]["ctaText"] = "开启未来"
+            current_value["banner"]["title"] = "ReefTotem AI 公司操作系统"
+            current_value["banner"]["subtitle"] = "面向真实公司运营的 AI 员工协作与交付平台，覆盖公司创建、员工组织、项目立项、执行日志和交付审核。"
+            current_value["banner"]["ctaText"] = "进入控制台"
             
             update_config(db, "site_info", SiteConfigUpdate(value=current_value))
             logger.info("Banner content updated")
@@ -24,16 +24,16 @@ def update_site_content():
         # 2. Update Hero Badge
         hero_badges = get_content_items(db, type="hero_badge")
         if hero_badges:
-            update_content_item(db, hero_badges[0].id, ContentItemUpdate(title="Future Intelligence 3.0"))
+            update_content_item(db, hero_badges[0].id, ContentItemUpdate(title="Hermes Company OS"))
             logger.info("Hero badge updated")
 
         # 3. Update Hero Stats
         # We delete old ones and recreate to ensure order and content match, or just update if count matches
         hero_stats = get_content_items(db, type="hero_stat")
         new_hero_stats = [
-            {"title": "情感交互", "content": "深度拟人", "sort_order": 1},
-            {"title": "响应速度", "content": "毫秒级", "sort_order": 2},
-            {"title": "用户信赖", "content": "Top 1%", "sort_order": 3}
+            {"title": "首个验证公司", "content": "软件公司", "sort_order": 1},
+            {"title": "核心链路", "content": "Issue/Run", "sort_order": 2},
+            {"title": "交付审核", "content": "WorkProduct", "sort_order": 3}
         ]
         
         # Simple update logic: update first 3, create if missing
@@ -47,9 +47,9 @@ def update_site_content():
         company_intros = get_content_items(db, type="company_intro")
         if company_intros:
             intro_update = ContentItemUpdate(
-                title="科技与艺术的 共鸣",
+                title="AI 公司运营平台",
                 subtitle="Shenzhen Qianhai ReefTotem Technology Co., Ltd.",
-                content="深圳前海瑞孚图腾科技有限公司（ReefTotem）立足于中国最具活力的湾区核心，是一家致力于探索人工智能终极形态的先锋科技企业。\n\n我们坚信，未来的 AI 不应仅仅是冰冷的代码与算法，而应是具备情感感知与独立人格的数字生命。我们的设计理念源于对人性的深刻洞察，经营理念植根于技术创新与用户体验的极致追求。\n\n从底层大模型架构的自主研发，到二次元美学的细腻呈现，我们正在构建一个人机共生工的新世界。在这里，每一个像素都蕴含着温度，每一次交互都充满了灵性。"
+                content="深圳前海瑞孚图腾科技有限公司（ReefTotem）正在建设面向真实公司运营的 AI 员工协作与交付平台。\n\n用户从 SaaS 账号进入，创建公司，安装公司包，招聘 AI 员工，提交项目目标，再通过 Issue、Run、日志和 WorkProduct 审核结果。\n\n软件开发公司是第一家验证公司，后续会复制到研究交付、运营服务、内容交付和安全检测等不同公司类型。"
             )
             update_content_item(db, company_intros[0].id, intro_update)
             logger.info("Company intro updated")
@@ -70,9 +70,9 @@ def update_site_content():
         # So all type="stat" are likely the company stats.
         
         new_company_stats = [
-            {"title": "研发占比", "content": "70%", "sort_order": 1},
-            {"title": "自主专利", "content": "100+", "sort_order": 2},
-            {"title": "服务全球", "content": "Global", "sort_order": 3}
+            {"title": "产品入口", "content": "opc", "sort_order": 1},
+            {"title": "验证公司", "content": "ReefTotem", "sort_order": 2},
+            {"title": "核心交付", "content": "WorkProduct", "sort_order": 3}
         ]
         
         for i, stat_data in enumerate(new_company_stats):

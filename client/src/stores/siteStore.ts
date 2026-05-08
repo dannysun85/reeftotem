@@ -35,17 +35,16 @@ const defaultSiteConfig: SiteConfig = {
     alt: 'ReefTotem',
   },
   banner: {
-    title: '定义未来的智能数字生命',
-    subtitle: 'ReefTotem 瑞孚图腾致力于打造具备情感与智慧的 AI 伴侣。通过先进的大模型技术与二次元美学，为您连接虚拟与现实的桥梁。',
-    ctaText: '开始体验',
+    title: 'ReefTotem AI 公司操作系统',
+    subtitle: '深圳前海瑞孚图腾科技有限公司正在建设面向真实公司运营的 AI 员工协作与交付平台。',
+    ctaText: '进入控制台',
     ctaLink: '/products',
     backgroundUrl: '',
   },
   footer: {
     copyright: '© 2026 深圳前海瑞孚图腾科技有限公司 All rights reserved.',
     contactEmail: 'contact@reeftotem.ai',
-    contactPhone: '+86 10 8888 6666',
-    address: '深圳前海',
+    address: '深圳市前海深港合作区',
   },
 };
 

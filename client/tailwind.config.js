@@ -68,12 +68,12 @@ export default {
         "surface": "#f5f5f7",
       },
       borderRadius: {
-        lg: "18px",
-        md: "12px",
-        sm: "8px",
-        xl: "24px",
-        "2xl": "32px",
-        "3xl": "40px",
+        lg: "8px",
+        md: "8px",
+        sm: "6px",
+        xl: "10px",
+        "2xl": "12px",
+        "3xl": "16px",
       },
       boxShadow: {
         'apple': '0 4px 24px rgba(0,0,0,0.06)',

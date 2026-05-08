@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { ExternalLink, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo';
-import { useSiteStore } from '@/stores/siteStore';
+
+const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const { fetchConfig } = useSiteStore();
 
   useEffect(() => {
-    fetchConfig();
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [fetchConfig]);
+  }, []);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -28,10 +27,10 @@ const Header = () => {
 
   const navLinks = [
     { name: '首页', path: '/' },
-    { name: '产品展示', path: '/products' },
-    { name: '关于我们', path: '/about' },
-    { name: '联系我们', path: '/contact' },
-    { name: '下载中心', path: '/downloads' },
+    { name: '产品与流程', path: '/products' },
+    { name: '公司说明', path: '/about' },
+    { name: '文档与入口', path: '/downloads' },
+    { name: '联系', path: '/contact' },
   ];
 
   return (
@@ -65,6 +64,16 @@ const Header = () => {
           ))}
         </nav>
 
+        <a
+          href={PRODUCT_CONSOLE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:inline-flex h-10 items-center gap-2 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-foreground/85"
+        >
+          产品控制台
+          <ExternalLink className="h-4 w-4" />
+        </a>
+
         {/* Mobile Menu Button */}
         <button
           className="md:hidden text-foreground p-2"
@@ -96,6 +105,15 @@ const Header = () => {
                   {link.name}
                 </Link>
               ))}
+              <a
+                href={PRODUCT_CONSOLE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-4 py-3 text-sm font-medium text-background"
+              >
+                产品控制台
+                <ExternalLink className="h-4 w-4" />
+              </a>
             </div>
           </motion.div>
         )}

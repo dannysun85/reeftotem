@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/common/Button';
-import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Building2, Mail, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,222 +10,122 @@ const Contact = () => {
     subject: '',
     message: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const mailto = useMemo(() => {
+    const subject = encodeURIComponent(formData.subject || 'ReefTotem 合作咨询');
+    const body = encodeURIComponent(
+      `姓名：${formData.name}\n邮箱：${formData.email}\n\n需求说明：\n${formData.message}`
+    );
+    return `mailto:contact@reeftotem.ai?subject=${subject}&body=${body}`;
+  }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setIsSubmitted(false), 3000);
-    }, 1500);
-  };
-
   return (
-    <div className="min-h-screen pt-20 bg-background">
-      {/* Header */}
-      <section className="py-16 text-center relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]" />
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-bold text-foreground mb-6 tracking-tight"
-          >
-            联系我们
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-muted-foreground max-w-2xl mx-auto font-light"
-          >
-            无论您有任何问题或合作意向，我们都期待听到您的声音
-          </motion.p>
+    <div className="min-h-screen bg-background pt-24">
+      <section className="border-b border-border bg-white py-16">
+        <div className="container mx-auto px-4">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
+            <p className="mb-4 text-sm font-semibold text-primary">联系</p>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">告诉我们你想创建什么公司</h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              如果你想试用 Hermes Company OS、部署私有环境、创建行业公司包，或讨论音视频安全检测等应用场景，可以先把公司类型、目标流程和数据边界说明清楚。
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      <div className="container mx-auto px-4 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="space-y-10"
-          >
-            <div className="bg-card border border-border rounded-[24px] p-8 shadow-apple">
-              <h3 className="text-2xl font-bold text-foreground mb-6">联系方式</h3>
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <MapPin className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-foreground font-semibold mb-1">公司地址</h4>
-                    <p className="text-muted-foreground">深圳前海</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <Mail className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-foreground font-semibold mb-1">电子邮箱</h4>
-                    <p className="text-muted-foreground">contact@reeftotem.ai<br />business@reeftotem.ai</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <Phone className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-foreground font-semibold mb-1">联系电话</h4>
-                    <p className="text-muted-foreground">+86 10 8888 6666<br />(周一至周五 9:00-18:00)</p>
-                  </div>
-                </div>
-              </div>
+      <section className="py-20">
+        <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="space-y-5">
+            <div className="rounded-lg border border-border bg-card p-6">
+              <MapPin className="mb-4 h-6 w-6 text-primary" />
+              <h2 className="font-semibold text-foreground">公司地址</h2>
+              <p className="mt-2 text-sm text-muted-foreground">深圳市前海深港合作区</p>
             </div>
-
-            {/* Map Placeholder */}
-            <div className="w-full h-64 bg-secondary rounded-[24px] border border-border overflow-hidden relative shadow-sm">
-               <div className="absolute inset-0 flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2674&auto=format&fit=crop')] bg-cover bg-center">
-                 <div className="bg-white/90 px-6 py-3 rounded-xl backdrop-blur-md border border-white/50 shadow-apple">
-                   <p className="text-foreground font-medium flex items-center">
-                     <MapPin className="w-4 h-4 mr-2 text-primary" />
-                     ReefTotem HQ
-                   </p>
-                 </div>
-               </div>
+            <div className="rounded-lg border border-border bg-card p-6">
+              <Mail className="mb-4 h-6 w-6 text-primary" />
+              <h2 className="font-semibold text-foreground">邮箱</h2>
+              <p className="mt-2 text-sm text-muted-foreground">contact@reeftotem.ai</p>
             </div>
-          </motion.div>
+            <div className="rounded-lg border border-border bg-card p-6">
+              <Building2 className="mb-4 h-6 w-6 text-primary" />
+              <h2 className="font-semibold text-foreground">适合沟通的内容</h2>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                产品控制台试用、AI 公司创建、员工模板、公司包、私有化部署、行业安全检测流程、Slack/钉钉工作间接入。
+              </p>
+            </div>
+          </div>
 
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-[24px] p-8 shadow-apple space-y-6">
-              <h3 className="text-2xl font-bold text-foreground mb-6">发送消息</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium text-muted-foreground">姓名</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full bg-secondary/30 border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                    placeholder="您的姓名"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-muted-foreground">邮箱</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full bg-secondary/30 border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                    placeholder="contact@reeftotem.ai"
-                  />
-                </div>
-              </div>
+          <form className="rounded-lg border border-border bg-card p-6 shadow-sm md:p-8">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">生成邮件内容</h2>
+            <p className="mt-3 text-sm text-muted-foreground">
+              当前官网不伪造“发送成功”。填写后会打开你的邮件客户端，把内容发送到 contact@reeftotem.ai。
+            </p>
 
-              <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-medium text-muted-foreground">主题</label>
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              <label className="space-y-2">
+                <span className="text-sm font-medium text-foreground">姓名</span>
                 <input
                   type="text"
-                  id="subject"
-                  name="subject"
-                  required
-                  value={formData.subject}
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
-                  className="w-full bg-secondary/30 border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                  placeholder="咨询主题"
+                  className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+                  placeholder="你的姓名"
                 />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium text-muted-foreground">留言内容</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={6}
-                  value={formData.message}
+              </label>
+              <label className="space-y-2">
+                <span className="text-sm font-medium text-foreground">邮箱</span>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-secondary/30 border border-border rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none"
-                  placeholder="请详细描述您的需求..."
+                  className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+                  placeholder="name@example.com"
                 />
-              </div>
+              </label>
+            </div>
 
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full rounded-full"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    发送中...
-                  </span>
-                ) : isSubmitted ? (
-                  <span className="flex items-center text-green-400">
-                    <Check className="mr-2 w-5 h-5" />
-                    发送成功
-                  </span>
-                ) : (
-                  <span className="flex items-center">
-                    发送消息
-                    <Send className="ml-2 w-4 h-4" />
-                  </span>
-                )}
+            <label className="mt-5 block space-y-2">
+              <span className="text-sm font-medium text-foreground">主题</span>
+              <input
+                type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+                placeholder="例如：想创建一个软件开发 AI 公司"
+              />
+            </label>
+
+            <label className="mt-5 block space-y-2">
+              <span className="text-sm font-medium text-foreground">需求说明</span>
+              <textarea
+                name="message"
+                rows={7}
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full resize-none rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+                placeholder="公司类型、员工角色、要接入的工具、数据安全边界、希望跑通的第一个项目..."
+              />
+            </label>
+
+            <a href={mailto} className="mt-6 inline-block">
+              <Button type="button" size="lg" className="rounded-md">
+                生成邮件
+                <Send className="ml-2 h-4 w-4" />
               </Button>
-            </form>
-          </motion.div>
+            </a>
+          </form>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
-
-// Simple Check Icon for Success State
-const Check = ({ className }: { className?: string }) => (
-  <svg 
-    className={className} 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round"
-  >
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
 
 export default Contact;

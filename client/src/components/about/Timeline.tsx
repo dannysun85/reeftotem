@@ -3,29 +3,29 @@ import { motion } from 'framer-motion';
 
 const events = [
   {
-    year: '2016',
-    title: '公司成立',
-    description: 'ReefTotem 在深圳成立，确立了"让 AI 更有温度"的核心愿景。',
+    year: '2026-05',
+    title: '产品主线收敛',
+    description: '明确 ReefTotem 是 AI 公司运营平台，优先跑通软件公司从立项到交付审核的流程。',
   },
   {
-    year: '2023 Q3',
-    title: '获得天使轮融资',
-    description: '获得顶级风投机构数千万美元投资，加速核心技术研发。',
+    year: '2026-05',
+    title: '服务器部署',
+    description: '根域名用于公司官网，opc 子域名用于 Hermes Company OS 产品控制台。',
   },
   {
-    year: '2024 Q1',
-    title: '发布 AI 助手 Beta 版',
-    description: '首款二次元 AI 伴侣内测上线，获得首批 10 万种子用户。',
+    year: '2026-05',
+    title: '自运营验证',
+    description: 'ReefTotem 软件公司开始验证文档读取、代码迭代、Run 和 WorkProduct 审核。',
   },
   {
-    year: '2024 Q3',
-    title: 'Agent 服务商业化',
-    description: '推出面向企业的智能 Agent 解决方案，赋能千行百业。',
+    year: 'Next',
+    title: '行业公司复制',
+    description: '在软件公司跑通后，再复制到研究交付、运营服务、内容交付和安全检测公司。',
   },
   {
-    year: '2025',
-    title: '全球化战略',
-    description: '开启海外市场拓展，致力于成为全球领先的 AI 交互平台。',
+    year: 'Later',
+    title: '公司包商业化',
+    description: '员工模板和公司制度包必须脱敏后进入售卖流程，不能携带公司机密。',
   },
 ];
 

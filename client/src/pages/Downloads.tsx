@@ -1,237 +1,119 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Download, ChevronDown, Monitor, Smartphone, Globe, Box, LineChart, Bot } from 'lucide-react';
-import { useDownloadsStore, DownloadItem } from '@/stores/downloads';
-import { Button } from '@/components/common/Button';
-import { useOS } from '@/hooks/useOS';
-import { cn } from '@/lib/utils';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { BookOpen, ExternalLink, FileText, Github, Server, ShieldCheck } from 'lucide-react';
 
-// Helper to format bytes
-const formatSize = (bytes: number) => {
-  if (!bytes) return 'Unknown size';
-  const units = ['B', 'KB', 'MB', 'GB'];
-  let size = bytes;
-  let unitIndex = 0;
-  while (size >= 1024 && unitIndex < units.length - 1) {
-    size /= 1024;
-    unitIndex++;
-  }
-  return `${size.toFixed(1)} ${units[unitIndex]}`;
-};
+const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
 
-// Helper to map category to display info
-const SOFTWARE_INFO = {
-  reeftotem: {
-    title: 'ReefTotem',
-    subtitle: 'AI 二次元助手',
-    icon: Bot,
-    color: 'bg-blue-500',
+const entries = [
+  {
+    icon: ExternalLink,
+    title: 'Hermes Company OS 控制台',
+    desc: '用于 SaaS 账号、公司创建、员工组织、项目立项、Run、WorkProduct 和审核。',
+    action: '打开 opc.reeftotem.ai',
+    href: PRODUCT_CONSOLE_URL,
   },
-  openclaw: {
-    title: 'OpenClaw',
-    subtitle: '智能 Agent 系统',
-    icon: Box,
-    color: 'bg-purple-500',
+  {
+    icon: BookOpen,
+    title: '产品使用说明',
+    desc: '从零创建软件公司、招聘员工、提交项目目标、查看工作间、审核交付物的操作说明会随版本持续补充。',
+    action: '查看说明规划',
+    href: '/products',
   },
-  quant: {
-    title: 'ReefQuant',
-    subtitle: '专业量化交易终端',
-    icon: LineChart,
-    color: 'bg-emerald-500',
+  {
+    icon: Server,
+    title: '部署与升级 Runbook',
+    desc: '记录服务器初始化、源码同步、Nginx 域名绑定、环境变量、备份、验证和回滚方式。',
+    action: '联系获取部署说明',
+    href: '/contact',
   },
-  other: {
-    title: 'Other Tools',
-    subtitle: '其他工具',
-    icon: Globe,
-    color: 'bg-gray-500',
+  {
+    icon: ShieldCheck,
+    title: '安全与数据边界',
+    desc: '公司实例、员工记忆、客户资料、代码上下文和可售模板之间必须隔离，避免把公司机密放入外售资产。',
+    action: '查看公司说明',
+    href: '/about',
   },
-};
+];
 
 const Downloads = () => {
-  const { items, incrementDownload, fetchItems, isLoading } = useDownloadsStore();
-  const currentOS = useOS();
-  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+  return (
+    <div className="min-h-screen bg-background pt-24">
+      <section className="border-b border-border bg-white py-16">
+        <div className="container mx-auto px-4">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
+            <p className="mb-4 text-sm font-semibold text-primary">文档与入口</p>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">当前没有虚假的客户端下载中心</h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              现阶段最重要的是产品控制台、使用说明、部署 runbook 和安全边界。桌面客户端、行业 SDK 或下载包只有在真实发布后才会出现在这里。
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-  useEffect(() => {
-    fetchItems();
-  }, [fetchItems]);
-
-  // Group items by category
-  const groupedItems = useMemo(() => {
-    const groups: Record<string, DownloadItem[]> = {
-      reeftotem: [],
-      openclaw: [],
-      quant: [],
-      other: [],
-    };
-
-    items.forEach((item) => {
-      // Assuming item.category is derived from product_id or stored in a way we can map
-      // For now, let's assume item.category field exists or we infer it.
-      // Since API doesn't return category directly yet (it's in Product), we might need to fetch products or adjust API.
-      // For MVP, let's assume API returns a category field (we added it to DownloadItem schema but maybe not filled).
-      // Or we map product_id to category if possible.
-      // Let's rely on 'category' being passed through if the backend joins it, or just default to 'other'.
-      const category = (item as any).category || 'other'; 
-      if (groups[category]) {
-        groups[category].push(item);
-      } else {
-        if (!groups['other']) groups['other'] = [];
-        groups['other'].push(item);
-      }
-    });
-
-    return groups;
-  }, [items]);
-
-  const toggleExpand = (category: string) => {
-    setExpandedItems(prev => ({ ...prev, [category]: !prev[category] }));
-  };
-
-  const renderSoftwareSection = (category: string, items: DownloadItem[]) => {
-    if (items.length === 0) return null;
-
-    const info = SOFTWARE_INFO[category as keyof typeof SOFTWARE_INFO] || SOFTWARE_INFO.other;
-    const Icon = info.icon;
-
-    // Find best match for current OS
-    const recommendedItem = items.find(item => item.os_type === currentOS) || items[0];
-    const otherItems = items.filter(item => item.id !== recommendedItem.id);
-    const isExpanded = expandedItems[category];
-
-    return (
-      <motion.div
-        key={category}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="bg-card border border-border/50 rounded-3xl p-8 shadow-apple mb-8"
-      >
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
-          <div className={cn("w-24 h-24 rounded-[22px] flex items-center justify-center text-white shadow-lg shrink-0", info.color)}>
-            <Icon className="w-12 h-12" />
-          </div>
-          
-          <div className="flex-grow">
-            <h2 className="text-3xl font-bold text-foreground mb-2">{info.title}</h2>
-            <p className="text-lg text-muted-foreground">{info.subtitle}</p>
-          </div>
-
-          <div className="w-full md:w-auto flex flex-col items-center gap-3">
-            <Button
-              size="lg"
-              className="w-full md:w-48 rounded-full font-semibold shadow-md bg-primary hover:bg-primary/90 text-white text-lg h-12"
-              onClick={() => {
-                incrementDownload(recommendedItem.id);
-                if (recommendedItem.package_url) window.open(recommendedItem.package_url, '_blank', 'noopener,noreferrer');
-              }}
-            >
-              获取
-            </Button>
-            <div className="text-xs text-muted-foreground text-center">
-              <p>适用于 {recommendedItem.platform}</p>
-              <p className="mt-0.5 text-[10px] opacity-70">v{recommendedItem.version} • {recommendedItem.file_size}</p>
-            </div>
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid gap-5 md:grid-cols-2">
+            {entries.map((entry) => {
+              const Icon = entry.icon;
+              const isExternal = entry.href.startsWith('http');
+              return (
+                <a
+                  key={entry.title}
+                  href={entry.href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  className="rounded-lg border border-border bg-card p-6 shadow-sm transition-colors hover:border-primary/40"
+                >
+                  <Icon className="mb-5 h-6 w-6 text-primary" />
+                  <h2 className="text-xl font-semibold text-foreground">{entry.title}</h2>
+                  <p className="mt-3 min-h-20 text-sm leading-6 text-muted-foreground">{entry.desc}</p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                    {entry.action}
+                    <ExternalLink className="h-4 w-4" />
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </div>
+      </section>
 
-        {/* Description */}
-        {/* <div className="bg-secondary/50 rounded-2xl p-6 mb-6 border border-border/50">
-          <p className="text-foreground/80 leading-relaxed">
-            {recommendedItem.description || '体验最新版本的软件，享受更流畅的操作与更强大的功能。'}
-          </p>
-        </div> */}
-
-        {/* Other Versions Toggle */}
-        {otherItems.length > 0 && (
-          <div className="border-t border-border pt-6">
-            <button 
-              onClick={() => toggleExpand(category)}
-              className="flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              查看其他版本与平台
-              <ChevronDown className={cn("ml-1 w-4 h-4 transition-transform", isExpanded && "rotate-180")} />
-            </button>
-
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  className="overflow-hidden"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                    {otherItems.map(item => (
-                      <div key={item.id} className="flex items-center justify-between p-4 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors border border-border/50">
-                        <div className="flex items-center gap-3">
-                          {item.os_type === 'windows' && <Monitor className="w-5 h-5 text-blue-500" />}
-                          {item.os_type === 'mac' && <Monitor className="w-5 h-5 text-gray-500" />}
-                          {item.os_type === 'android' && <Smartphone className="w-5 h-5 text-green-500" />}
-                          {item.os_type === 'ios' && <Smartphone className="w-5 h-5 text-gray-900 dark:text-gray-100" />}
-                          
-                          <div>
-                            <div className="text-sm font-medium text-foreground">{item.platform}</div>
-                            <div className="text-xs text-muted-foreground">v{item.version} • {item.file_size}</div>
-                          </div>
-                        </div>
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="rounded-full bg-white dark:bg-gray-800 shadow-sm text-primary"
-                          onClick={() => {
-                            incrementDownload(item.id);
-                            if (item.package_url) window.open(item.package_url, '_blank', 'noopener,noreferrer');
-                          }}
-                        >
-                          <Download className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+      <section className="border-y border-border bg-white py-20">
+        <div className="container mx-auto grid gap-8 px-4 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground">对外文档会按产品流程组织</h2>
+            <p className="mt-4 text-muted-foreground leading-7">
+              不是堆 API 文档，而是让用户知道如何从官网进入控制台，再完成一家公司从创建到交付审核的完整操作。
+            </p>
           </div>
-        )}
-      </motion.div>
-    );
-  };
-
-  if (isLoading) {
-    return <div className="min-h-screen pt-24 flex justify-center text-muted-foreground">Loading...</div>;
-  }
-
-  return (
-    <div className="min-h-screen pt-24 pb-16 bg-background">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
-            下载中心
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            为您检测到的操作系统：
-            <span className="text-foreground font-medium ml-2 capitalize">
-              {currentOS === 'ios' ? 'iOS' : currentOS === 'mac' ? 'macOS' : currentOS}
-            </span>
-          </p>
-        </motion.div>
-
-        {Object.keys(groupedItems).length === 0 ? (
-          <div className="text-center py-20 text-muted-foreground">暂无可用下载</div>
-        ) : (
-          <div className="space-y-4">
-            {renderSoftwareSection('reeftotem', groupedItems['reeftotem'])}
-            {renderSoftwareSection('openclaw', groupedItems['openclaw'])}
-            {renderSoftwareSection('quant', groupedItems['quant'])}
-            {renderSoftwareSection('other', groupedItems['other'])}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              ['账号与权限', '注册、登录、租户、公司成员、审批权限。'],
+              ['公司创建', '公司名称、行业方向、公司包、基本制度。'],
+              ['员工组织', '管理岗、执行岗、人格、记忆、心跳、汇报线。'],
+              ['项目交付', '立项、Issue、Run、日志、WorkProduct、验收。'],
+            ].map(([title, text]) => (
+              <div key={title} className="rounded-lg border border-border bg-background p-5">
+                <FileText className="mb-4 h-5 w-5 text-primary" />
+                <h3 className="font-semibold text-foreground">{title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{text}</p>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      </section>
+
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="rounded-lg border border-border bg-card p-8">
+            <Github className="mb-4 h-6 w-6 text-primary" />
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">源码同步与版本升级</h2>
+            <p className="mt-4 max-w-4xl text-sm leading-6 text-muted-foreground">
+              产品控制台部署采用服务器目录、环境变量文件、Docker Compose、Nginx 站点配置、备份和 smoke test 的升级流程。官网源码以当前仓库作为发布源，构建产物发布到服务器站点目录。
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

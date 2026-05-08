@@ -1,6 +1,5 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { useSiteStore } from '@/stores/siteStore';
 
 interface LogoProps {
   className?: string;
@@ -8,28 +7,9 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ className, showText = true }) => {
-  const { siteConfig } = useSiteStore();
-  const { logo } = siteConfig;
-
-  if (logo.url) {
-    return (
-      <div className={cn("flex items-center space-x-3 select-none", className)}>
-        <img src={logo.url} alt={logo.alt} className="h-10 w-auto" />
-        {showText && (
-          <div className="flex flex-col items-start justify-center">
-            <span className="font-sans font-bold text-xl tracking-tight text-foreground leading-none">
-              {logo.alt || 'ReefTotem'}
-            </span>
-          </div>
-        )}
-      </div>
-    );
-  }
-
   return (
     <div className={cn("flex items-center space-x-3 select-none", className)}>
       <div className="relative w-10 h-10 flex items-center justify-center">
-        {/* Simplified Apple-style Logo Mark */}
         <svg 
           viewBox="0 0 100 100" 
           className="relative w-full h-full text-primary"
@@ -48,6 +28,9 @@ const Logo: React.FC<LogoProps> = ({ className, showText = true }) => {
         <div className="flex flex-col items-start justify-center">
           <span className="font-sans font-bold text-xl tracking-tight text-foreground leading-none">
             ReefTotem
+          </span>
+          <span className="text-[11px] text-muted-foreground leading-none mt-1">
+            AI Company OS
           </span>
         </div>
       )}

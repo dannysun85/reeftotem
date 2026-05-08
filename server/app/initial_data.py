@@ -39,9 +39,9 @@ def init_db():
                 value={
                     "logo": {"url": "", "alt": "ReefTotem"},
                     "banner": {
-                        "title": "定义未来的智能数字生命",
-                        "subtitle": "ReefTotem 瑞孚图腾致力于打造具备情感与智慧的 AI 伴侣。通过先进的大模型技术与二次元美学，为您连接虚拟与现实的桥梁。",
-                        "ctaText": "开始体验",
+                        "title": "ReefTotem AI 公司操作系统",
+                        "subtitle": "面向真实公司运营的 AI 员工协作与交付平台，覆盖公司创建、员工组织、项目立项、执行日志和交付审核。",
+                        "ctaText": "进入控制台",
                         "ctaLink": "/products",
                         "backgroundUrl": ""
                     },
@@ -62,27 +62,27 @@ def init_db():
         if not existing_features:
             features = [
                 {
-                    "title": "二次元 AI 伴侣",
-                    "content": "拥有独特个性和情感的虚拟角色，支持语音、文字多模态交互，为您带来沉浸式的陪伴体验。",
-                    "meta_data": {"icon": "MessageSquare", "color": "from-neon-pink to-pink-600"},
+                    "title": "公司创建与公司包",
+                    "content": "用户创建不同类型公司，安装适配行业的制度、员工、流程和工具能力包。",
+                    "meta_data": {"icon": "Building2", "color": "from-tech-cyan to-blue-600"},
                     "sort_order": 1
                 },
                 {
-                    "title": "智能 Agent 服务",
-                    "content": "强大的自主代理系统，能够理解复杂指令，自动执行任务，成为您工作和生活的得力助手。",
-                    "meta_data": {"icon": "Cpu", "color": "from-tech-cyan to-blue-600"},
+                    "title": "AI 员工组织",
+                    "content": "维护岗位、人格、记忆、心跳、上下级关系和协作边界，让员工能在公司流程内工作。",
+                    "meta_data": {"icon": "Users", "color": "from-tech-cyan to-blue-600"},
                     "sort_order": 2
                 },
                 {
-                    "title": "隐私安全保障",
-                    "content": "采用企业级加密技术，确保您的对话数据和个人信息绝对安全，让您无后顾之忧。",
-                    "meta_data": {"icon": "Shield", "color": "from-bright-purple to-indigo-600"},
+                    "title": "交付可追踪",
+                    "content": "项目目标进入公司后，拆解为 Issue、Run、事件日志和 WorkProduct，由用户审核交付结果。",
+                    "meta_data": {"icon": "ClipboardCheck", "color": "from-bright-purple to-indigo-600"},
                     "sort_order": 3
                 },
                 {
-                    "title": "超低延迟响应",
-                    "content": "基于自研高性能推理引擎，实现毫秒级对话响应，让交流如同面对面般自然流畅。",
-                    "meta_data": {"icon": "Zap", "color": "from-yellow-400 to-orange-500"},
+                    "title": "安全边界",
+                    "content": "真实公司记忆和客户上下文留在公司实例内，可售员工模板与公司包必须脱敏。",
+                    "meta_data": {"icon": "Shield", "color": "from-yellow-400 to-orange-500"},
                     "sort_order": 4
                 }
             ]
@@ -91,83 +91,83 @@ def init_db():
             logger.info("Feature items initialized")
 
         # 4. Products
-        if not get_product_by_slug(db, "reeftotem-ai"):
+        if not get_product_by_slug(db, "hermes-company-os"):
             p1 = ProductCreate(
-                name="ReefTotem AI",
-                slug="reeftotem-ai",
-                short_desc="您的专属二次元 AI 伴侣",
-                full_desc="ReefTotem AI 是我们旗舰级的虚拟伴侣产品，搭载最新的情感计算引擎。她不仅能理解您的语言，更能读懂您的情绪。支持全天候陪伴、日程管理、情感疏导等功能。",
+                name="Hermes Company OS",
+                slug="hermes-company-os",
+                short_desc="AI 公司运营与交付平台",
+                full_desc="Hermes Company OS 支持用户创建公司、安装公司包、招聘 AI 员工、提交项目目标，并通过 Issue、Run、日志和 WorkProduct 完成交付审核。",
                 icon_url="",
-                features=["情感记忆系统", "多模态交互 (语音/图像)", "个性化装扮", "跨平台同步"],
+                features=["公司创建", "AI 员工组织", "项目立项", "Run 与 WorkProduct 审核"],
                 sort_order=1,
                 is_published=True
             )
             create_product(db, p1)
-            logger.info("Product 'ReefTotem AI' created")
+            logger.info("Product 'Hermes Company OS' created")
 
-        if not get_product_by_slug(db, "openclaw"):
+        if not get_product_by_slug(db, "reeftotem-software-company"):
             p2 = ProductCreate(
-                name="OpenClaw",
-                slug="openclaw",
-                short_desc="企业级智能 Agent 编排系统",
-                full_desc="OpenClaw 专为企业打造，提供强大的自动化任务执行能力。无论是数据采集、报表生成，还是复杂的业务流程自动化，OpenClaw 都能轻松应对。",
+                name="ReefTotem 软件公司包",
+                slug="reeftotem-software-company",
+                short_desc="软件开发公司的岗位、制度与交付流程",
+                full_desc="ReefTotem 软件公司包用于验证产品自身的自运营开发流程，包括项目文档读取、代码迭代、版本日志、GitHub Issue 和交付审核。",
                 icon_url="",
-                features=["可视化工作流编排", "丰富的插件生态", "企业级安全管控", "私有化部署支持"],
+                features=["管理岗汇报", "工程执行", "文档驱动开发", "版本升级流程"],
                 sort_order=2,
                 is_published=True
             )
             create_product(db, p2)
-            logger.info("Product 'OpenClaw' created")
+            logger.info("Product 'ReefTotem 软件公司包' created")
 
-        if not get_product_by_slug(db, "reefquant"):
+        if not get_product_by_slug(db, "security-detection-company"):
             p3 = ProductCreate(
-                name="ReefQuant",
-                slug="reefquant",
-                short_desc="新一代量化交易终端",
-                full_desc="结合 AI 预测能力的量化交易平台，为专业交易者提供毫秒级的回测与实盘交易服务。",
+                name="音视频安全检测公司能力",
+                slug="security-detection-company",
+                short_desc="面向内容安全与风险检测的行业能力方向",
+                full_desc="该方向聚焦语音、视频、内容和风险检测流程，会通过行业公司包或项目交付接入 Hermes Company OS。",
                 icon_url="",
-                features=["AI 因子挖掘", "超低延迟执行", "多市场支持", "Python/C++ 双接口"],
+                features=["内容安全识别", "风险事件追踪", "企业流程接入", "私有化交付评估"],
                 sort_order=3,
                 is_published=True
             )
             create_product(db, p3)
-            logger.info("Product 'ReefQuant' created")
+            logger.info("Product '音视频安全检测公司能力' created")
 
         # 5. Downloads
-        # Check if we have downloads for ReefTotem AI
-        p1_obj = get_product_by_slug(db, "reeftotem-ai")
+        # Check if we have document entries for Hermes Company OS
+        p1_obj = get_product_by_slug(db, "hermes-company-os")
         if p1_obj:
             existing_downloads = get_downloads(db, product_id=p1_obj.id)
             if not existing_downloads:
                 d1 = DownloadItemCreate(
                     product_id=p1_obj.id,
-                    name="ReefTotem Desktop",
-                    version="1.2.0",
-                    platform="Windows x64",
-                    os_type=OSType.WINDOWS,
+                    name="Hermes Company OS Console",
+                    version="2.2.x",
+                    platform="Web",
+                    os_type=OSType.OTHER,
                     category="reeftotem",
-                    package_url="https://example.com/downloads/reeftotem-setup-1.2.0.exe",
-                    file_size="145 MB",
-                    release_date=datetime(2026, 2, 20),
-                    description="包含最新的情感引擎更新和冬季主题包。",
+                    package_url="https://opc.reeftotem.ai/login",
+                    file_size="Web",
+                    release_date=datetime(2026, 5, 9),
+                    description="产品控制台入口，用于公司创建、员工组织、项目立项和交付审核。",
                     is_latest=True
                 )
                 create_download(db, d1)
                 
                 d2 = DownloadItemCreate(
                     product_id=p1_obj.id,
-                    name="ReefTotem for Mac",
-                    version="1.2.0",
-                    platform="macOS (Apple Silicon)",
-                    os_type=OSType.MAC,
+                    name="Production Deployment Runbook",
+                    version="2026-05-09",
+                    platform="Documentation",
+                    os_type=OSType.OTHER,
                     category="reeftotem",
-                    package_url="https://example.com/downloads/reeftotem-1.2.0-arm64.dmg",
-                    file_size="138 MB",
-                    release_date=datetime(2026, 2, 20),
+                    package_url="https://reeftotem.ai/downloads",
+                    file_size="Doc",
+                    release_date=datetime(2026, 5, 9),
                     is_latest=True
                 )
                 create_download(db, d2)
-                logger.info("Downloads for ReefTotem initialized")
+                logger.info("Document entries for Hermes Company OS initialized")
 
         # 6. About Us & Contact Us (New Content Types)
         # About Us - Team Members
@@ -177,21 +177,21 @@ def init_db():
                 {
                     "title": "Alex Chen",
                     "subtitle": "CEO & Founder",
-                    "content": "前 Google AI 研究员，拥有 10 年人工智能领域经验，致力于让 AI 更有温度。",
+                    "content": "负责 ReefTotem 公司运营平台的产品方向、公司包边界和商业化验证。",
                     "image_url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256",
                     "sort_order": 1
                 },
                 {
                     "title": "Sarah Li",
                     "subtitle": "CTO",
-                    "content": "清华大学计算机博士，主攻自然语言处理与情感计算，ReefTotem 核心架构师。",
+                    "content": "负责 Hermes Company OS 的工程架构、部署流程和 AI 员工执行路径。",
                     "image_url": "https://images.unsplash.com/photo-1573496359-7013ac2bebb5?auto=format&fit=crop&q=80&w=256",
                     "sort_order": 2
                 },
                 {
                     "title": "Mike Wang",
                     "subtitle": "Product Director",
-                    "content": "资深产品经理，曾主导多款千万级用户 APP 的设计与迭代。",
+                    "content": "负责公司创建、员工组织、项目立项、工作间和交付审核体验。",
                     "image_url": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=256",
                     "sort_order": 3
                 }
@@ -207,7 +207,7 @@ def init_db():
                 {
                     "title": "商务合作",
                     "subtitle": "business@reeftotem.ai",
-                    "content": "期待与各行业伙伴建立合作关系，共创 AI 未来。",
+                    "content": "适合沟通行业公司包、私有化部署、公司能力复制和业务试运行。",
                     "meta_data": {"icon": "Briefcase"},
                     "sort_order": 1
                 },
@@ -221,7 +221,7 @@ def init_db():
                 {
                     "title": "加入我们",
                     "subtitle": "careers@reeftotem.ai",
-                    "content": "寻找志同道合的你，一起探索人工智能的无限边界。",
+                    "content": "寻找能把 AI 员工、公司流程、交付系统和安全边界落地的人。",
                     "meta_data": {"icon": "Users"},
                     "sort_order": 3
                 }
@@ -237,7 +237,7 @@ def init_db():
         if not existing_hero_badge:
             create_content_item(db, ContentItemCreate(
                 type="hero_badge",
-                title="New Release 2.0",
+                title="Hermes Company OS",
                 is_active=True
             ))
             logger.info("Hero badge initialized")
@@ -246,9 +246,9 @@ def init_db():
         existing_hero_stats = get_content_items(db, type="hero_stat")
         if not existing_hero_stats:
             stats = [
-                {"title": "活跃用户", "content": "100K+", "sort_order": 1},
-                {"title": "智能响应", "content": "24/7", "sort_order": 2},
-                {"title": "好评率", "content": "99%", "sort_order": 3}
+                {"title": "首个验证公司", "content": "软件公司", "sort_order": 1},
+                {"title": "核心链路", "content": "Issue/Run", "sort_order": 2},
+                {"title": "交付审核", "content": "WorkProduct", "sort_order": 3}
             ]
             for s in stats:
                 create_content_item(db, ContentItemCreate(type="hero_stat", **s))
@@ -259,9 +259,9 @@ def init_db():
         if not existing_company_intro:
             create_content_item(db, ContentItemCreate(
                 type="company_intro",
-                title="关于 瑞孚图腾",
+                title="关于 ReefTotem",
                 subtitle="Shenzhen Qianhai ReefTotem Technology Co., Ltd.",
-                content="深圳前海瑞孚图腾科技有限公司（ReefTotem）是一家专注于人工智能领域的创新科技公司。我们致力于将最前沿的 AI 技术转化为触手可及的智能产品。\n\n我们的团队由来自全球顶尖科技公司的工程师和设计师组成，怀揣着同一个愿景：让 AI 更有温度，让科技更懂人心。无论是二次元 AI 伴侣，还是高效的 Agent 服务，都是我们探索未来的足迹。",
+                content="深圳前海瑞孚图腾科技有限公司（ReefTotem）正在建设面向真实公司运营的 AI 员工协作与交付平台。\n\n用户从 SaaS 账号进入，创建公司，安装公司包，招聘 AI 员工，提交项目目标，再通过 Issue、Run、日志和 WorkProduct 审核结果。\n\n软件开发公司是第一家验证公司，后续会复制到研究交付、运营服务、内容交付和安全检测等不同公司类型。",
                 image_url="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2565&auto=format&fit=crop",
                 sort_order=1
             ))
@@ -273,8 +273,8 @@ def init_db():
             # Product Showcase Title
             create_content_item(db, ContentItemCreate(
                 type="home_section_title",
-                title="探索 无限可能",
-                subtitle="融合前沿 AI 技术与极致交互设计，为您打造前所未有的智能体验",
+                title="从公司目标到交付审核",
+                subtitle="用公司、员工、项目、Issue、Run 和 WorkProduct 把 AI 工作流落到真实运营里",
                 meta_data={"section": "product_showcase"},
                 sort_order=1
             ))
@@ -284,9 +284,9 @@ def init_db():
         existing_stats = get_content_items(db, type="stat")
         if not existing_stats:
             company_stats = [
-                {"title": "成立年份", "content": "2026", "sort_order": 1},
-                {"title": "服务全球", "content": "Global", "sort_order": 2},
-                {"title": "核心专利", "content": "50+", "sort_order": 3}
+                {"title": "产品入口", "content": "opc", "sort_order": 1},
+                {"title": "验证公司", "content": "ReefTotem", "sort_order": 2},
+                {"title": "核心交付", "content": "WorkProduct", "sort_order": 3}
             ]
             for s in company_stats:
                 create_content_item(db, ContentItemCreate(type="stat", **s))

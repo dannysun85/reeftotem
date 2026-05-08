@@ -63,7 +63,7 @@ const HeroSection = () => {
               {banner.title.split(' ')[0]}
             </span>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
-              {banner.title.split(' ').slice(1).join(' ') || '智能数字生命'}
+              {banner.title.split(' ').slice(1).join(' ') || 'AI 公司操作系统'}
             </span>
           </h1>
 
