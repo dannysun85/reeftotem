@@ -35,7 +35,7 @@ const About = () => {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
             <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">深圳前海瑞孚图腾科技有限公司</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              ReefTotem 专注于 AI 软件产品和企业自动化能力建设，产品方向包括 Hermes Company OS、ReefTotem 小助手、量化交易软件、音视频与内容安全能力，以及支撑这些产品的数字员工和公司能力包。
+              ReefTotem 专注于 AI 软件产品和企业自动化能力建设，产品方向包括 Hermes Company OS、ReefTotem 小助手、量化研究工具、音视频与内容安全能力，以及支撑这些产品的数字员工和公司能力包。
             </p>
           </motion.div>
         </div>

@@ -70,7 +70,7 @@ const Header = () => {
           rel="noopener noreferrer"
           className="hidden md:inline-flex h-10 items-center gap-2 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-foreground/85"
         >
-          产品控制台
+          OPC 控制台
           <ExternalLink className="h-4 w-4" />
         </a>
 
@@ -111,7 +111,7 @@ const Header = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-4 py-3 text-sm font-medium text-background"
               >
-                产品控制台
+                OPC 控制台
                 <ExternalLink className="h-4 w-4" />
               </a>
             </div>
