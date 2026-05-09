@@ -30,7 +30,7 @@ const Logo: React.FC<LogoProps> = ({ className, showText = true }) => {
             ReefTotem
           </span>
           <span className="text-[11px] text-muted-foreground leading-none mt-1">
-            AI Company OS
+            AI Software Products
           </span>
         </div>
       )}

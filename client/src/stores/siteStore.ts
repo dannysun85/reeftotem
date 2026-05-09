@@ -35,8 +35,8 @@ const defaultSiteConfig: SiteConfig = {
     alt: 'ReefTotem',
   },
   banner: {
-    title: 'ReefTotem AI 公司操作系统',
-    subtitle: '深圳前海瑞孚图腾科技有限公司正在建设面向真实公司运营的 AI 员工协作与交付平台。',
+    title: 'ReefTotem',
+    subtitle: '深圳前海瑞孚图腾科技有限公司，建设 AI 软件产品、企业自动化、量化研究工具和行业安全能力。',
     ctaText: '进入控制台',
     ctaLink: '/products',
     backgroundUrl: '',

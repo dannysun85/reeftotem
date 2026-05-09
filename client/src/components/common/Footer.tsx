@@ -15,7 +15,7 @@ const Footer = () => {
               <Logo />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              深圳前海瑞孚图腾科技有限公司，正在建设面向真实公司运营的 AI 员工协作与交付平台。
+              深圳前海瑞孚图腾科技有限公司，建设 AI 软件产品、企业自动化、量化研究工具和行业安全能力。
             </p>
           </div>
 
@@ -23,8 +23,8 @@ const Footer = () => {
             <h3 className="text-foreground font-semibold mb-6">快速链接</h3>
             <ul className="space-y-4">
               {[
-                { name: '首页', path: '/' },
-                { name: 'Hermes Company OS', path: '/products' },
+                { name: '公司首页', path: '/' },
+                { name: '产品矩阵', path: '/products' },
                 { name: '公司包与员工', path: '/products' },
                 { name: '公司说明', path: '/about' },
                 { name: '文档与入口', path: '/downloads' },
@@ -40,7 +40,7 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-foreground font-semibold mb-6">产品入口</h3>
+            <h3 className="text-foreground font-semibold mb-6">产品与服务</h3>
             <ul className="space-y-4">
               <li>
                 <a href={PRODUCT_CONSOLE_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary">
@@ -48,9 +48,10 @@ const Footer = () => {
                   <ExternalLink className="h-3.5 w-3.5" />
                 </a>
               </li>
-              <li className="text-sm text-muted-foreground">软件公司工作流</li>
-              <li className="text-sm text-muted-foreground">部署与升级说明</li>
-              <li className="text-sm text-muted-foreground">客户公司试运行</li>
+              <li className="text-sm text-muted-foreground">Hermes Company OS</li>
+              <li className="text-sm text-muted-foreground">ReefTotem 小助手</li>
+              <li className="text-sm text-muted-foreground">量化交易软件</li>
+              <li className="text-sm text-muted-foreground">私有化部署咨询</li>
             </ul>
           </div>
 
@@ -74,7 +75,7 @@ const Footer = () => {
             © 2026 深圳前海瑞孚图腾科技有限公司 All rights reserved.
           </p>
           <p className="mt-4 text-xs text-muted-foreground md:mt-0">
-            ReefTotem AI Company OS
+            ReefTotem · AI Software Products
           </p>
         </div>
       </div>

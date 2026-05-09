@@ -14,9 +14,9 @@ const entries = [
   },
   {
     icon: BookOpen,
-    title: '产品使用说明',
-    desc: '从零创建软件公司、招聘员工、提交项目目标、查看工作间、审核交付物的操作说明会随版本持续补充。',
-    action: '查看说明规划',
+    title: '产品使用手册',
+    desc: '从注册账号、创建客户工作区、选择公司包，到提交项目目标、查看工作间、审核交付物。',
+    action: '查看产品流程',
     href: '/products',
   },
   {
@@ -41,10 +41,9 @@ const Downloads = () => {
       <section className="border-b border-border bg-white py-16">
         <div className="container mx-auto px-4">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
-            <p className="mb-4 text-sm font-semibold text-primary">文档与入口</p>
-            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">当前没有虚假的客户端下载中心</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">文档与入口</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              现阶段最重要的是产品控制台、使用说明、部署 runbook 和安全边界。桌面客户端、行业 SDK 或下载包只有在真实发布后才会出现在这里。
+              这里提供产品控制台、使用说明、部署 runbook 和安全边界说明。小助手、量化交易软件或行业 SDK 的下载入口会在真实发布后进入该页面。
             </p>
           </motion.div>
         </div>

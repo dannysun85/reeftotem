@@ -26,10 +26,10 @@ const Header = () => {
   }, [location]);
 
   const navLinks = [
-    { name: '首页', path: '/' },
-    { name: '产品与流程', path: '/products' },
+    { name: '公司首页', path: '/' },
+    { name: '产品矩阵', path: '/products' },
     { name: '公司说明', path: '/about' },
-    { name: '文档与入口', path: '/downloads' },
+    { name: '文档入口', path: '/downloads' },
     { name: '联系', path: '/contact' },
   ];
 
