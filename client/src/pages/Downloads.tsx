@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, ExternalLink, FileText, Github, Server, ShieldCheck } from 'lucide-react';
+import { BookOpen, Download, ExternalLink, FileText, Github, Server, ShieldCheck } from 'lucide-react';
 
 const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
 
@@ -11,6 +11,13 @@ const entries = [
     desc: '用于 SaaS 账号、公司创建、员工组织、项目立项、Run、WorkProduct 和审核。',
     action: '打开 opc.reeftotem.ai',
     href: PRODUCT_CONSOLE_URL,
+  },
+  {
+    icon: Download,
+    title: 'Reeftotem Assistant 下载状态',
+    desc: '当前官网基线版本 0.9.22，公开下载等待签名、公证、updater 安装/回滚和新用户空白状态 smoke。',
+    action: '查看小助手发布计划',
+    href: '/assistant',
   },
   {
     icon: BookOpen,
@@ -43,7 +50,7 @@ const Downloads = () => {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
             <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">文档与入口</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              这里提供产品控制台、使用说明、部署 runbook 和安全边界说明。小助手、量化交易软件或行业 SDK 的下载入口会在真实发布后进入该页面。
+              这里提供产品控制台、Reeftotem Assistant 发布状态、使用说明、部署 runbook 和安全边界说明。未完成签名、公证和 smoke 的客户端不会作为公开稳定版下载。
             </p>
           </motion.div>
         </div>

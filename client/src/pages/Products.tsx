@@ -28,12 +28,14 @@ const products = [
   },
   {
     icon: MessageSquareText,
-    maturity: '产品线规划',
-    name: 'ReefTotem 小助手',
-    category: '个人与企业助手',
-    desc: '面向办公辅助、知识问答、任务提醒、资料整理和轻量流程协作的助手产品线。',
-    details: ['资料问答', '任务提醒', '办公辅助', '企业流程入口'],
+    maturity: '0.9.22 官网基线',
+    name: 'Reeftotem Assistant',
+    category: 'Live2D 桌面 AI 伴侣',
+    desc: '本地优先的桌面 AI 伴侣，面向聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录和自然语言自动化。',
+    details: ['Live2D 桌面常驻', '长期记忆与人格主题', '聊天创建提醒和 Workflow', 'Activity 可解释恢复'],
     image: '/images/brand/assistant-visual.svg',
+    action: '查看小助手',
+    href: '/assistant',
   },
   {
     icon: BarChart3,
@@ -72,7 +74,7 @@ const Products = () => {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
             <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">产品矩阵</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              ReefTotem 的产品组合覆盖 AI 公司操作系统、小助手、量化研究工具、内容安全能力，以及支撑这些产品的数字员工和公司能力包。
+              ReefTotem 的产品组合覆盖 AI 公司操作系统、Reeftotem Assistant、量化研究工具、内容安全能力，以及支撑这些产品的数字员工和公司能力包。
             </p>
           </motion.div>
         </div>
@@ -106,17 +108,26 @@ const Products = () => {
                           </div>
                         ))}
                       </div>
-                      {product.href && (
-                        <a
-                          href={product.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-foreground px-5 text-sm font-semibold text-background"
-                        >
-                          {product.action}
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      )}
+                      {product.href &&
+                        (product.href.startsWith('http') ? (
+                          <a
+                            href={product.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-foreground px-5 text-sm font-semibold text-background"
+                          >
+                            {product.action}
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        ) : (
+                          <Link
+                            to={product.href}
+                            className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-foreground px-5 text-sm font-semibold text-background"
+                          >
+                            {product.action}
+                            <ArrowRight className="h-4 w-4" />
+                          </Link>
+                        ))}
                     </div>
                     <div className="min-h-[280px] border-t border-border bg-background lg:border-l lg:border-t-0">
                       <img src={product.image} alt={product.name} className="h-full min-h-[280px] w-full object-cover" />
@@ -158,7 +169,7 @@ const Products = () => {
             <div>
               <h2 className="text-3xl font-bold tracking-tight">官网负责产品矩阵，OPC 负责公司操作系统。</h2>
               <p className="mt-4 max-w-3xl text-sm leading-6 text-background/75">
-                小助手、量化研究工具和内容安全能力后续需要补独立产品页；ReefTotem AI 公司操作系统的操作文档继续放在 OPC 和文档入口中。
+                Reeftotem Assistant 已补独立产品页；量化研究工具和内容安全能力后续继续补独立产品页；ReefTotem AI 公司操作系统的操作文档继续放在 OPC 和文档入口中。
               </p>
             </div>
             <Link

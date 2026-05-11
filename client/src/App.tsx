@@ -7,6 +7,7 @@ import Products from '@/pages/Products';
 import About from '@/pages/About';
 import Contact from '@/pages/Contact';
 import Downloads from '@/pages/Downloads';
+import Assistant from '@/pages/Assistant';
 
 const routeSeo: Record<string, { title: string; description: string }> = {
   '/': {
@@ -15,9 +16,14 @@ const routeSeo: Record<string, { title: string; description: string }> = {
       'ReefTotem 是深圳前海瑞孚图腾科技有限公司旗下 AI 软件品牌，建设 AI 公司操作系统、企业自动化智能助手、量化研究工具、内容安全能力和私有化部署服务，帮助团队把 AI 员工、工具、审批、日志和交付结果放进真实业务流程。',
   },
   '/products': {
-    title: 'ReefTotem 产品矩阵 | AI 公司操作系统、小助手、量化研究与内容安全',
+    title: 'ReefTotem 产品矩阵 | AI 公司操作系统、Reeftotem Assistant、量化研究与内容安全',
     description:
-      'ReefTotem 产品矩阵覆盖 AI 公司操作系统、企业自动化智能助手、量化研究工具、内容安全能力、数字员工和公司能力包，按成熟度说明线上控制台、规划产品、行业能力和交付边界，便于客户判断试点路径。',
+      'ReefTotem 产品矩阵覆盖 AI 公司操作系统、Reeftotem Assistant 桌面 AI 伴侣、量化研究工具、内容安全能力、数字员工和公司能力包，按成熟度说明线上控制台、发布状态、行业能力和交付边界。',
+  },
+  '/assistant': {
+    title: 'Reeftotem Assistant | Live2D 桌面 AI 伴侣与自然语言自动化',
+    description:
+      'Reeftotem Assistant 是本地优先的 Live2D 桌面 AI 伴侣，覆盖聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录、Workflow、MCP 工具和 Provider 能力。',
   },
   '/about': {
     title: '关于 ReefTotem AI 软件公司 | 深圳前海瑞孚图腾科技有限公司',
@@ -32,7 +38,7 @@ const routeSeo: Record<string, { title: string; description: string }> = {
   '/contact': {
     title: '联系 ReefTotem | AI 公司操作系统与私有化部署咨询',
     description:
-      '联系 ReefTotem 获取 AI 公司操作系统、小助手、量化研究工具、内容安全能力、私有化部署、企业自动化流程设计、业务验证方案和长期维护支持咨询，适合需要真实试点落地的团队。',
+      '联系 ReefTotem 获取 AI 公司操作系统、Reeftotem Assistant、量化研究工具、内容安全能力、私有化部署、企业自动化流程设计、业务验证方案和长期维护支持咨询，适合需要真实试点落地的团队。',
   },
 };
 
@@ -112,6 +118,7 @@ function AppContent() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/assistant" element={<Assistant />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/downloads" element={<Downloads />} />

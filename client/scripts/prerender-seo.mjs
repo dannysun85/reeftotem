@@ -27,7 +27,7 @@ const pages = [
       ],
       [
         '企业自动化智能助手',
-        'ReefTotem 小助手面向办公辅助、知识问答、资料整理、流程提醒和轻量协作，适合从单个业务流程开始试点，再逐步扩展到运营、销售、研究、客服、内容安全和内部知识管理。',
+        'Reeftotem Assistant 面向办公辅助、知识问答、资料整理、流程提醒和轻量协作，适合从单个业务流程开始试点，再逐步扩展到运营、销售、研究、客服、内容安全和内部知识管理。',
       ],
       [
         '可验证交付',
@@ -48,9 +48,9 @@ const pages = [
     path: '/products',
     file: 'products/index.html',
     flatFile: 'products.html',
-    title: 'ReefTotem 产品矩阵 | AI 公司操作系统、小助手、量化研究与内容安全',
+    title: 'ReefTotem 产品矩阵 | AI 公司操作系统、Reeftotem Assistant、量化研究与内容安全',
     description:
-      'ReefTotem 产品矩阵覆盖 AI 公司操作系统、企业自动化智能助手、量化研究工具、内容安全能力、数字员工和公司能力包，按成熟度说明线上控制台、规划产品、行业能力和交付边界，便于客户判断试点路径。',
+      'ReefTotem 产品矩阵覆盖 AI 公司操作系统、Reeftotem Assistant 桌面 AI 伴侣、量化研究工具、内容安全能力、数字员工和公司能力包，按成熟度说明线上控制台、发布状态、行业能力和交付边界。',
     h1: 'ReefTotem 产品矩阵',
     intro:
       'ReefTotem 的产品组合按成熟度展示，核心包括已部署控制台、规划中的助手产品线、量化研究工具、内容安全能力和可复用公司能力包。产品页用于帮助客户判断当前可以试点什么、哪些能力仍在规划、哪些场景需要私有化定制。',
@@ -60,8 +60,8 @@ const pages = [
         '为团队创建 AI 公司、配置数字员工、管理项目交付和审核结果的企业操作系统。它关注组织结构、任务拆分、执行记录、工具权限、交付物沉淀和管理者验收，适合需要把 AI 能力嵌入日常运营的团队。',
       ],
       [
-        'ReefTotem 小助手',
-        '面向办公辅助、知识问答、任务提醒、资料整理和轻量流程协作的助手产品线。小助手可以作为低门槛入口，让客户先在一个部门或一个流程中验证 AI 的价值，再决定是否升级到完整公司操作系统。',
+        'Reeftotem Assistant',
+        '本地优先的 Live2D 桌面 AI 伴侣，覆盖聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录和自然语言自动化。它是个人与企业进入 ReefTotem 能力矩阵的低门槛入口。',
       ],
       [
         '量化研究工具',
@@ -81,6 +81,40 @@ const pages = [
       ],
     ],
     jsonLdTypes: ['organization', 'software'],
+  },
+  {
+    path: '/assistant',
+    file: 'assistant/index.html',
+    flatFile: 'assistant.html',
+    title: 'Reeftotem Assistant | Live2D 桌面 AI 伴侣与自然语言自动化',
+    description:
+      'Reeftotem Assistant 是本地优先的 Live2D 桌面 AI 伴侣，覆盖聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录、Workflow、MCP 工具和 Provider 能力。',
+    h1: 'Reeftotem Assistant 桌面 AI 伴侣',
+    intro:
+      'Reeftotem Assistant 把 AI 伴侣和桌面 Agent 合在一个本地优先的应用里。用户通过自然语言表达目标，人物判断要不要记忆、提醒、检索、创建 Workflow 或调用工具；高风险动作先请求授权，执行完成后回到 Chat 汇报并在 Activity 留下可追踪记录。',
+    sections: [
+      [
+        '用户只需要聊天',
+        '提醒、记忆、资料整理、Workflow 和工具调用都从自然语言发起，普通用户不需要学习 Cron、MCP 或 DAG。MCP、Cron、Workflow、A2A 和 Provider 是底层能力，不是普通用户的主入口。',
+      ],
+      [
+        '人格、情绪和长期记忆',
+        '人物主题影响说话方式、system prompt、能力边界和长期记忆。用户可以让角色记住偏好、删除错误记忆、纠正旧内容，并通过 Activity 查看记忆写入和纠错记录。',
+      ],
+      [
+        'Live2D 桌面常驻',
+        '角色可以常驻桌面，以短气泡、主窗口和 Activity 记录配合工作。桌宠体验需要避免遮挡用户主要工作区，并尽量减少透明窗口对其他应用的鼠标干扰。',
+      ],
+      [
+        '可解释行动记录',
+        '记忆写入、提醒创建、工具授权、失败恢复、撤销和 trace 都进入 Activity。工具失败时应该说明原因、替代路径、重试方式和是否能撤销。',
+      ],
+      [
+        '发布状态',
+        '当前官网基线版本是 0.9.22，仍不是公开稳定版。公开下载必须等待 Developer ID 签名、公证、updater 安装回滚 smoke 和新用户空白状态 smoke 全部通过。',
+      ],
+    ],
+    jsonLdTypes: ['organization', 'assistantSoftware', 'breadcrumb'],
   },
   {
     path: '/about',
@@ -107,7 +141,7 @@ const pages = [
       ],
       [
         '建设节点',
-        'ReefTotem 的建设路径从公司官网、产品控制台、业务验证、持续监控和交付文档开始，逐步扩展到小助手、公司能力包、行业模板和第三方系统适配。每一步都需要保留可审计证据，避免产品路线只停留在概念层。',
+        'ReefTotem 的建设路径从公司官网、产品控制台、业务验证、持续监控和交付文档开始，逐步扩展到 Reeftotem Assistant、公司能力包、行业模板和第三方系统适配。每一步都需要保留可审计证据，避免产品路线只停留在概念层。',
       ],
       [
         '合作方式',
@@ -122,10 +156,10 @@ const pages = [
     flatFile: 'downloads.html',
     title: 'ReefTotem 文档与入口 | OPC 控制台、部署说明与安全边界',
     description:
-      'ReefTotem 文档与入口页面提供 OPC 控制台、产品使用手册、部署升级 runbook、安全与数据边界说明、后续下载入口和合作咨询路径，帮助客户从官网进入真实产品流程。',
+      'ReefTotem 文档与入口页面提供 OPC 控制台、Reeftotem Assistant 发布状态、产品使用手册、部署升级 runbook、安全与数据边界说明、后续下载入口和合作咨询路径。',
     h1: 'ReefTotem 文档与入口',
     intro:
-      '这里提供产品控制台、使用说明、部署 runbook 和安全边界说明。小助手、量化研究工具或行业 SDK 的下载入口会在真实发布后进入该页面。下载页不是营销物料堆放区，而是让客户进入真实产品流程、试点流程和交付文档的入口。',
+      '这里提供产品控制台、Reeftotem Assistant 发布状态、使用说明、部署 runbook 和安全边界说明。未完成签名、公证和 smoke 的客户端不会作为公开稳定版下载。下载页不是营销物料堆放区，而是让客户进入真实产品流程、试点流程和交付文档的入口。',
     sections: [
       [
         'OPC 控制台',
@@ -145,7 +179,7 @@ const pages = [
       ],
       [
         '后续入口',
-        '后续下载入口会按真实发布状态开放，包括小助手客户端、行业 SDK、部署模板、监控报告样例和业务验证模板。未发布能力会保持说明状态，避免客户误以为已经可以直接下载使用。',
+        '后续下载入口会按真实发布状态开放，包括 Reeftotem Assistant 客户端、行业 SDK、部署模板、监控报告样例和业务验证模板。未发布能力会保持说明状态，避免客户误以为已经可以直接下载使用。',
       ],
     ],
     jsonLdTypes: ['organization', 'breadcrumb'],
@@ -156,16 +190,16 @@ const pages = [
     flatFile: 'contact.html',
     title: '联系 ReefTotem | AI 公司操作系统与私有化部署咨询',
     description:
-      '联系 ReefTotem 获取 AI 公司操作系统、小助手、量化研究工具、内容安全能力、私有化部署、企业自动化流程设计、业务验证方案和长期维护支持咨询，适合需要真实试点落地的团队。',
+      '联系 ReefTotem 获取 AI 公司操作系统、Reeftotem Assistant、量化研究工具、内容安全能力、私有化部署、企业自动化流程设计、业务验证方案和长期维护支持咨询，适合需要真实试点落地的团队。',
     h1: '联系 ReefTotem',
     intro:
-      '如果你想了解 AI 公司操作系统、小助手、量化研究工具、私有化部署或音视频安全检测等应用场景，可以说明产品方向、目标流程、数据边界、当前系统环境和希望验证的业务指标。清晰的输入能帮助双方更快判断是否适合试点。',
+      '如果你想了解 AI 公司操作系统、Reeftotem Assistant、量化研究工具、私有化部署或音视频安全检测等应用场景，可以说明产品方向、目标流程、数据边界、当前系统环境和希望验证的业务指标。清晰的输入能帮助双方更快判断是否适合试点。',
     sections: [
       ['联系邮箱', 'contact@reeftotem.ai。建议在邮件中说明公司名称、业务场景、目标流程、是否需要私有化部署、是否已有内部系统以及希望优先验证的结果。'],
       ['公司地址', '深圳市前海深港合作区。具体沟通通常先通过线上会议完成需求边界确认，再根据客户场景判断是否进入试点、部署或长期合作。'],
       [
         '适合沟通的内容',
-        '产品控制台试用、小助手合作、量化研究工具、AI 公司创建、公司能力包、私有化部署、行业安全检测流程、业务监控指标和验收报告设计。ReefTotem 更适合能提供明确业务流程和验证目标的客户。',
+        '产品控制台试用、Reeftotem Assistant 合作、量化研究工具、AI 公司创建、公司能力包、私有化部署、行业安全检测流程、业务监控指标和验收报告设计。ReefTotem 更适合能提供明确业务流程和验证目标的客户。',
       ],
       [
         '前期准备',
@@ -287,6 +321,24 @@ function buildJsonLd(page, canonical) {
       description: '按项目咨询、试点和私有化部署沟通。',
     },
   };
+  const assistantSoftware = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Reeftotem Assistant',
+    applicationCategory: 'ProductivityApplication',
+    operatingSystem: 'macOS, Windows, Linux',
+    url: `${siteUrl}/assistant`,
+    description:
+      '本地优先的 Live2D 桌面 AI 伴侣，覆盖聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录和自然语言自动化。',
+    softwareVersion: '0.9.22',
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/PreOrder',
+      priceCurrency: 'USD',
+      price: '0',
+      description: '公开下载等待签名、公证、updater smoke 和新用户空白状态 smoke。',
+    },
+  };
   const breadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -306,7 +358,7 @@ function buildJsonLd(page, canonical) {
     ],
   };
 
-  return page.jsonLdTypes.map((type) => ({ organization, website, software, breadcrumb })[type]);
+  return page.jsonLdTypes.map((type) => ({ organization, website, software, assistantSoftware, breadcrumb })[type]);
 }
 
 function escapeHtml(value) {

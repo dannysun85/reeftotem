@@ -10,6 +10,7 @@ Contact: contact@reeftotem.ai
 
 - Home: https://reeftotem.ai/
 - Products: https://reeftotem.ai/products
+- Reeftotem Assistant: https://reeftotem.ai/assistant
 - About: https://reeftotem.ai/about
 - Documents and entry points: https://reeftotem.ai/downloads
 - Contact: https://reeftotem.ai/contact
@@ -17,7 +18,7 @@ Contact: contact@reeftotem.ai
 ## Product Directions
 
 - AI company operating system for company creation, digital employees, project delivery and review.
-- Enterprise automation assistant for workflow, knowledge and collaboration.
+- Reeftotem Assistant desktop AI companion for natural-language tasks, Live2D, memory, calendar reminders, Activity audit records, Workflow and tool routing.
 - Quantitative research tools for market analysis, strategy research, backtest records and risk monitoring.
 - Content safety capabilities for media recognition, risk workflows and enterprise security processes.
 

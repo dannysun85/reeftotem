@@ -25,6 +25,7 @@ const Footer = () => {
               {[
                 { name: '公司首页', path: '/' },
                 { name: '产品矩阵', path: '/products' },
+                { name: 'Reeftotem Assistant', path: '/assistant' },
                 { name: '公司包与员工', path: '/products' },
                 { name: '公司说明', path: '/about' },
                 { name: '文档与入口', path: '/downloads' },
@@ -49,7 +50,7 @@ const Footer = () => {
                 </a>
               </li>
               <li className="text-sm text-muted-foreground">ReefTotem AI 公司操作系统</li>
-              <li className="text-sm text-muted-foreground">ReefTotem 小助手</li>
+              <li className="text-sm text-muted-foreground">Reeftotem Assistant</li>
               <li className="text-sm text-muted-foreground">量化交易软件</li>
               <li className="text-sm text-muted-foreground">私有化部署咨询</li>
             </ul>

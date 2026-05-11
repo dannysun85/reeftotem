@@ -28,6 +28,7 @@ const Header = () => {
   const navLinks = [
     { name: '公司首页', path: '/' },
     { name: '产品矩阵', path: '/products' },
+    { name: '小助手', path: '/assistant' },
     { name: '公司说明', path: '/about' },
     { name: '文档入口', path: '/downloads' },
     { name: '联系', path: '/contact' },
@@ -49,7 +50,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden lg:flex items-center space-x-8">
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -68,7 +69,7 @@ const Header = () => {
           href={PRODUCT_CONSOLE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:inline-flex h-10 items-center gap-2 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-foreground/85"
+          className="hidden lg:inline-flex h-10 items-center gap-2 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-foreground/85"
         >
           OPC 控制台
           <ExternalLink className="h-4 w-4" />
@@ -76,7 +77,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-foreground p-2"
+          className="lg:hidden text-foreground p-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X /> : <Menu />}
@@ -90,7 +91,7 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-t border-border/50 overflow-hidden"
+            className="lg:hidden bg-background/95 backdrop-blur-xl border-t border-border/50 overflow-hidden"
           >
             <div className="container mx-auto px-4 py-6 flex flex-col space-y-4">
               {navLinks.map((link) => (

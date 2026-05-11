@@ -32,7 +32,7 @@ const Contact = () => {
             <p className="mb-4 text-sm font-semibold text-primary">联系</p>
             <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">告诉我们你想创建什么公司</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              如果你想了解 ReefTotem AI 公司操作系统、小助手、量化研究工具、私有化部署或音视频安全检测等应用场景，可以先把产品方向、目标流程和数据边界说明清楚。
+              如果你想了解 ReefTotem AI 公司操作系统、Reeftotem Assistant、量化研究工具、私有化部署或音视频安全检测等应用场景，可以先把产品方向、目标流程和数据边界说明清楚。
             </p>
           </motion.div>
         </div>
@@ -55,7 +55,7 @@ const Contact = () => {
               <Building2 className="mb-4 h-6 w-6 text-primary" />
               <h2 className="font-semibold text-foreground">适合沟通的内容</h2>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                产品控制台试用、小助手合作、量化研究工具、AI 公司创建、公司包、私有化部署、行业安全检测流程。
+                产品控制台试用、Reeftotem Assistant 合作、量化交易软件、AI 公司创建、公司包、私有化部署、行业安全检测流程。
               </p>
             </div>
           </div>

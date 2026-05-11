@@ -25,9 +25,9 @@ const productPortfolio = [
   },
   {
     icon: MessageSquareText,
-    title: 'ReefTotem 小助手',
-    type: '个人与企业助手',
-    text: '面向知识整理、任务提醒、资料问答和日常办公协作的助手产品。',
+    title: 'Reeftotem Assistant',
+    type: '桌面 AI 伴侣',
+    text: 'Live2D 桌面常驻、长期记忆、人格主题、提醒和自然语言自动化入口。',
   },
   {
     icon: LineChart,
@@ -73,6 +73,12 @@ const Home = () => {
               >
                 查看产品矩阵
                 <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to="/assistant"
+                className="inline-flex h-12 items-center justify-center rounded-md border border-border bg-white px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/50 hover:text-primary"
+              >
+                了解小助手
               </Link>
               <Link
                 to="/contact"
@@ -166,7 +172,7 @@ const Home = () => {
               </div>
               <h2 className="text-3xl font-bold tracking-tight md:text-4xl">先了解 ReefTotem，再进入具体产品。</h2>
               <p className="mt-4 max-w-3xl text-sm leading-6 text-background/75">
-                ReefTotem AI 公司操作系统使用 OPC 控制台；小助手、量化研究工具和内容安全能力会在产品矩阵中分别说明定位、成熟度和交付边界。
+                ReefTotem AI 公司操作系统使用 OPC 控制台；Reeftotem Assistant、量化研究工具和内容安全能力会在产品矩阵中分别说明定位、成熟度和交付边界。
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">

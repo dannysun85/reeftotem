@@ -12,7 +12,7 @@
   "routes": [
     { "handle": "filesystem" },
     {
-      "src": "/(products|about|downloads|contact)/?",
+      "src": "/(products|assistant|about|downloads|contact)/?",
       "dest": "/$1.html"
     },
     {
