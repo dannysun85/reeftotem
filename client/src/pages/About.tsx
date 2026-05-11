@@ -16,7 +16,7 @@ const milestones = [
   {
     date: '2026',
     title: '独立域名与升级环境',
-    text: '根域名承载公司官网，opc 子域名承载 Hermes Company OS 控制台，并沉淀可复用部署流程。',
+    text: '根域名承载公司官网，opc 子域名承载 ReefTotem AI 公司操作系统控制台，并沉淀可复用部署流程。',
   },
 ];
 
@@ -35,7 +35,7 @@ const About = () => {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
             <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">深圳前海瑞孚图腾科技有限公司</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              ReefTotem 专注于 AI 软件产品和企业自动化能力建设，产品方向包括 Hermes Company OS、ReefTotem 小助手、量化研究工具、音视频与内容安全能力，以及支撑这些产品的数字员工和公司能力包。
+              ReefTotem 专注于 AI 软件产品和企业自动化能力建设，产品方向包括 ReefTotem AI 公司操作系统、ReefTotem 小助手、量化研究工具、音视频与内容安全能力，以及支撑这些产品的数字员工和公司能力包。
             </p>
           </motion.div>
         </div>
@@ -46,7 +46,7 @@ const About = () => {
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-foreground">公司定位</h2>
             <p className="mt-4 text-muted-foreground leading-7">
-              ReefTotem 的官网承担公司介绍、产品矩阵、试用入口、部署咨询和用户文档入口。Hermes Company OS 是其中的核心产品之一，不等同于公司本身。
+              ReefTotem 的官网承担公司介绍、产品矩阵、试用入口、部署咨询和用户文档入口。AI 公司操作系统是其中的核心产品之一，不等同于公司本身。
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">

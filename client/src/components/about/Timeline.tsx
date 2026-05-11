@@ -10,7 +10,7 @@ const events = [
   {
     year: '2026-05',
     title: '服务器部署',
-    description: '根域名用于公司官网，opc 子域名用于 Hermes Company OS 产品控制台。',
+    description: '根域名用于公司官网，opc 子域名用于 ReefTotem AI 公司操作系统控制台。',
   },
   {
     year: '2026-05',

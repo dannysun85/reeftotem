@@ -7,7 +7,7 @@ const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
 const entries = [
   {
     icon: ExternalLink,
-    title: 'Hermes Company OS 控制台',
+    title: 'ReefTotem AI 公司操作系统控制台',
     desc: '用于 SaaS 账号、公司创建、员工组织、项目立项、Run、WorkProduct 和审核。',
     action: '打开 opc.reeftotem.ai',
     href: PRODUCT_CONSOLE_URL,

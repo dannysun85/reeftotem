@@ -19,7 +19,7 @@ const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
 const productPortfolio = [
   {
     icon: Building2,
-    title: 'Hermes Company OS',
+    title: 'ReefTotem AI 公司操作系统',
     type: '企业 AI 组织',
     text: '创建 AI 公司、数字员工、项目交付和审核流程的企业操作系统。',
   },
@@ -166,7 +166,7 @@ const Home = () => {
               </div>
               <h2 className="text-3xl font-bold tracking-tight md:text-4xl">先了解 ReefTotem，再进入具体产品。</h2>
               <p className="mt-4 max-w-3xl text-sm leading-6 text-background/75">
-                Hermes Company OS 使用 OPC 控制台；小助手、量化研究工具和内容安全能力会在产品矩阵中分别说明定位、成熟度和交付边界。
+                ReefTotem AI 公司操作系统使用 OPC 控制台；小助手、量化研究工具和内容安全能力会在产品矩阵中分别说明定位、成熟度和交付边界。
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">

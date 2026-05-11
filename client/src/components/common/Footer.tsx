@@ -48,7 +48,7 @@ const Footer = () => {
                   <ExternalLink className="h-3.5 w-3.5" />
                 </a>
               </li>
-              <li className="text-sm text-muted-foreground">Hermes Company OS</li>
+              <li className="text-sm text-muted-foreground">ReefTotem AI 公司操作系统</li>
               <li className="text-sm text-muted-foreground">ReefTotem 小助手</li>
               <li className="text-sm text-muted-foreground">量化交易软件</li>
               <li className="text-sm text-muted-foreground">私有化部署咨询</li>

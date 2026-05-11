@@ -18,7 +18,7 @@ const products = [
   {
     icon: Building2,
     maturity: '已部署控制台',
-    name: 'Hermes Company OS',
+    name: 'ReefTotem AI 公司操作系统',
     category: 'AI 公司操作系统',
     desc: '为团队创建 AI 公司、配置数字员工、管理项目交付和审核结果的企业操作系统。',
     details: ['OPC 控制台', 'AI 公司与公司包', '数字员工组织', '交付审核与审计'],
@@ -158,7 +158,7 @@ const Products = () => {
             <div>
               <h2 className="text-3xl font-bold tracking-tight">官网负责产品矩阵，OPC 负责公司操作系统。</h2>
               <p className="mt-4 max-w-3xl text-sm leading-6 text-background/75">
-                小助手、量化研究工具和内容安全能力后续需要补独立产品页；Hermes Company OS 的操作文档继续放在 OPC 和文档入口中。
+                小助手、量化研究工具和内容安全能力后续需要补独立产品页；ReefTotem AI 公司操作系统的操作文档继续放在 OPC 和文档入口中。
               </p>
             </div>
             <Link
