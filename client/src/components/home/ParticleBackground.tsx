@@ -12,18 +12,20 @@ const ParticleBackground: React.FC = () => {
 
     let particles: Particle[] = [];
     let animationFrameId: number;
-    let mouse = { x: 0, y: 0 };
+    const mouse = { x: 0, y: 0 };
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
 
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('mousemove', (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.x;
       mouse.y = e.y;
-    });
+    };
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', handleMouseMove);
     
     resizeCanvas();
 
@@ -135,6 +137,7 @@ const ParticleBackground: React.FC = () => {
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

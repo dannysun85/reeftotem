@@ -26,6 +26,9 @@ type DownloadsState = {
   incrementDownload: (id: string) => Promise<void>;
 };
 
+const errorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
+
 export const useDownloadsStore = create<DownloadsState>((set) => ({
   items: [],
   isLoading: false,
@@ -36,13 +39,13 @@ export const useDownloadsStore = create<DownloadsState>((set) => ({
     try {
       const data = await request.get('/downloads');
       if (Array.isArray(data)) {
-        set({ items: data as any, isLoading: false });
+        set({ items: data as DownloadItem[], isLoading: false });
       } else {
         set({ items: [], isLoading: false });
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Fetch downloads error:', err);
-      set({ isLoading: false, error: err.message || 'Failed to fetch downloads' });
+      set({ isLoading: false, error: errorMessage(err, 'Failed to fetch downloads') });
     }
   },
 

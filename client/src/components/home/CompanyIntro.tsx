@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/common/Button';
 import { ArrowRight } from 'lucide-react';
 import { useContentStore } from '@/stores/contentStore';
-import { useSiteStore } from '@/stores/siteStore';
 
 const CompanyIntro = () => {
   const { companyIntro, stats, fetchAllContent } = useContentStore();

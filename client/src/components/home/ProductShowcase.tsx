@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { Box, Code, Cpu, MessageSquare, Shield, Zap, Globe, Smartphone } from 'lucide-react';
-import { useContentStore } from '@/stores/contentStore';
+import { Box, Code, Cpu, MessageSquare, Shield, Zap, Globe, Smartphone, type LucideIcon } from 'lucide-react';
+import { useContentStore, type ContentItem } from '@/stores/contentStore';
 
-const ICON_MAP: Record<string, any> = {
+const ICON_MAP: Record<string, LucideIcon> = {
   Box, Code, Cpu, MessageSquare, Shield, Zap, Globe, Smartphone
 };
 
@@ -79,8 +79,8 @@ const ProductShowcase = () => {
   );
 };
 
-const GlassCard = ({ feature, index }: { feature: any, index: number }) => {
-  const iconName = feature.meta_data?.icon || 'Box';
+const GlassCard = ({ feature, index }: { feature: ContentItem, index: number }) => {
+  const iconName = typeof feature.meta_data?.icon === 'string' ? feature.meta_data.icon : 'Box';
   const Icon = ICON_MAP[iconName] || Box;
   
   const mouseX = useMotionValue(0);

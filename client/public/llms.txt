@@ -1,0 +1,24 @@
+# ReefTotem
+
+ReefTotem is the AI software brand of 深圳前海瑞孚图腾科技有限公司.
+
+Official website: https://reeftotem.ai/
+Company: 深圳前海瑞孚图腾科技有限公司
+Contact: contact@reeftotem.ai
+
+## Primary Pages
+
+- Home: https://reeftotem.ai/
+- Products: https://reeftotem.ai/products
+- About: https://reeftotem.ai/about
+- Documents and entry points: https://reeftotem.ai/downloads
+- Contact: https://reeftotem.ai/contact
+
+## Product Directions
+
+- AI company operating system for company creation, digital employees, project delivery and review.
+- Enterprise automation assistant for workflow, knowledge and collaboration.
+- Quantitative research tools for market analysis, strategy research, backtest records and risk monitoring.
+- Content safety capabilities for media recognition, risk workflows and enterprise security processes.
+
+ReefTotem does not make investment return promises. Product pages and documentation describe software capabilities, deployment boundaries, auditability and support paths.

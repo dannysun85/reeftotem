@@ -7,7 +7,6 @@ import {
   Bot,
   BrainCircuit,
   Building2,
-  CheckCircle2,
   FileText,
   Globe2,
   LineChart,

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Bot, Zap, MessageSquare, Cpu } from 'lucide-react';
+import { Bot, Zap, MessageSquare, Cpu, type LucideIcon } from 'lucide-react';
 
 const DigitalLifeCore = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -110,7 +110,15 @@ const DigitalLifeCore = () => {
   );
 };
 
-const FloatingCard = ({ icon: Icon, label, value, delay, className }: any) => {
+type FloatingCardProps = {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  delay: number;
+  className: string;
+};
+
+const FloatingCard = ({ icon: Icon, label, value, delay, className }: FloatingCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

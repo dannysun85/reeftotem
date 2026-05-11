@@ -12,6 +12,10 @@
   "routes": [
     { "handle": "filesystem" },
     {
+      "src": "/(products|about|downloads|contact)/?",
+      "dest": "/$1.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

@@ -29,6 +29,13 @@ type SiteState = {
   fetchConfig: () => Promise<void>;
 };
 
+type SiteConfigResponse = {
+  value?: SiteConfig;
+};
+
+const errorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
+
 const defaultSiteConfig: SiteConfig = {
   logo: {
     url: '',
@@ -58,15 +65,15 @@ export const useSiteStore = create<SiteState>()(
         set({ isLoading: true, error: null });
         try {
           // Add timestamp to prevent caching
-          const response: any = await request.get(`/content/config/site_info?t=${Date.now()}`);
+          const response = await request.get(`/content/config/site_info?t=${Date.now()}`) as SiteConfigResponse;
           if (response && response.value) {
             set({ siteConfig: response.value, isLoading: false });
           } else {
              set({ isLoading: false });
           }
-        } catch (err: any) {
+        } catch (err: unknown) {
           console.error('Failed to fetch site config', err);
-          set({ isLoading: false, error: err.message || 'Failed to fetch config' });
+          set({ isLoading: false, error: errorMessage(err, 'Failed to fetch config') });
         }
       },
     }),

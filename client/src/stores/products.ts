@@ -23,6 +23,9 @@ type ProductsState = {
   fetchProducts: () => Promise<void>;
 };
 
+const errorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
+
 export const useProductsStore = create<ProductsState>((set) => ({
   products: [],
   isLoading: false,
@@ -33,14 +36,14 @@ export const useProductsStore = create<ProductsState>((set) => ({
     try {
       const data = await request.get('/products');
       if (Array.isArray(data)) {
-        set({ products: data as any, isLoading: false });
+        set({ products: data as Product[], isLoading: false });
       } else {
         console.warn('Expected array from /products, got:', data);
         set({ products: [], isLoading: false });
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Fetch products error:', err);
-      set({ isLoading: false, error: err.message || 'Failed to fetch products' });
+      set({ isLoading: false, error: errorMessage(err, 'Failed to fetch products') });
     }
   },
 }));

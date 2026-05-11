@@ -8,10 +8,13 @@ export type ContentItem = {
   subtitle?: string;
   content?: string;
   image_url?: string;
-  meta_data?: Record<string, any>;
+  meta_data?: Record<string, string | number | boolean | null | undefined>;
   sort_order: number;
   is_active: boolean;
 };
+
+const errorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
 
 type ContentState = {
   features: ContentItem[];
@@ -42,7 +45,7 @@ export const useContentStore = create<ContentState>((set) => ({
   fetchAllContent: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response: any = await request.get('/content/items', {
+      const response = await request.get('/content/items', {
         params: { is_active: true, limit: 100 }
       });
       
@@ -62,9 +65,9 @@ export const useContentStore = create<ContentState>((set) => ({
       } else {
         set({ isLoading: false });
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to fetch content items', err);
-      set({ isLoading: false, error: err.message || 'Failed to fetch content' });
+      set({ isLoading: false, error: errorMessage(err, 'Failed to fetch content') });
     }
   },
 }));
