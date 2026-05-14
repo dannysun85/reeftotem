@@ -18,7 +18,7 @@
 *   **语言版本**: Python 3.10+
 *   **ORM**: **SQLAlchemy** (配合 Pydantic 进行数据验证)
 *   **数据库**: PostgreSQL (生产环境) / SQLite (开发环境)
-*   **认证机制**: OAuth2 with Password Bearer (JWT)
+*   **认证机制**: 第一阶段统一账号中心，OAuth2 Password Bearer + JWT + `account_sessions`；后续升级 OIDC/PKCE 和企业 SAML。
 *   **任务队列**: Celery + Redis (可选，用于邮件发送或耗时任务)
 
 ### 部署与运维 (DevOps)
@@ -49,10 +49,34 @@
 *   **图库管理 (Media)**: 统一管理上传的图片/文件。
 
 ### 3.3 后端服务 (API Server)
-*   **Auth Service**: 处理登录，刷新 Token，权限验证。
+*   **Account Center / Auth Service**: 处理统一登录、账号上下文、应用入口元数据、会话/设备撤销和权限验证。OPC、星伴 Assistant、QuantAgent 不各自维护账号密码。
 *   **Content Service**: 提供产品、下载、文案的 CRUD。
 *   **File Service**: 处理文件上传（本地存储/S3），图片压缩。
 *   **Stat Service**: 埋点数据收集与聚合。
+*   **Billing Center**: 统一管理 OPC、星伴 Assistant、QuantAgent 的套餐、订单、支付通道、订阅权益、RFT Credits 钱包和不可变账本。支付通道采用适配器模式，国内优先微信支付/支付宝直连，海外保留 Stripe。
+
+### 3.4 计费域 (Billing Center)
+计费域不属于单一产品，必须作为公司级基础设施独立存在。
+
+*   **Payment Routes**: 根据用户地区、签约主体和购买类型选择微信支付、支付宝、Stripe 或对公转账。
+*   **Plan Catalog**: 维护星伴、OPC、QuantAgent 的月付、年付、企业合同和充值包。
+*   **Entitlement Service**: 输出产品可用权限，不让产品系统直接判断支付状态。
+*   **Credit Wallet**: 统一 RFT Credits 余额，按整数 `credit_cents` 记录。
+*   **Ledger Service**: 所有充值、扣减、退款、过期和人工调整都写入不可变流水。
+*   **Usage Metering**: 产品只上报用量事件，由 Pricing Engine 换算扣费。
+
+### 3.5 统一账号中心 (Account Center)
+
+统一账号中心是所有产品的身份源头。
+
+*   **Account Identity**: `users.id` 是跨官网、后台、OPC、星伴、QuantAgent 的稳定账号 ID。
+*   **Account Session**: `account_sessions` 记录每次登录、应用来源、设备、过期和撤销状态。
+*   **Application Registry**: `GET /api/v1/auth/sso/applications` 输出官网账户钱包、OPC、星伴 Assistant、QuantAgent 的接入元数据。
+*   **Account Context**: `GET /api/v1/auth/me` 输出当前账号、当前会话、可进入应用、Billing owner 和一致性契约。
+*   **Session Revocation**: 当前设备退出和指定设备撤销必须进入 Account Center，不由各应用单独处理。
+*   **Billing Link**: 账号中心只证明身份；产品是否可用、钱包余额和用量扣费必须读取 Billing Center。
+
+第一阶段只处理个人账号。企业组织、SAML、组织钱包和席位分配放到第二阶段。
 
 ## 4. 目录结构规划
 
@@ -76,8 +100,9 @@ reeftotem/
 │   │   ├── models/         # SQLAlchemy 模型
 │   │   ├── schemas/        # Pydantic 验证模型
 │   │   └── main.py         # 入口文件
-│   ├── alembic/            # 数据库迁移脚本
-│   └── requirements.txt
+│   ├── pyproject.toml      # uv 管理的 Python 3.12 依赖
+│   ├── uv.lock             # 锁定依赖版本
+│   └── .venv/              # 服务器和本地统一使用的 Python 3.12 虚拟环境
 ├── docker-compose.yml      # 容器编排
 └── README.md
 ```

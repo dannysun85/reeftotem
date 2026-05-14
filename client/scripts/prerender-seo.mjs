@@ -8,76 +8,72 @@ const distDir = join(rootDir, 'dist');
 const baseHtmlPath = join(distDir, 'index.html');
 const baseHtml = readFileSync(baseHtmlPath, 'utf8');
 const siteUrl = 'https://reeftotem.ai';
-const defaultImage = `${siteUrl}/images/brand/reeftotem-corporate-gpt.png`;
+const defaultImage = `${siteUrl}/images/product/xingban-desktop.png`;
 
 const pages = [
   {
     path: '/',
     file: 'index.html',
-    title: 'ReefTotem AI 公司操作系统与企业自动化软件 | 深圳前海瑞孚图腾科技有限公司',
+    title: 'ReefTotem AI 软件系统矩阵 | 星伴 Assistant 下载、OPC 企业平台、QuantAgent',
     description:
-      'ReefTotem 是深圳前海瑞孚图腾科技有限公司旗下 AI 软件品牌，建设 AI 公司操作系统、企业自动化智能助手、量化研究工具、内容安全能力和私有化部署服务，帮助团队把 AI 员工、工具、审批、日志和交付结果放进真实业务流程。',
-    h1: 'ReefTotem AI 公司操作系统与企业自动化软件',
+      'ReefTotem 是深圳前海瑞孚图腾科技有限公司的 AI 软件系统矩阵，提供星伴 Assistant macOS 下载、OPC 企业平台入口、QuantAgent 自动量化系统发布路线和技术文档。',
+    h1: '星伴 Assistant 1.0 现在可以从官网下载',
     intro:
-      'ReefTotem 面向真实业务场景建设可部署、可验证、可持续迭代的 AI 软件产品，帮助企业把 AI 员工、工具、审批、日志、文档和交付结果放进可运营流程。官网用于说明公司定位、产品矩阵、试点入口、私有化部署边界和长期维护方式。',
+      'ReefTotem 官网新版以下载中心为第一优先级动作。星伴 Assistant 1.0 已提供 macOS Apple Silicon DMG 下载，OPC 企业平台提供线上控制台入口，QuantAgent 完成后沿同一下载中心发布。',
     sections: [
       [
-        'AI 公司操作系统',
-        'ReefTotem 的核心方向是把数字员工、任务队列、工具调用、项目工作间、交付物审核和运行日志组织成企业可以管理的系统，而不是只提供一次性的聊天窗口。团队可以围绕真实客户项目创建 Run，追踪每一步输入、输出、责任人和验收结果。',
+        '下载中心优先',
+        '下载中心不是单产品页，而是公司产品交付入口。当前可下载星伴 Assistant 1.0 macOS Apple Silicon 安装包，后续 QuantAgent 完成后从同一入口发布。',
       ],
       [
-        '企业自动化智能助手',
-        'Reeftotem Assistant 面向办公辅助、知识问答、资料整理、流程提醒和轻量协作，适合从单个业务流程开始试点，再逐步扩展到运营、销售、研究、客服、内容安全和内部知识管理。',
+        'OPC 企业平台',
+        'OPC 是 ReefTotem 的企业自动化与 AI 公司控制台，用于客户工作区、AI 公司、数字员工、项目交付、日志和审核结果管理。',
       ],
       [
-        '可验证交付',
-        '系统强调可解释、可复盘和可验收：Issue、Run、事件、工具调用、WorkProduct、人工审核和监控报告都要能反向解释最终结果，方便团队判断 AI 是否真正提升效率，而不是只依赖主观感觉。',
+        '星伴 Assistant',
+        '星伴是 ReefTotem 的桌面 AI 入口，覆盖聊天、长期记忆、提醒、活动记录和本地优先工作流，当前官网开放 1.0 下载。',
       ],
       [
-        '私有化部署与长期维护',
-        'ReefTotem 支持围绕客户数据边界、账号权限、服务器部署、备份恢复、升级验证和回滚策略进行交付。真实公司记忆、客户上下文和业务资料需要隔离管理，外部可复用的只是脱敏模板和通用能力包。',
+        'QuantAgent',
+        'QuantAgent 是面向策略研究、证据门禁、风险控制和自动化执行的量化系统。完成后会在官网提供下载或内测入口。',
       ],
       [
-        '服务边界',
-        'ReefTotem 提供软件产品、私有化部署、版本升级、文档和长期维护支持，不承诺投资收益、搜索排名或任何不可验证的第三方平台结果。业务验证需要通过持续监控、前后对照和阶段复盘来判断。',
+        '真实品牌资产',
+        '官网使用公司确认的 ReefTotem 官方 logo 和星伴产品 logo，展示真实产品截图、真实下载包和明确的交付状态。',
       ],
     ],
-    jsonLdTypes: ['organization', 'website'],
+    jsonLdTypes: ['organization', 'website', 'assistantSoftware'],
   },
   {
     path: '/products',
     file: 'products/index.html',
     flatFile: 'products.html',
-    title: 'ReefTotem 产品矩阵 | AI 公司操作系统、Reeftotem Assistant、量化研究与内容安全',
+    title: 'ReefTotem 产品体系 | OPC 企业平台、星伴 Assistant、QuantAgent',
     description:
-      'ReefTotem 产品矩阵覆盖 AI 公司操作系统、Reeftotem Assistant 桌面 AI 伴侣、量化研究工具、内容安全能力、数字员工和公司能力包，按成熟度说明线上控制台、发布状态、行业能力和交付边界。',
-    h1: 'ReefTotem 产品矩阵',
+      'ReefTotem 产品体系覆盖 OPC 企业平台、星伴 Assistant 桌面 AI 入口、QuantAgent 自动量化系统和公司级 AI 软件交付标准，按真实成熟度展示截图、入口和发布状态。',
+    h1: 'ReefTotem 产品体系',
     intro:
-      'ReefTotem 的产品组合按成熟度展示，核心包括已部署控制台、规划中的助手产品线、量化研究工具、内容安全能力和可复用公司能力包。产品页用于帮助客户判断当前可以试点什么、哪些能力仍在规划、哪些场景需要私有化定制。',
+      '官网顶部保持公司级导航，产品体系在正文中呈现。OPC、星伴 Assistant 和 QuantAgent 分别对应企业平台、个人桌面入口和自动量化系统，页面按当前真实交付状态展示。',
     sections: [
       [
-        'AI 公司操作系统',
-        '为团队创建 AI 公司、配置数字员工、管理项目交付和审核结果的企业操作系统。它关注组织结构、任务拆分、执行记录、工具权限、交付物沉淀和管理者验收，适合需要把 AI 能力嵌入日常运营的团队。',
+        'OPC 企业平台',
+        '面向企业创建 AI 公司、配置数字员工、管理客户工作区、项目交付、运行日志和 WorkProduct 审核。当前提供线上控制台入口。',
       ],
       [
-        'Reeftotem Assistant',
-        '本地优先的 Live2D 桌面 AI 伴侣，覆盖聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录和自然语言自动化。它是个人与企业进入 ReefTotem 能力矩阵的低门槛入口。',
+        '星伴 Assistant',
+        '个人桌面 AI 入口，当前开放 1.0 macOS Apple Silicon 下载。官网展示真实产品截图、版本号和安装包入口。',
       ],
       [
-        '量化研究工具',
-        '面向行情分析、策略研究、回测记录、风险监控和交易流程辅助，坚持工具和风控边界。该方向强调研究流程、数据记录和风险提示，不把工具包装成收益承诺，也不替代用户自己的投资决策。',
+        'QuantAgent',
+        '围绕策略 Alpha 深研、证据工厂、风险控制和自动化流程建设，完成后将在官网下载中心提供入口。',
       ],
       [
-        '内容安全能力',
-        '围绕音视频识别、内容风险、事件追踪和企业安全流程接入形成解决方案。适合需要做素材审核、风险标注、留痕记录、人工复核和安全策略闭环的企业或平台场景。',
+        '公司级交付',
+        '所有产品都按真实截图、真实入口、明确成熟度和可验证边界展示，避免把规划能力包装成已经发布的产品。',
       ],
       [
-        '数字员工与公司能力包',
-        'ReefTotem 会把可复用流程沉淀成公司能力包，例如运营研究、销售线索整理、内容检查、文档生成、客户交付和内部知识维护。能力包需要结合客户数据边界和业务目标进行选择，不建议一次性全量铺开。',
-      ],
-      [
-        '成熟度与边界',
-        '产品矩阵会持续标记已上线、可试点、规划中和需要定制的能力，避免客户把概念页误解成全部可立即交付。每个阶段都需要通过真实业务 run、监控记录和验收标准来判断是否进入下一步。',
+        '技术文档',
+        '技术文档用于说明安装、更新、部署、安全边界、产品状态和后续发布路径，和官网页面保持同一套事实口径。',
       ],
     ],
     jsonLdTypes: ['organization', 'software'],
@@ -86,32 +82,32 @@ const pages = [
     path: '/assistant',
     file: 'assistant/index.html',
     flatFile: 'assistant.html',
-    title: 'Reeftotem Assistant | Live2D 桌面 AI 伴侣与自然语言自动化',
+    title: '星伴 Assistant 1.0 | ReefTotem 桌面 AI 入口',
     description:
-      'Reeftotem Assistant 是本地优先的 Live2D 桌面 AI 伴侣，覆盖聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录、Workflow、MCP 工具和 Provider 能力。',
-    h1: 'Reeftotem Assistant 桌面 AI 伴侣',
+      '星伴 Assistant 是 ReefTotem 的桌面 AI 入口，提供聊天、长期记忆、提醒、活动记录和本地优先工作流，当前官网开放 macOS Apple Silicon DMG 下载。',
+    h1: '星伴 Assistant 1.0',
     intro:
-      'Reeftotem Assistant 把 AI 伴侣和桌面 Agent 合在一个本地优先的应用里。用户通过自然语言表达目标，人物判断要不要记忆、提醒、检索、创建 Workflow 或调用工具；高风险动作先请求授权，执行完成后回到 Chat 汇报并在 Activity 留下可追踪记录。',
+      '星伴是 ReefTotem 的个人桌面助手产品。当前官网开放 1.0 macOS Apple Silicon DMG 下载，页面展示真实桌面应用截图和版本信息。',
     sections: [
       [
-        '用户只需要聊天',
-        '提醒、记忆、资料整理、Workflow 和工具调用都从自然语言发起，普通用户不需要学习 Cron、MCP 或 DAG。MCP、Cron、Workflow、A2A 和 Provider 是底层能力，不是普通用户的主入口。',
+        '自然语言入口',
+        '用户通过聊天表达目标，星伴把提醒、记忆、资料整理和工具调用收进桌面体验，不需要把普通用户暴露在底层工程概念里。',
       ],
       [
-        '人格、情绪和长期记忆',
-        '人物主题影响说话方式、system prompt、能力边界和长期记忆。用户可以让角色记住偏好、删除错误记忆、纠正旧内容，并通过 Activity 查看记忆写入和纠错记录。',
+        '长期记忆与活动记录',
+        '偏好、提醒、执行结果和关键活动会形成可追踪记录，便于用户回看、纠正和继续推进。',
       ],
       [
-        'Live2D 桌面常驻',
-        '角色可以常驻桌面，以短气泡、主窗口和 Activity 记录配合工作。桌宠体验需要避免遮挡用户主要工作区，并尽量减少透明窗口对其他应用的鼠标干扰。',
+        '桌面体验',
+        '星伴围绕桌面常驻、主窗口、聊天和任务反馈组织体验，让个人用户从轻量入口接入 ReefTotem 的 AI 软件能力。',
       ],
       [
-        '可解释行动记录',
-        '记忆写入、提醒创建、工具授权、失败恢复、撤销和 trace 都进入 Activity。工具失败时应该说明原因、替代路径、重试方式和是否能撤销。',
+        '当前版本',
+        '当前官网下载版本为 1.0.0，文件名为 Xingban-Assistant-1.0.0-aarch64.dmg，适用于 macOS Apple Silicon。',
       ],
       [
-        '发布状态',
-        '当前官网基线版本是 0.9.22，仍不是公开稳定版。公开下载必须等待 Developer ID 签名、公证、updater 安装回滚 smoke 和新用户空白状态 smoke 全部通过。',
+        '企业扩展',
+        '团队版、私有 Provider 接入、企业内部试用和定制流程可以通过联系入口沟通，官网不会伪造尚未开放的企业下载。',
       ],
     ],
     jsonLdTypes: ['organization', 'assistantSoftware', 'breadcrumb'],
@@ -129,7 +125,7 @@ const pages = [
     sections: [
       [
         '公司定位',
-        'ReefTotem 帮助企业运营 AI 公司，而不是把所有工作塞进单个聊天窗口。产品设计关注组织、流程、权限、工具、审计和交付，目标客户包括希望搭建 AI 员工体系、自动化运营流程或内部智能工作台的团队。',
+        'ReefTotem 帮助团队把 AI 软件产品接入真实流程，而不是只停留在演示。产品设计关注组织、流程、权限、工具、审计和交付，当前重点产品包括 OPC、星伴 Assistant 和 QuantAgent。',
       ],
       [
         '交付原则',
@@ -141,7 +137,7 @@ const pages = [
       ],
       [
         '建设节点',
-        'ReefTotem 的建设路径从公司官网、产品控制台、业务验证、持续监控和交付文档开始，逐步扩展到 Reeftotem Assistant、公司能力包、行业模板和第三方系统适配。每一步都需要保留可审计证据，避免产品路线只停留在概念层。',
+        'ReefTotem 的建设路径从公司官网、产品控制台、下载中心、业务验证、持续监控和交付文档开始，逐步扩展到星伴 Assistant、QuantAgent、公司能力包、行业模板和第三方系统适配。',
       ],
       [
         '合作方式',
@@ -154,32 +150,66 @@ const pages = [
     path: '/downloads',
     file: 'downloads/index.html',
     flatFile: 'downloads.html',
-    title: 'ReefTotem 文档与入口 | OPC 控制台、部署说明与安全边界',
+    title: 'ReefTotem 下载中心 | 星伴 Assistant 1.0 macOS 下载',
     description:
-      'ReefTotem 文档与入口页面提供 OPC 控制台、Reeftotem Assistant 发布状态、产品使用手册、部署升级 runbook、安全与数据边界说明、后续下载入口和合作咨询路径。',
-    h1: 'ReefTotem 文档与入口',
+      'ReefTotem 下载中心提供星伴 Assistant 1.0 macOS Apple Silicon DMG 下载、OPC 企业平台入口、QuantAgent 后续发布说明、安装更新说明和技术文档。',
+    h1: 'ReefTotem 下载中心',
     intro:
-      '这里提供产品控制台、Reeftotem Assistant 发布状态、使用说明、部署 runbook 和安全边界说明。未完成签名、公证和 smoke 的客户端不会作为公开稳定版下载。下载页不是营销物料堆放区，而是让客户进入真实产品流程、试点流程和交付文档的入口。',
+      '下载中心是公司产品交付入口。当前开放星伴 Assistant 1.0 macOS Apple Silicon 安装包，OPC 提供线上控制台，QuantAgent 完成后从同一入口发布。',
     sections: [
       [
-        'OPC 控制台',
-        '用于 SaaS 账号、公司创建、员工组织、项目立项、Run、WorkProduct 和审核。客户可以从控制台进入业务验证流程，查看项目状态、任务记录、交付物和验收结果。',
+        '星伴 Assistant 下载',
+        '当前可下载文件为 /downloads/Xingban-Assistant-1.0.0-aarch64.dmg，版本 1.0.0，适用于 macOS Apple Silicon。',
       ],
       [
-        '产品使用手册',
-        '从注册账号、创建客户工作区、选择公司包，到提交项目目标、查看工作间、审核交付物。手册需要覆盖正常路径、失败路径、权限边界和常见问题，便于新用户按页面流程学习。',
+        '安装与更新',
+        '下载 DMG 后拖入 Applications。后续版本会沿同一下载中心发布，并保留版本说明。',
       ],
       [
-        '部署与升级',
-        '记录服务器初始化、源码同步、域名绑定、环境变量、备份、验证和回滚方式。私有化交付时，部署文档要和版本号、验证命令、监控结果、变更记录一起保留。',
+        'OPC 企业平台',
+        'OPC 是线上控制台入口，不通过下载包交付。官网提供入口和产品说明，客户可进入控制台查看平台能力。',
       ],
       [
-        '安全边界',
-        '公司实例、员工记忆、客户资料、代码上下文和可售模板之间必须隔离。对外文档只描述能力和流程，不暴露客户隐私、内部账号、未脱敏日志或不可公开的业务资产。',
+        'QuantAgent 发布路线',
+        'QuantAgent 当前展示产品方向和真实截图，完成后会沿同一下载中心发布，不在官网提前伪造下载。',
       ],
       [
-        '后续入口',
-        '后续下载入口会按真实发布状态开放，包括 Reeftotem Assistant 客户端、行业 SDK、部署模板、监控报告样例和业务验证模板。未发布能力会保持说明状态，避免客户误以为已经可以直接下载使用。',
+        '发布原则',
+        '下载入口只指向真实产物，产品状态按当前可用、演示联系和即将开放排列。',
+      ],
+    ],
+    jsonLdTypes: ['organization', 'breadcrumb'],
+  },
+  {
+    path: '/billing',
+    file: 'billing/index.html',
+    flatFile: 'billing.html',
+    title: 'ReefTotem 账户钱包 | 充值、订阅、消费账单与软件权益',
+    description:
+      'ReefTotem 账户钱包提供星伴 Assistant、OPC 企业平台、QuantAgent 的统一充值、订阅购买、消费账单、钱包余额和软件权益查询入口。',
+    h1: 'ReefTotem 账户钱包',
+    intro:
+      '账户钱包是 ReefTotem 官网的统一充值和权益管理入口。用户可以查看 RFT Credits 余额、冻结额度、订阅、订单、消费账本，以及星伴 Assistant、OPC 企业平台、QuantAgent 的可访问状态。',
+    sections: [
+      [
+        '统一充值',
+        '用户从官网创建充值包或订阅订单，支付通道可以是微信支付、支付宝、Stripe、对公转账或手动确认，但账本统一进入 Billing Core。',
+      ],
+      [
+        '消费账本',
+        '每一次入账、冻结、扣费和释放都会形成钱包流水，用户可以在官网查看最近账本，后台可以用于对账和运营分析。',
+      ],
+      [
+        '产品权益',
+        '星伴 Assistant、OPC 企业平台、QuantAgent 不各自实现支付系统，而是读取统一权益和钱包状态。',
+      ],
+      [
+        '软件扣费',
+        '高成本任务按照 reserve、commit、release 流程扣费，避免失败任务直接扣余额，也避免并发任务超额消费。',
+      ],
+      [
+        '后台确认',
+        '对公转账、手动收款和支付回调未上线前的异常订单，可以在管理后台计费中心确认入账。',
       ],
     ],
     jsonLdTypes: ['organization', 'breadcrumb'],
@@ -188,18 +218,18 @@ const pages = [
     path: '/contact',
     file: 'contact/index.html',
     flatFile: 'contact.html',
-    title: '联系 ReefTotem | AI 公司操作系统与私有化部署咨询',
+    title: '联系 ReefTotem | AI 软件系统与产品咨询',
     description:
-      '联系 ReefTotem 获取 AI 公司操作系统、Reeftotem Assistant、量化研究工具、内容安全能力、私有化部署、企业自动化流程设计、业务验证方案和长期维护支持咨询，适合需要真实试点落地的团队。',
+      '联系 ReefTotem 获取星伴 Assistant 下载支持、OPC 企业平台演示、QuantAgent 内测、私有化部署、企业自动化流程设计和长期维护支持咨询。',
     h1: '联系 ReefTotem',
     intro:
-      '如果你想了解 AI 公司操作系统、Reeftotem Assistant、量化研究工具、私有化部署或音视频安全检测等应用场景，可以说明产品方向、目标流程、数据边界、当前系统环境和希望验证的业务指标。清晰的输入能帮助双方更快判断是否适合试点。',
+      '如果你想了解星伴下载、OPC 企业平台、QuantAgent 内测或私有化部署，可以说明产品方向、目标流程、数据边界、当前系统环境和希望验证的业务指标。',
     sections: [
       ['联系邮箱', 'contact@reeftotem.ai。建议在邮件中说明公司名称、业务场景、目标流程、是否需要私有化部署、是否已有内部系统以及希望优先验证的结果。'],
       ['公司地址', '深圳市前海深港合作区。具体沟通通常先通过线上会议完成需求边界确认，再根据客户场景判断是否进入试点、部署或长期合作。'],
       [
         '适合沟通的内容',
-        '产品控制台试用、Reeftotem Assistant 合作、量化研究工具、AI 公司创建、公司能力包、私有化部署、行业安全检测流程、业务监控指标和验收报告设计。ReefTotem 更适合能提供明确业务流程和验证目标的客户。',
+        '星伴 Assistant 下载支持、OPC 企业平台演示、QuantAgent 内测、AI 公司创建、公司能力包、私有化部署、业务监控指标和验收报告设计。',
       ],
       [
         '前期准备',
@@ -288,7 +318,7 @@ function buildJsonLd(page, canonical) {
     name: 'ReefTotem',
     legalName: '深圳前海瑞孚图腾科技有限公司',
     url: siteUrl,
-    logo: `${siteUrl}/favicon.svg`,
+    logo: `${siteUrl}/images/brand/reeftotem-symbol-color.png`,
     contactPoint: {
       '@type': 'ContactPoint',
       email: 'contact@reeftotem.ai',
@@ -308,35 +338,35 @@ function buildJsonLd(page, canonical) {
   const software = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'ReefTotem AI 公司操作系统',
+    name: 'ReefTotem OPC 企业平台',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     url: `${siteUrl}/products`,
-    description: '面向 AI 公司创建、数字员工组织、项目交付、审核验收和企业自动化的软件系统。',
+    description: '面向客户工作区、AI 公司创建、数字员工组织、项目交付、日志和审核验收的企业平台。',
     offers: {
       '@type': 'Offer',
       availability: 'https://schema.org/OnlineOnly',
       priceCurrency: 'USD',
       price: '0',
-      description: '按项目咨询、试点和私有化部署沟通。',
+      description: '线上控制台、项目咨询、试点和私有化部署沟通。',
     },
   };
   const assistantSoftware = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Reeftotem Assistant',
+    name: '星伴 Assistant',
     applicationCategory: 'ProductivityApplication',
-    operatingSystem: 'macOS, Windows, Linux',
+    operatingSystem: 'macOS',
     url: `${siteUrl}/assistant`,
-    description:
-      '本地优先的 Live2D 桌面 AI 伴侣，覆盖聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录和自然语言自动化。',
-    softwareVersion: '0.9.22',
+    downloadUrl: `${siteUrl}/downloads/Xingban-Assistant-1.0.0-aarch64.dmg`,
+    description: 'ReefTotem 的桌面 AI 入口，提供聊天、长期记忆、提醒、活动记录和本地优先工作流。',
+    softwareVersion: '1.0.0',
     offers: {
       '@type': 'Offer',
-      availability: 'https://schema.org/PreOrder',
+      availability: 'https://schema.org/InStock',
       priceCurrency: 'USD',
       price: '0',
-      description: '公开下载等待签名、公证、updater smoke 和新用户空白状态 smoke。',
+      description: '官网提供 macOS Apple Silicon DMG 下载。',
     },
   };
   const breadcrumb = {

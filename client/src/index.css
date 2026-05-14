@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 20% 12%;
+    --background: 216 31% 96%;
+    --foreground: 225 74% 11%;
     
     --card: 0 0% 100%; /* #FFFFFF - Pure White Cards */
     --card-foreground: 240 6% 10%;
@@ -13,7 +13,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 6% 10%;
 
-    --primary: 176 84% 32%;
+    --primary: 188 90% 55%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 100%; /* White for secondary elements on gray bg */
@@ -22,7 +22,7 @@
     --muted: 240 5% 96%; /* Matches background */
     --muted-foreground: 240 4% 46%; /* #86868b - Secondary Text */
 
-    --accent: 217 91% 60%;
+    --accent: 220 100% 51%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -30,7 +30,7 @@
 
     --border: 240 6% 90%; /* Subtle border */
     --input: 240 6% 90%;
-    --ring: 176 84% 32%;
+    --ring: 188 90% 55%;
 
     --radius: 8px;
   }
@@ -69,17 +69,62 @@
 @layer base {
   * {
     @apply border-border;
+    min-width: 0;
   }
   
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    max-width: 100%;
+    overflow-x: hidden;
     text-rendering: optimizeLegibility;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased selection:bg-primary/20 selection:text-primary;
+    max-width: 100%;
     overflow-x: hidden;
+  }
+
+  #root {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  img,
+  video,
+  canvas {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  .brand-grid {
+    background-image:
+      radial-gradient(circle at 72% 18%, rgba(34, 213, 245, 0.16), transparent 32%),
+      radial-gradient(circle at 12% 44%, rgba(7, 93, 255, 0.16), transparent 30%);
+    background-size: auto;
+  }
+
+  .brand-grid-light {
+    background-image:
+      radial-gradient(circle at 76% 18%, rgba(34, 213, 245, 0.18), transparent 30%),
+      radial-gradient(circle at 18% 52%, rgba(7, 93, 255, 0.08), transparent 26%);
+    background-size: auto;
+  }
+
+  .section-shell {
+    @apply mx-auto max-w-[1720px] px-6 md:px-10;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .eyebrow {
+    @apply text-sm font-semibold tracking-[0.24em] uppercase;
+  }
+
+  .media-frame {
+    @apply overflow-hidden rounded-[24px] border border-white/15 bg-white/5 shadow-[0_24px_80px_rgba(0,0,0,0.28)];
   }
 }
 

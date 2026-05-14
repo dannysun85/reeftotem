@@ -7,7 +7,6 @@ export const useOS = (): OS => {
 
   useEffect(() => {
     const userAgent = window.navigator.userAgent.toLowerCase();
-    const platform = window.navigator.platform.toLowerCase();
 
     if (userAgent.includes('win')) {
       setOS('windows');

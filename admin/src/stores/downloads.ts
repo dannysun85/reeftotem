@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import request from '@/api/request';
+import { getErrorMessage } from '@/lib/errors';
 
 export type DownloadItem = {
   id: string;
@@ -37,14 +38,14 @@ export const useDownloadsStore = create<DownloadsState>((set, get) => ({
   fetchItems: async () => {
     set({ isLoading: true, error: null });
     try {
-      const data = await request.get('/downloads');
+      const data = await request.get<unknown, DownloadItem[]>('/downloads');
       if (Array.isArray(data)) {
-        set({ items: data as any, isLoading: false });
+        set({ items: data, isLoading: false });
       } else {
         set({ items: [], isLoading: false });
       }
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to fetch downloads' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to fetch downloads') });
     }
   },
 
@@ -53,8 +54,8 @@ export const useDownloadsStore = create<DownloadsState>((set, get) => ({
     try {
       await request.post('/downloads', item);
       await get().fetchItems();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to create download' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to create download') });
     }
   },
 
@@ -63,8 +64,8 @@ export const useDownloadsStore = create<DownloadsState>((set, get) => ({
     try {
       await request.put(`/downloads/${id}`, patch);
       await get().fetchItems();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to update download' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to update download') });
     }
   },
 
@@ -73,8 +74,8 @@ export const useDownloadsStore = create<DownloadsState>((set, get) => ({
     try {
       await request.delete(`/downloads/${id}`);
       await get().fetchItems();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to delete download' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to delete download') });
     }
   },
 }));

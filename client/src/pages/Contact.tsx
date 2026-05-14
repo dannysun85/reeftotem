@@ -1,127 +1,119 @@
 import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/common/Button';
-import { Building2, Mail, MapPin, Send } from 'lucide-react';
+import { Building2, Mail, MapPin, Send, type LucideIcon } from 'lucide-react';
+
+const contactItems: Array<{ icon: LucideIcon; text: string }> = [
+  { icon: MapPin, text: '深圳市前海深港合作区' },
+  { icon: Mail, text: 'contact@reeftotem.ai' },
+  { icon: Building2, text: 'AI 软件系统、企业自动化、量化系统与部署咨询' },
+];
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
   });
 
   const mailto = useMemo(() => {
     const subject = encodeURIComponent(formData.subject || 'ReefTotem 合作咨询');
-    const body = encodeURIComponent(
-      `姓名：${formData.name}\n邮箱：${formData.email}\n\n需求说明：\n${formData.message}`
-    );
+    const body = encodeURIComponent(`姓名：${formData.name}\n邮箱：${formData.email}\n\n需求说明：\n${formData.message}`);
     return `mailto:contact@reeftotem.ai?subject=${subject}&body=${body}`;
   }, [formData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <div className="min-h-screen bg-background pt-24">
-      <section className="border-b border-border bg-white py-16">
-        <div className="container mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
-            <p className="mb-4 text-sm font-semibold text-primary">联系</p>
-            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">告诉我们你想创建什么公司</h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              如果你想了解 ReefTotem AI 公司操作系统、Reeftotem Assistant、量化研究工具、私有化部署或音视频安全检测等应用场景，可以先把产品方向、目标流程和数据边界说明清楚。
+    <div className="min-h-screen bg-[#07122F] text-white">
+      <section className="brand-grid bg-[linear-gradient(180deg,#07122F_0%,#1B3155_64%,#F4F7FB_100%)] pt-36">
+        <div className="section-shell grid gap-12 pb-24 lg:grid-cols-[0.85fr_1.15fr]">
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
+            <h1 className="text-[56px] font-semibold leading-tight tracking-tight md:text-[84px]">联系 ReefTotem</h1>
+            <p className="mt-7 max-w-2xl text-xl leading-9 text-[#DDF9FF]/80">
+              如果你想了解星伴下载、OPC 企业平台、QuantAgent 内测或私有化部署，可以先把产品方向、目标流程和数据边界说明清楚。
             </p>
+            <div className="mt-10 grid gap-4">
+              {contactItems.map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-4 rounded-[20px] border border-white/10 bg-white/6 p-5">
+                  <Icon className="h-5 w-5 text-[#22D5F5]" />
+                  <span className="text-sm text-[#DDF9FF]/80">{text}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
-        </div>
-      </section>
 
-      <section className="py-20">
-        <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="space-y-5">
-            <div className="rounded-lg border border-border bg-card p-6">
-              <MapPin className="mb-4 h-6 w-6 text-primary" />
-              <h2 className="font-semibold text-foreground">公司地址</h2>
-              <p className="mt-2 text-sm text-muted-foreground">深圳市前海深港合作区</p>
-            </div>
-            <div className="rounded-lg border border-border bg-card p-6">
-              <Mail className="mb-4 h-6 w-6 text-primary" />
-              <h2 className="font-semibold text-foreground">邮箱</h2>
-              <p className="mt-2 text-sm text-muted-foreground">contact@reeftotem.ai</p>
-            </div>
-            <div className="rounded-lg border border-border bg-card p-6">
-              <Building2 className="mb-4 h-6 w-6 text-primary" />
-              <h2 className="font-semibold text-foreground">适合沟通的内容</h2>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                产品控制台试用、Reeftotem Assistant 合作、量化交易软件、AI 公司创建、公司包、私有化部署、行业安全检测流程。
-              </p>
-            </div>
-          </div>
-
-          <form className="rounded-lg border border-border bg-card p-6 shadow-sm md:p-8">
-            <h2 className="text-2xl font-bold tracking-tight text-foreground">生成邮件内容</h2>
-            <p className="mt-3 text-sm text-muted-foreground">
+          <motion.form
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="rounded-[30px] border border-white/12 bg-[#07122F]/86 p-7 shadow-[0_24px_80px_rgba(0,0,0,0.28)] md:p-9"
+          >
+            <h2 className="text-3xl font-semibold">生成邮件内容</h2>
+            <p className="mt-3 text-sm leading-6 text-[#DDF9FF]/70">
               当前官网不伪造“发送成功”。填写后会打开你的邮件客户端，把内容发送到 contact@reeftotem.ai。
             </p>
 
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               <label className="space-y-2">
-                <span className="text-sm font-medium text-foreground">姓名</span>
+                <span className="text-sm font-medium text-[#DDF9FF]">姓名</span>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-[16px] border border-white/12 bg-white/8 px-4 py-3 text-sm text-white outline-none focus:border-[#22D5F5]"
                   placeholder="你的姓名"
                 />
               </label>
               <label className="space-y-2">
-                <span className="text-sm font-medium text-foreground">邮箱</span>
+                <span className="text-sm font-medium text-[#DDF9FF]">邮箱</span>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-[16px] border border-white/12 bg-white/8 px-4 py-3 text-sm text-white outline-none focus:border-[#22D5F5]"
                   placeholder="name@example.com"
                 />
               </label>
             </div>
 
             <label className="mt-5 block space-y-2">
-              <span className="text-sm font-medium text-foreground">主题</span>
+              <span className="text-sm font-medium text-[#DDF9FF]">主题</span>
               <input
                 type="text"
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
-                placeholder="例如：想创建一个软件开发 AI 公司"
+                className="w-full rounded-[16px] border border-white/12 bg-white/8 px-4 py-3 text-sm text-white outline-none focus:border-[#22D5F5]"
+                placeholder="例如：星伴团队试用 / OPC 企业平台演示 / QuantAgent 内测"
               />
             </label>
 
             <label className="mt-5 block space-y-2">
-              <span className="text-sm font-medium text-foreground">需求说明</span>
+              <span className="text-sm font-medium text-[#DDF9FF]">需求说明</span>
               <textarea
                 name="message"
                 rows={7}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full resize-none rounded-md border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
-                placeholder="公司类型、员工角色、要接入的工具、数据安全边界、希望跑通的第一个项目..."
+                className="w-full resize-none rounded-[16px] border border-white/12 bg-white/8 px-4 py-3 text-sm text-white outline-none focus:border-[#22D5F5]"
+                placeholder="产品方向、目标流程、数据边界、希望跑通的第一个场景..."
               />
             </label>
 
-            <a href={mailto} className="mt-6 inline-block">
-              <Button type="button" size="lg" className="rounded-md">
-                生成邮件
-                <Send className="ml-2 h-4 w-4" />
-              </Button>
+            <a
+              href={mailto}
+              className="mt-6 inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#22D5F5] px-7 text-sm font-semibold text-[#07122F]"
+            >
+              生成邮件
+              <Send className="h-4 w-4" />
             </a>
-          </form>
+          </motion.form>
         </div>
       </section>
     </div>

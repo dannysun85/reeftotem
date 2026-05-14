@@ -1,90 +1,84 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowRight, Download } from 'lucide-react';
 import {
-  ArrowRight,
-  BarChart3,
-  Bot,
-  BrainCircuit,
-  Building2,
-  FileText,
-  Globe2,
-  LineChart,
-  MessageSquareText,
-  ShieldCheck,
-} from 'lucide-react';
+  ASSISTANT_DOWNLOAD_URL,
+  ASSISTANT_VERSION,
+  deliveryProducts,
+  productSystem,
+} from '@/data/site';
 
-const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
+const isExternal = (href: string) => href.startsWith('http');
+const isDownload = (href: string) => href.startsWith('/downloads/');
 
-const productPortfolio = [
-  {
-    icon: Building2,
-    title: 'ReefTotem AI 公司操作系统',
-    type: '企业 AI 组织',
-    text: '创建 AI 公司、数字员工、项目交付和审核流程的企业操作系统。',
-  },
-  {
-    icon: MessageSquareText,
-    title: 'Reeftotem Assistant',
-    type: '桌面 AI 伴侣',
-    text: 'Live2D 桌面常驻、长期记忆、人格主题、提醒和自然语言自动化入口。',
-  },
-  {
-    icon: LineChart,
-    title: '量化交易软件',
-    type: '量化研究工具',
-    text: '面向行情分析、策略研究、回测记录和风险监控的工具软件。',
-  },
-  {
-    icon: ShieldCheck,
-    title: '内容安全能力',
-    type: '行业解决方案',
-    text: '围绕音视频识别、内容风险和企业安全流程形成可部署能力。',
-  },
-];
+const SmartLink = ({
+  href,
+  className,
+  children,
+  style,
+}: {
+  href: string;
+  className: string;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) => {
+  if (isExternal(href) || isDownload(href)) {
+    return (
+      <a
+        href={href}
+        className={className}
+        target={isExternal(href) ? '_blank' : undefined}
+        rel={isExternal(href) ? 'noopener noreferrer' : undefined}
+        download={isDownload(href) ? true : undefined}
+        style={style}
+      >
+        {children}
+      </a>
+    );
+  }
 
-const capabilities = [
-  { icon: BrainCircuit, title: 'AI 产品研发', text: '把模型能力转化为可部署的软件产品和业务流程。' },
-  { icon: Bot, title: '企业自动化', text: '用数字员工、工具、审批和日志提升团队执行效率。' },
-  { icon: BarChart3, title: '数据与风控', text: '围绕研究、监控、指标和审计构建可验证的决策工具。' },
-  { icon: FileText, title: '交付与服务', text: '提供私有化部署、版本升级、文档和长期维护支持。' },
-];
+  return (
+    <Link to={href} className={className} style={style}>
+      {children}
+    </Link>
+  );
+};
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <section className="border-b border-border bg-white pt-28">
-        <div className="container mx-auto grid gap-14 px-4 pb-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+    <div className="min-h-screen bg-[#07122F] text-white">
+      <section className="brand-grid relative overflow-hidden bg-[linear-gradient(180deg,#081734_0%,#1D2D49_58%,#E9EEF5_100%)] pt-32">
+        <div className="absolute inset-x-0 top-0 h-[720px] bg-[radial-gradient(circle_at_72%_22%,rgba(34,213,245,0.16),transparent_34%),radial-gradient(circle_at_12%_42%,rgba(7,93,255,0.18),transparent_30%)]" />
+        <div className="section-shell relative grid min-h-[760px] gap-12 pb-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
+            className="max-w-3xl"
           >
-            <h1 className="max-w-3xl text-5xl font-bold leading-tight tracking-tight text-foreground md:text-7xl">
-              让 AI 软件进入真实工作
+            <h1 className="max-w-4xl text-[38px] font-semibold leading-[1.1] tracking-[-0.01em] text-white sm:text-[58px] md:text-[88px]">
+              <span className="block">星伴 Assistant</span>
+              <span className="block">1.0 现在可以</span>
+              <span className="block">从官网下载</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              ReefTotem 是深圳前海瑞孚图腾科技有限公司旗下的 AI 软件品牌，面向企业与个人构建智能助手、AI 公司操作系统、量化研究工具与内容安全能力。我们关注可部署、可验证、可持续迭代的软件交付。
+            <p className="mt-7 max-w-2xl break-words text-lg leading-8 text-[#DDF9FF]/90 [overflow-wrap:anywhere] sm:text-[22px] sm:leading-9">
+              下载中心作为当前官网的第一优先级动作：星伴先开放 macOS 安装包，QuantAgent 完成后沿同一入口发布。
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to="/products"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-foreground px-6 text-sm font-semibold text-background transition-colors hover:bg-foreground/85"
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <a
+                href={ASSISTANT_DOWNLOAD_URL}
+                download
+                className="inline-flex h-16 items-center justify-center gap-3 rounded-full bg-[#22D5F5] px-8 text-lg font-semibold text-[#07122F] transition hover:bg-[#8EF2FF]"
               >
-                查看产品矩阵
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+                下载 macOS 版
+                <Download className="h-5 w-5" />
+              </a>
               <Link
-                to="/assistant"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-border bg-white px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/50 hover:text-primary"
+                to="/downloads#install"
+                className="inline-flex h-16 items-center justify-center rounded-full bg-[#07122F]/75 px-8 text-lg font-semibold text-white ring-1 ring-white/20 transition hover:bg-white/10"
               >
-                了解小助手
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-border bg-white px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/50 hover:text-primary"
-              >
-                联系合作
+                查看安装与更新
               </Link>
             </div>
           </motion.div>
@@ -93,101 +87,155 @@ const Home = () => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.45 }}
-            className="overflow-hidden rounded-lg border border-border bg-background shadow-apple"
+            className="relative"
           >
-            <img
-              src="/images/brand/reeftotem-corporate-gpt.png"
-              alt="ReefTotem AI software product portfolio visual generated from the brand direction"
-              className="aspect-[16/10] w-full object-cover"
-            />
+            <div className="rounded-[28px] border border-white/20 bg-white/10 p-4 shadow-[0_28px_100px_rgba(0,0,0,0.34)] backdrop-blur-sm sm:p-8 lg:rounded-[36px] lg:p-10">
+              <div className="overflow-hidden rounded-[28px] bg-white shadow-[0_20px_80px_rgba(0,0,0,0.24)]">
+                <img
+                  src="/images/product/xingban-desktop.png"
+                  alt="星伴 Assistant 桌面应用真实界面"
+                  className="aspect-[1.85/1] w-full object-cover object-top"
+                />
+              </div>
+            </div>
+            <div className="absolute -bottom-5 left-[8%] z-10 flex min-w-[520px] items-center gap-4 rounded-[26px] border border-[#22D5F5]/35 bg-[#041127] p-4 shadow-[0_18px_60px_rgba(0,0,0,0.35)] sm:gap-6 sm:p-6 max-md:static max-md:mt-5 max-md:min-w-0">
+              <img src="/images/brand/xingban-icon.png" alt="星伴 logo" className="h-16 w-16 rounded-[18px] sm:h-24 sm:w-24 sm:rounded-[22px]" />
+              <div>
+                <div className="font-mono text-lg text-white sm:text-[26px]">Xingban Assistant</div>
+                <div className="mt-2 font-mono text-sm text-[#BEEB4D] sm:text-[22px]">{ASSISTANT_VERSION} · aarch64.dmg</div>
+              </div>
+            </div>
           </motion.div>
         </div>
+
+        <div className="section-shell relative pb-20">
+          <div className="rounded-[34px] border border-[#2F74FF]/20 bg-[#06142E] p-8 shadow-[0_24px_90px_rgba(7,18,47,0.34)] md:p-12">
+            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.6fr] lg:items-end">
+              <div>
+                <h2 className="text-4xl font-semibold tracking-tight text-white">产品交付状态</h2>
+                <p className="mt-5 max-w-2xl text-lg leading-8 text-[#DDF9FF]/80">
+                  下载中心保持公司官网结构；产品以交付状态排列，避免把页面拆成单一产品页。
+                </p>
+              </div>
+              <div className="h-px bg-white/12 lg:mb-8" />
+            </div>
+            <div className="mt-9 grid gap-5 lg:grid-cols-3">
+              {deliveryProducts.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <SmartLink
+                    key={item.name}
+                    href={item.href}
+                    className="group grid min-h-[132px] grid-cols-[88px_1fr] items-center gap-4 rounded-[22px] border bg-[#0B1D3D] p-4 shadow-[0_16px_45px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#112954] sm:grid-cols-[118px_1fr] sm:gap-5 sm:p-5"
+                    style={{ borderColor: `${item.accent}70` } as React.CSSProperties}
+                  >
+                    <div
+                      className="flex h-[76px] w-[88px] items-center justify-center overflow-hidden rounded-[18px] border bg-white/5 sm:h-[92px] sm:w-[118px]"
+                      style={{ borderColor: `${item.accent}4F` }}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className={
+                          item.imageKind === 'icon'
+                            ? 'h-[62px] w-[62px] rounded-[16px] sm:h-[74px] sm:w-[74px]'
+                            : 'h-full w-full object-cover object-top'
+                        }
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-semibold" style={{ color: item.accent }}>
+                        {item.status}
+                      </div>
+                      <h3 className="mt-1 text-[24px] font-semibold leading-tight text-white">{item.name}</h3>
+                      <p className="mt-1 text-sm text-[#CFE0EF]">{item.desc}</p>
+                      <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#F4FBFF]">
+                        {item.action}
+                        <Icon className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                      </div>
+                    </div>
+                  </SmartLink>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-            <div className="max-w-3xl">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">产品矩阵</h2>
-              <p className="mt-4 text-muted-foreground">
-                官网呈现 ReefTotem 的完整业务组合。每条产品线都有自己的成熟度、边界和交付方式。
+      <section className="brand-grid-light bg-[#F4F7FB] py-24 text-[#07122F]">
+        <div className="section-shell">
+          <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+            <div>
+              <h2 className="max-w-3xl text-5xl font-semibold tracking-tight md:text-6xl">一个品牌下的三套 AI 产品能力</h2>
+              <p className="mt-6 max-w-2xl text-xl leading-8 text-[#354463]">
+                企业自动化运营、个人桌面助理、策略研究与自动量化，统一在 ReefTotem 的工程标准下交付。
               </p>
             </div>
-            <a
-              href={PRODUCT_CONSOLE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80"
-            >
-              打开 OPC 控制台
-              <ArrowRight className="h-4 w-4" />
-            </a>
+            <div className="rounded-[28px] border border-[#075DFF]/15 bg-white/75 p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)]">
+              <img src="/images/brand/reeftotem-logo-color.png" alt="ReefTotem 官方 logo" className="h-20 w-auto" />
+              <p className="mt-4 text-base leading-7 text-[#41506F]">
+                官网顶部保持公司级导航，产品矩阵在正文中呈现，避免把官网拆成多个产品站点。
+              </p>
+            </div>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {productPortfolio.map((item) => {
-              const Icon = item.icon;
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-4">
+            {productSystem.map((product) => {
+              const Icon = product.icon;
               return (
-                <article key={item.title} className="rounded-lg border border-border bg-card p-6 shadow-sm">
-                  <Icon className="mb-5 h-6 w-6 text-primary" />
-                  <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{item.type}</div>
-                  <h3 className="mt-2 text-xl font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.text}</p>
-                </article>
+                <SmartLink
+                  key={product.name}
+                  href={product.href}
+                  className="group overflow-hidden rounded-[24px] border border-[#07122F]/10 bg-white shadow-[0_16px_45px_rgba(7,18,47,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(7,18,47,0.13)]"
+                >
+                  <div className="h-44 bg-[#07122F]">
+                    <img src={product.image} alt={product.name} className="h-full w-full object-cover object-top" />
+                  </div>
+                  <div className="p-6">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <span className="text-sm font-semibold text-[#075DFF]">{product.status}</span>
+                      <Icon className="h-5 w-5 text-[#22D5F5]" />
+                    </div>
+                    <h3 className="text-2xl font-semibold text-[#07122F]">{product.name}</h3>
+                    <p className="mt-3 min-h-20 text-sm leading-6 text-[#50617F]">{product.desc}</p>
+                    <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#075DFF]">
+                      {product.action}
+                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+                </SmartLink>
               );
             })}
           </div>
         </div>
       </section>
 
-      <section className="border-y border-border bg-white py-20">
-        <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">能力方向</h2>
-            <p className="mt-4 text-muted-foreground">
-              ReefTotem 的交付不只是一组页面，而是围绕产品、数据、自动化和部署服务形成长期能力。
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {capabilities.map((item) => {
-              const Icon = item.icon;
-              return (
-                <article key={item.title} className="rounded-lg border border-border bg-background p-6">
-                  <Icon className="mb-5 h-6 w-6 text-primary" />
-                  <h3 className="font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.text}</p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-8 rounded-lg border border-border bg-foreground p-8 text-background md:p-10 lg:grid-cols-[1fr_auto] lg:items-center">
+      <section className="bg-[#07122F] py-24 text-white">
+        <div className="section-shell">
+          <div className="grid gap-8 rounded-[34px] border border-white/10 bg-white/6 p-8 md:p-12 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <div className="mb-4 flex items-center gap-2 text-sm text-background/70">
-                <Globe2 className="h-4 w-4" />
-                官网、产品控制台、使用文档分工明确
-              </div>
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">先了解 ReefTotem，再进入具体产品。</h2>
-              <p className="mt-4 max-w-3xl text-sm leading-6 text-background/75">
-                ReefTotem AI 公司操作系统使用 OPC 控制台；Reeftotem Assistant、量化研究工具和内容安全能力会在产品矩阵中分别说明定位、成熟度和交付边界。
+              <h2 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl">
+                先下载星伴，再从同一个官网进入 OPC、QuantAgent 和技术文档。
+              </h2>
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-[#DDF9FF]/75">
+                ReefTotem 官网承担公司品牌、产品体系、下载入口和技术资料，不再使用陈旧的空洞介绍页。
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
+              <a
+                href={ASSISTANT_DOWNLOAD_URL}
+                download
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#22D5F5] px-7 text-sm font-semibold text-[#07122F]"
+              >
+                下载星伴
+                <Download className="h-4 w-4" />
+              </a>
               <Link
                 to="/products"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-background px-6 text-sm font-semibold text-foreground transition-colors hover:bg-background/90"
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-white/20 px-7 text-sm font-semibold text-white"
               >
-                查看产品
+                查看产品体系
                 <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex h-12 items-center justify-center rounded-md border border-background/30 px-6 text-sm font-semibold text-background"
-              >
-                联系我们
               </Link>
             </div>
           </div>

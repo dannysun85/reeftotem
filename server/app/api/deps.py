@@ -10,14 +10,13 @@ from app.core.database import get_db
 from app.models.user import User
 from app.schemas.token import TokenPayload
 from app.crud import user as crud_user
+from app.crud import account as crud_account
 
 reusable_oauth2 = OAuth2PasswordBearer(
     tokenUrl=f"{settings.API_V1_STR}/auth/login"
 )
 
-def get_current_user(
-    db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
-) -> User:
+def get_current_token_payload(token: str = Depends(reusable_oauth2)) -> TokenPayload:
     try:
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]
@@ -28,6 +27,12 @@ def get_current_user(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
         )
+    return token_data
+
+
+def get_current_user(
+    db: Session = Depends(get_db), token_data: TokenPayload = Depends(get_current_token_payload)
+) -> User:
     if not token_data.sub:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -36,6 +41,14 @@ def get_current_user(
     user = crud_user.get_user(db, user_id=token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+    if token_data.sid:
+        session = crud_account.get_account_session(db, token_data.sid)
+        if not crud_account.is_account_session_active(session) or session.user_id != user.id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Account session is no longer active",
+            )
+        crud_account.touch_account_session(db, session)
     return user
 
 def get_current_active_user(

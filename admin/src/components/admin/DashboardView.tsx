@@ -1,9 +1,16 @@
 import React from 'react';
 import { useAdminStore } from '@/stores/adminStore';
 import { useDownloadsStore } from '@/stores/downloads';
-import { Users, Download, Eye, TrendingUp } from 'lucide-react';
+import { Users, Download, Eye, TrendingUp, type LucideIcon } from 'lucide-react';
 
-const StatCard = ({ title, value, icon: Icon, color }: any) => (
+type StatCardProps = {
+  title: string;
+  value: string | number;
+  icon: LucideIcon;
+  color: string;
+};
+
+const StatCard = ({ title, value, icon: Icon, color }: StatCardProps) => (
   <div className="bg-card border border-border rounded-[24px] p-6 shadow-sm">
     <div className="flex items-center justify-between mb-4">
       <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-md`}>

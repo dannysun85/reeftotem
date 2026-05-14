@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import request from '@/api/request';
+import { getErrorMessage } from '@/lib/errors';
 
 export type Product = {
   id: string;
@@ -35,14 +36,14 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
   fetchProducts: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response: any = await request.get('/products');
+      const response = await request.get<unknown, Product[]>('/products');
       if (Array.isArray(response)) {
         set({ products: response, isLoading: false });
       } else {
         set({ products: [], isLoading: false });
       }
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to fetch products' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to fetch products') });
     }
   },
 
@@ -51,8 +52,8 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
     try {
       await request.post('/products', product);
       await get().fetchProducts();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to create product' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to create product') });
     }
   },
 
@@ -61,8 +62,8 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
     try {
       await request.put(`/products/${id}`, patch);
       await get().fetchProducts();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to update product' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to update product') });
     }
   },
 
@@ -71,8 +72,8 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
     try {
       await request.delete(`/products/${id}`);
       await get().fetchProducts();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to delete product' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to delete product') });
     }
   },
 }));

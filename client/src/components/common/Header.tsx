@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ExternalLink, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { navLinks } from '@/data/site';
 import Logo from './Logo';
-
-const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,108 +12,95 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
-  const navLinks = [
-    { name: '公司首页', path: '/' },
-    { name: '产品矩阵', path: '/products' },
-    { name: '小助手', path: '/assistant' },
-    { name: '公司说明', path: '/about' },
-    { name: '文档入口', path: '/downloads' },
-    { name: '联系', path: '/contact' },
-  ];
+  const isActive = (path: string) => {
+    const pathname = path.split('#')[0];
+    return location.pathname === pathname;
+  };
 
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b',
-        isScrolled 
-          ? 'bg-white/80 backdrop-blur-xl border-border/50 py-3 shadow-sm' 
-          : 'bg-transparent border-transparent py-5'
+        'fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#07122F]/95 shadow-[0_18px_60px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-300',
+        isScrolled ? 'py-3' : 'py-4'
       )}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="group">
-          <Logo className={isScrolled ? "text-foreground" : "text-foreground"} />
+      <div className="mx-auto flex max-w-[1720px] items-center justify-between gap-4 px-6 md:px-10">
+        <Link to="/" aria-label="ReefTotem 首页" className="min-w-0 shrink">
+          <Logo className="h-[44px] max-w-[210px] sm:h-[58px] sm:max-w-none" variant="white" />
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center space-x-8">
+        <nav className="hidden items-center gap-10 lg:flex">
           {navLinks.map((link) => (
             <Link
-              key={link.path}
+              key={link.name}
               to={link.path}
               className={cn(
-                'text-[15px] font-medium transition-colors hover:text-primary relative group',
-                location.pathname === link.path ? 'text-primary' : 'text-foreground/80'
+                'relative text-[17px] font-medium text-white/80 transition-colors hover:text-[#22D5F5]',
+                isActive(link.path) && 'text-[#22D5F5]'
               )}
             >
               {link.name}
+              {isActive(link.path) && (
+                <span className="absolute -bottom-3 left-0 h-0.5 w-full rounded-full bg-[#22D5F5]" />
+              )}
             </Link>
           ))}
         </nav>
 
-        <a
-          href={PRODUCT_CONSOLE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden lg:inline-flex h-10 items-center gap-2 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-colors hover:bg-foreground/85"
+        <Link
+          to="/contact"
+          className="hidden h-12 items-center justify-center rounded-full bg-white px-8 text-[15px] font-semibold text-[#07122F] transition hover:bg-[#DDF9FF] lg:inline-flex"
         >
-          OPC 控制台
-          <ExternalLink className="h-4 w-4" />
-        </a>
+          联系我们
+        </Link>
 
-        {/* Mobile Menu Button */}
         <button
-          className="lg:hidden text-foreground p-2"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          type="button"
+          aria-label="打开导航"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white lg:hidden"
+          onClick={() => setIsMobileMenuOpen((value) => !value)}
         >
-          {isMobileMenuOpen ? <X /> : <Menu />}
+          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-background/95 backdrop-blur-xl border-t border-border/50 overflow-hidden"
+            className="overflow-hidden border-t border-white/10 bg-[#07122F]/95 backdrop-blur-xl lg:hidden"
           >
-            <div className="container mx-auto px-4 py-6 flex flex-col space-y-4">
+            <div className="mx-auto flex max-w-[1720px] flex-col gap-1 px-6 py-5">
               {navLinks.map((link) => (
                 <Link
-                  key={link.path}
+                  key={link.name}
                   to={link.path}
                   className={cn(
-                    'text-lg font-medium transition-colors hover:text-primary py-2 border-b border-border/30',
-                    location.pathname === link.path ? 'text-primary' : 'text-foreground/80'
+                    'rounded-lg px-3 py-3 text-lg font-medium text-[#E8F7FF]',
+                    isActive(link.path) && 'bg-white/8 text-[#22D5F5]'
                   )}
                 >
                   {link.name}
                 </Link>
               ))}
-              <a
-                href={PRODUCT_CONSOLE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-4 py-3 text-sm font-medium text-background"
+              <Link
+                to="/contact"
+                className="mt-3 inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-[#07122F]"
               >
-                OPC 控制台
-                <ExternalLink className="h-4 w-4" />
-              </a>
+                联系我们
+              </Link>
             </div>
           </motion.div>
         )}

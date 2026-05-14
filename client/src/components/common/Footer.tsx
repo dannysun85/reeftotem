@@ -1,37 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, Mail, MapPin } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
+import { navLinks } from '@/data/site';
 import Logo from './Logo';
-
-const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
 
 const Footer = () => {
   return (
-    <footer className="bg-background border-t border-border pt-16 pb-12">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          <div className="col-span-1 md:col-span-1">
-            <Link to="/" className="flex items-center mb-6 group">
-              <Logo />
+    <footer className="border-t border-white/10 bg-[#07122F] py-14 text-white">
+      <div className="section-shell">
+        <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
+          <div>
+            <Link to="/" className="inline-flex">
+              <Logo className="h-16" variant="white" />
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              深圳前海瑞孚图腾科技有限公司，建设 AI 软件产品、企业自动化、量化研究工具和行业安全能力。
+            <p className="mt-6 max-w-xl text-sm leading-7 text-[#DDF9FF]/68">
+              深圳前海瑞孚图腾科技有限公司，建设 OPC 企业平台、星伴 Assistant、QuantAgent 自动量化系统和 AI 软件交付能力。
             </p>
           </div>
 
           <div>
-            <h3 className="text-foreground font-semibold mb-6">快速链接</h3>
-            <ul className="space-y-4">
-              {[
-                { name: '公司首页', path: '/' },
-                { name: '产品矩阵', path: '/products' },
-                { name: 'Reeftotem Assistant', path: '/assistant' },
-                { name: '公司包与员工', path: '/products' },
-                { name: '公司说明', path: '/about' },
-                { name: '文档与入口', path: '/downloads' },
-              ].map((link) => (
+            <h3 className="mb-5 text-sm font-semibold text-white">导航</h3>
+            <ul className="grid gap-3">
+              {navLinks.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.path} className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  <Link to={link.path} className="text-sm text-[#BFD7EA] transition hover:text-[#22D5F5]">
                     {link.name}
                   </Link>
                 </li>
@@ -39,45 +31,24 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Services */}
           <div>
-            <h3 className="text-foreground font-semibold mb-6">产品与服务</h3>
-            <ul className="space-y-4">
-              <li>
-                <a href={PRODUCT_CONSOLE_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary">
-                  opc.reeftotem.ai
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </a>
+            <h3 className="mb-5 text-sm font-semibold text-white">联系</h3>
+            <ul className="grid gap-4">
+              <li className="flex items-center gap-3 text-sm text-[#DDF9FF]/68">
+                <MapPin className="h-4 w-4 text-[#22D5F5]" />
+                深圳市前海深港合作区
               </li>
-              <li className="text-sm text-muted-foreground">ReefTotem AI 公司操作系统</li>
-              <li className="text-sm text-muted-foreground">Reeftotem Assistant</li>
-              <li className="text-sm text-muted-foreground">量化交易软件</li>
-              <li className="text-sm text-muted-foreground">私有化部署咨询</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-foreground font-semibold mb-6">联系方式</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start space-x-3 text-muted-foreground text-sm">
-                <MapPin className="w-5 h-5 text-primary shrink-0" />
-                <span>深圳市前海深港合作区</span>
-              </li>
-              <li className="flex items-center space-x-3 text-muted-foreground text-sm">
-                <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span>contact@reeftotem.ai</span>
+              <li className="flex items-center gap-3 text-sm text-[#DDF9FF]/68">
+                <Mail className="h-4 w-4 text-[#22D5F5]" />
+                contact@reeftotem.ai
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-muted-foreground text-sm text-center md:text-left">
-            © 2026 深圳前海瑞孚图腾科技有限公司 All rights reserved.
-          </p>
-          <p className="mt-4 text-xs text-muted-foreground md:mt-0">
-            ReefTotem · AI Software Products
-          </p>
+        <div className="mt-12 flex flex-col justify-between gap-4 border-t border-white/10 pt-8 text-xs text-[#DDF9FF]/52 md:flex-row">
+          <p>© 2026 深圳前海瑞孚图腾科技有限公司 All rights reserved.</p>
+          <p>ReefTotem · AI Software Systems</p>
         </div>
       </div>
     </footer>

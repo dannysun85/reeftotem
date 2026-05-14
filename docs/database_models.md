@@ -3,7 +3,7 @@
 基于 Python SQLAlchemy 的 ORM 模型设计。
 
 ## 1. User (管理员/用户)
-用于后台登录和权限管理。
+统一账号中心的身份主表，用于官网、后台、OPC、星伴 Assistant、QuantAgent 登录和权限管理。
 
 | 字段名 | 类型 | 约束 | 说明 |
 | :--- | :--- | :--- | :--- |
@@ -15,6 +15,23 @@
 | `is_active` | Boolean | Default: True | 账户状态 |
 | `created_at` | DateTime | Default: Now | 创建时间 |
 | `last_login` | DateTime | Nullable | 最后登录时间 |
+
+## 1.1 AccountSession (账号会话)
+用于第一阶段统一账号中心的会话、设备、应用登录态管理。
+
+| 字段名 | 类型 | 约束 | 说明 |
+| :--- | :--- | :--- | :--- |
+| `id` | UUID | Primary Key | 会话 ID，对应 JWT `sid` |
+| `user_id` | UUID | ForeignKey('users.id'), Index | 所属账号 |
+| `client_id` | String | Index | `website`, `opc`, `xingban`, `quantagent` |
+| `device_label` | String | Nullable | 设备或应用标识 |
+| `user_agent` | String | Nullable | 登录设备 UA |
+| `ip_address` | String | Nullable | 登录 IP |
+| `status` | Enum | Default: `active` | `active`, `revoked`, `expired` |
+| `created_at` | DateTime | Default: Now | 创建时间 |
+| `last_seen_at` | DateTime | Default: Now | 最近使用时间 |
+| `expires_at` | DateTime | Not Null | 过期时间 |
+| `revoked_at` | DateTime | Nullable | 撤销时间 |
 
 ## 2. SiteConfig (系统配置)
 单例表，存储全站通用配置。
@@ -109,3 +126,59 @@
 | `ip_address` | String | Nullable | 来源 IP |
 | `is_read` | Boolean | Default: False | 是否已读 |
 | `created_at` | DateTime | Default: Now | 提交时间 |
+
+## 8. BillingProduct (计费产品)
+公司级计费产品定义，不等同于官网展示产品。
+
+| 字段名 | 类型 | 约束 | 说明 |
+| :--- | :--- | :--- | :--- |
+| `id` | UUID | Primary Key | 计费产品 ID |
+| `code` | String | Unique, Index | `opc`, `xingban`, `quantagent` |
+| `name` | String | Not Null | 产品名称 |
+| `description` | String | Nullable | 计费说明 |
+| `is_active` | Boolean | Default: True | 是否启用 |
+| `created_at` | DateTime | Default: Now | 创建时间 |
+| `updated_at` | DateTime | OnUpdate: Now | 更新时间 |
+
+## 9. BillingPlan (套餐)
+套餐和价格版本。
+
+| 字段名 | 类型 | 约束 | 说明 |
+| :--- | :--- | :--- | :--- |
+| `id` | UUID | Primary Key | 套餐 ID |
+| `product_code` | String | ForeignKey | 所属计费产品 |
+| `code` | String | Unique, Index | 套餐编码 |
+| `name` | String | Not Null | 套餐名称 |
+| `cycle` | Enum | Not Null | `free`, `month`, `year`, `usage`, `custom` |
+| `currency` | String | Default: CNY | 币种 |
+| `price_cents` | Integer | Not Null | 价格，单位为分 |
+| `included_credit_cents` | Integer | Default: 0 | 每周期赠送 RFT Credits，单位为分 |
+| `seat_limit` | Integer | Default: 1 | 席位数量 |
+| `features` | JSON | Nullable | 权益列表 |
+| `is_public` | Boolean | Default: True | 是否公开展示 |
+| `is_active` | Boolean | Default: True | 是否启用 |
+
+## 10. CreditWallet / CreditLedgerEntry (额度钱包与不可变账本)
+RFT Credits 不直接存在产品系统里，必须经由钱包和账本。
+
+| 表 | 关键字段 | 说明 |
+| :--- | :--- | :--- |
+| `credit_wallets` | `owner_type`, `owner_id`, `balance_cents`, `reserved_cents` | 用户、团队或企业的钱包余额 |
+| `credit_ledger_entries` | `wallet_id`, `direction`, `reason`, `amount_cents`, `balance_after_cents`, `idempotency_key` | 充值、扣减、退款、过期、调整流水 |
+| `usage_reservations` | `owner_type`, `owner_id`, `wallet_id`, `product_code`, `usage_key`, `amount_cents`, `status`, `idempotency_key` | 模型调用、自动化任务、回测等高成本任务的冻结额度 |
+
+规则：
+
+*   余额只能通过 ledger 变化。
+*   支付回调必须使用 `idempotency_key` 防重复入账。
+*   高成本任务先写 `usage_reservations` 并增加 `reserved_cents`，成功后写 debit ledger，失败后写 release ledger。
+*   退款、撤销、过期只能写反向流水，不能删除原始流水。
+
+## 11. PaymentOrder / BillingSubscription (订单与订阅)
+
+| 表 | 关键字段 | 说明 |
+| :--- | :--- | :--- |
+| `payment_orders` | `order_no`, `provider`, `order_type`, `status`, `amount_cents`, `credit_amount_cents` | 一次性购买、充值、人工调整订单 |
+| `billing_subscriptions` | `owner_type`, `owner_id`, `product_code`, `plan_code`, `status`, `provider`, `current_period_end` | 产品订阅状态 |
+
+支付通道是适配器，不是业务源头。业务源头是订单、订阅和 ledger。

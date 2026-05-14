@@ -2,23 +2,104 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20260514" />
+    <link rel="shortcut icon" href="/favicon.ico?v=20260514" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260514" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ReefTotem 是深圳前海瑞孚图腾科技有限公司旗下 AI 软件品牌，建设 AI 公司操作系统、Reeftotem Assistant 桌面 AI 伴侣、量化研究工具和内容安全能力。" />
+    <meta name="description" content="ReefTotem 是深圳前海瑞孚图腾科技有限公司的 AI 软件系统矩阵，提供星伴 Assistant macOS 下载、OPC 企业平台入口、QuantAgent 自动量化系统发布路线和技术文档。" />
     <link rel="canonical" href="https://reeftotem.ai/" />
-    <meta property="og:title" content="ReefTotem AI 公司操作系统与企业自动化软件" />
-    <meta property="og:description" content="ReefTotem 建设 AI 公司操作系统、Reeftotem Assistant 桌面 AI 伴侣、量化研究工具和内容安全能力，提供可部署、可验证、可持续迭代的软件交付。" />
+    <meta property="og:title" content="ReefTotem AI 软件系统矩阵" />
+    <meta property="og:description" content="ReefTotem 提供星伴 Assistant 下载、OPC 企业平台入口、QuantAgent 发布路线和技术文档。" />
     <meta property="og:url" content="https://reeftotem.ai/" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://reeftotem.ai/images/brand/reeftotem-corporate-gpt.png" />
+    <meta property="og:image" content="https://reeftotem.ai/images/product/xingban-desktop.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ReefTotem AI 公司操作系统与企业自动化软件" />
-    <meta name="twitter:description" content="ReefTotem 建设 AI 公司操作系统、Reeftotem Assistant 桌面 AI 伴侣、量化研究工具和内容安全能力。" />
-    <meta name="twitter:image" content="https://reeftotem.ai/images/brand/reeftotem-corporate-gpt.png" />
+    <meta name="twitter:title" content="ReefTotem AI 软件系统矩阵" />
+    <meta name="twitter:description" content="ReefTotem 提供星伴 Assistant 下载、OPC 企业平台入口、QuantAgent 发布路线和技术文档。" />
+    <meta name="twitter:image" content="https://reeftotem.ai/images/product/xingban-desktop.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <title>ReefTotem AI 公司操作系统与企业自动化软件 | 深圳前海瑞孚图腾科技有限公司</title>
+    <title>ReefTotem AI 软件系统矩阵 | 星伴 Assistant 下载、OPC 企业平台、QuantAgent</title>
+    <script>
+      if (window.location.protocol === 'file:') {
+        const previewUrl = 'http://127.0.0.1:4173/'
+
+        window.addEventListener('DOMContentLoaded', () => {
+          document.body.classList.add('local-file-entry')
+          const previewLink = document.querySelector('[data-local-preview-link]')
+          if (previewLink) {
+            previewLink.setAttribute('href', previewUrl)
+          }
+        })
+
+        window.location.replace(previewUrl)
+      }
+    </script>
+    <style>
+      body.local-file-entry {
+        margin: 0;
+        min-height: 100vh;
+        background: #071323;
+        color: #f8fbff;
+        font-family:
+          Inter,
+          "Noto Sans SC",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      .local-preview-notice {
+        display: none;
+      }
+
+      body.local-file-entry .local-preview-notice {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 32px;
+      }
+
+      body.local-file-entry .local-preview-panel {
+        width: min(560px, 100%);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 32px;
+      }
+
+      body.local-file-entry .local-preview-panel h1 {
+        margin: 0 0 12px;
+        font-size: 28px;
+        line-height: 1.2;
+      }
+
+      body.local-file-entry .local-preview-panel p {
+        margin: 0 0 20px;
+        color: #c7d7e8;
+        line-height: 1.7;
+      }
+
+      body.local-file-entry .local-preview-panel a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        border-radius: 999px;
+        background: #22d3ee;
+        color: #06111f;
+        font-weight: 700;
+        padding: 0 22px;
+        text-decoration: none;
+      }
+
+      body.local-file-entry #root,
+      body.local-file-entry > script {
+        display: none;
+      }
+    </style>
     <script type="module">
       if (import.meta.hot?.on) {
         import.meta.hot.on('vite:error', (error) => {
@@ -32,17 +113,26 @@
     </script>
   </head>
   <body>
+    <div class="local-preview-notice" aria-live="polite">
+      <section class="local-preview-panel">
+        <h1>请使用本地预览地址打开官网</h1>
+        <p>
+          这个文件不能直接用 file:// 方式运行 Vite/React 应用。当前已经启动本地预览服务，
+          如果没有自动跳转，请点击下面的入口。
+        </p>
+        <a data-local-preview-link href="http://127.0.0.1:4173/">打开本地预览</a>
+      </section>
+    </div>
     <div id="root">
       <main>
-        <h1>ReefTotem AI 公司操作系统与企业自动化软件</h1>
-        <p>ReefTotem 是深圳前海瑞孚图腾科技有限公司旗下 AI 软件品牌，面向企业与个人构建 AI 公司操作系统、Reeftotem Assistant 桌面 AI 伴侣、量化研究工具和内容安全能力。</p>
-        <p>官网提供公司介绍、产品矩阵、文档入口和合作联系方式。核心产品方向包括 AI 公司创建、数字员工组织、项目交付审核、自然语言桌面助手、量化研究工具和内容安全能力。</p>
+        <h1>ReefTotem AI 软件系统矩阵</h1>
+        <p>ReefTotem 提供星伴 Assistant macOS 下载、OPC 企业平台入口、QuantAgent 自动量化系统发布路线和技术文档。</p>
+        <p>官网提供首页、产品体系、下载中心、技术文档和联系入口。</p>
         <nav>
-          <a href="/products">产品矩阵</a>
-          <a href="/assistant">Reeftotem Assistant</a>
-          <a href="/about">公司说明</a>
-          <a href="/downloads">文档与入口</a>
-          <a href="/contact">联系 ReefTotem</a>
+          <a href="/products">产品体系</a>
+          <a href="/downloads">下载中心</a>
+          <a href="/downloads#docs">技术文档</a>
+          <a href="/contact">联系我们</a>
         </nav>
       </main>
     </div>

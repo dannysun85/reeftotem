@@ -10,16 +10,20 @@ Contact: contact@reeftotem.ai
 
 - Home: https://reeftotem.ai/
 - Products: https://reeftotem.ai/products
-- Reeftotem Assistant: https://reeftotem.ai/assistant
+- Xingban Assistant: https://reeftotem.ai/assistant
 - About: https://reeftotem.ai/about
-- Documents and entry points: https://reeftotem.ai/downloads
+- Download center: https://reeftotem.ai/downloads
+- Account wallet: https://reeftotem.ai/billing
 - Contact: https://reeftotem.ai/contact
 
 ## Product Directions
 
-- AI company operating system for company creation, digital employees, project delivery and review.
-- Reeftotem Assistant desktop AI companion for natural-language tasks, Live2D, memory, calendar reminders, Activity audit records, Workflow and tool routing.
-- Quantitative research tools for market analysis, strategy research, backtest records and risk monitoring.
-- Content safety capabilities for media recognition, risk workflows and enterprise security processes.
+- OPC enterprise platform for customer workspaces, AI company creation, digital employees, project delivery, logs and review.
+- Xingban Assistant 1.0 desktop AI entry for chat, memory, reminders, activity records and local-first workflows. The macOS Apple Silicon DMG is available from the download center.
+- QuantAgent automatic quantitative system for strategy research, evidence gates, risk control and automation. It will be published from the same download center after completion.
+- Account wallet and Billing Core provide unified top-up, subscription, wallet ledger, entitlement checks and usage-based credit reservation for OPC, Xingban Assistant and QuantAgent.
+- Company-level delivery standards: real screenshots, real product status, explicit download links and clear boundaries for unreleased capabilities.
+
+Download URL: https://reeftotem.ai/downloads/Xingban-Assistant-1.0.0-aarch64.dmg
 
 ReefTotem does not make investment return promises. Product pages and documentation describe software capabilities, deployment boundaries, auditability and support paths.

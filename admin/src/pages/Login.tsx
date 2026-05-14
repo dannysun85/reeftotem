@@ -4,6 +4,11 @@ import { useAuthStore } from '@/stores/authStore';
 import request from '@/api/request';
 import { Lock, User } from 'lucide-react';
 import { Button } from '@/components/common/Button';
+import { getErrorMessage } from '@/lib/errors';
+
+type LoginResponse = {
+  access_token?: string;
+};
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -24,7 +29,7 @@ const Login = () => {
       params.append('username', username);
       params.append('password', password);
 
-      const response: any = await request.post('/auth/login', params, {
+      const response = await request.post<unknown, LoginResponse>('/auth/login', params, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -37,9 +42,9 @@ const Login = () => {
       } else {
         setError('Login failed. Please check your credentials.');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Login error:', err);
-      setError(err.response?.data?.detail || 'An error occurred during login.');
+      setError(getErrorMessage(err, 'An error occurred during login.'));
     } finally {
       setLoading(false);
     }

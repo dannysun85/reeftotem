@@ -49,7 +49,7 @@ const ProductDialog: React.FC<ProductDialogProps> = ({ product, isOpen, onClose 
     }
   }, [product]);
 
-  const handleChange = (field: keyof Product, value: any) => {
+  const handleChange = <K extends keyof Product>(field: K, value: Product[K]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 

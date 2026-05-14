@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import request from '@/api/request';
+import { getErrorMessage } from '@/lib/errors';
 
 export type SiteConfig = {
   logo: {
@@ -28,7 +29,7 @@ export type ContentItem = {
   subtitle?: string;
   content?: string;
   image_url?: string;
-  meta_data?: Record<string, any>;
+  meta_data?: Record<string, unknown>;
   sort_order: number;
   is_active: boolean;
 };
@@ -57,12 +58,12 @@ export const useContentStore = create<ContentState>((set, get) => ({
   fetchConfig: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response: any = await request.get('/content/config/site_info');
+      const response = await request.get<unknown, { value?: SiteConfig }>('/content/config/site_info');
       if (response && response.value) {
         set({ siteConfig: response.value, isLoading: false });
       }
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to fetch site config' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to fetch site config') });
     }
   },
 
@@ -71,25 +72,25 @@ export const useContentStore = create<ContentState>((set, get) => ({
     try {
       await request.put('/content/config/site_info', { value: config });
       set({ siteConfig: config, isLoading: false });
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to update site config' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to update site config') });
     }
   },
 
   fetchItems: async (type) => {
     set({ isLoading: true, error: null });
     try {
-      const params: any = { limit: 100 };
+      const params: Record<string, string | number> = { limit: 100 };
       if (type) params.type = type;
       
-      const response: any = await request.get('/content/items', { params });
+      const response = await request.get<unknown, ContentItem[]>('/content/items', { params });
       if (Array.isArray(response)) {
         set({ items: response, isLoading: false });
       } else {
         set({ items: [], isLoading: false });
       }
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to fetch content items' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to fetch content items') });
     }
   },
 
@@ -98,8 +99,8 @@ export const useContentStore = create<ContentState>((set, get) => ({
     try {
       await request.post('/content/items', item);
       await get().fetchItems(item.type); // Refresh list
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to create item' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to create item') });
     }
   },
 
@@ -113,8 +114,8 @@ export const useContentStore = create<ContentState>((set, get) => ({
         items: currentItems.map(i => i.id === id ? { ...i, ...patch } : i),
         isLoading: false 
       });
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to update item' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to update item') });
     }
   },
 
@@ -126,8 +127,8 @@ export const useContentStore = create<ContentState>((set, get) => ({
         items: get().items.filter(i => i.id !== id),
         isLoading: false 
       });
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to delete item' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to delete item') });
     }
   },
 }));

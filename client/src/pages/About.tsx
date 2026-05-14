@@ -1,94 +1,67 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Building2, CheckCircle2, GitBranch, ShieldCheck, Users } from 'lucide-react';
+import { Building2, GitBranch, ShieldCheck, Users, type LucideIcon } from 'lucide-react';
 
-const milestones = [
-  {
-    date: '2026',
-    title: '企业 AI 公司操作系统',
-    text: '围绕客户工作区、AI 公司、数字员工、公司包、项目交付和人工审核建立产品主线。',
-  },
-  {
-    date: '2026',
-    title: '第一家自运营软件公司',
-    text: '用 ReefTotem 自己的软件开发公司验证文档读取、代码迭代、版本升级、部署和交付审核。',
-  },
-  {
-    date: '2026',
-    title: '独立域名与升级环境',
-    text: '根域名承载公司官网，opc 子域名承载 ReefTotem AI 公司操作系统控制台，并沉淀可复用部署流程。',
-  },
-];
-
-const principles = [
-  { icon: Building2, title: '公司先于聊天', text: '用户创建的是公司，不是单个聊天机器人；员工聊天只是公司协作的一部分。' },
-  { icon: Users, title: '员工必须有职责', text: '每个数字员工都要有岗位、人格、记忆、心跳、上下级和协作边界。' },
-  { icon: GitBranch, title: '交付必须可追踪', text: 'Issue、Run、事件、工具调用和 WorkProduct 要能反向解释交付结果。' },
-  { icon: ShieldCheck, title: '安全默认隔离', text: '真实公司记忆和客户上下文不进入外售包，只允许脱敏模板复用。' },
+const principles: Array<{ title: string; text: string; icon: LucideIcon }> = [
+  { title: '产品真实', text: '官网只展示真实 logo、真实截图和真实下载状态。', icon: Building2 },
+  { title: '公司级导航', text: '顶部入口保持公司官网结构，产品在正文体系中表达。', icon: GitBranch },
+  { title: '交付可追踪', text: '下载、控制台、文档、部署和回滚都需要可验证路径。', icon: Users },
+  { title: '边界清晰', text: '个人助手、企业平台、量化系统和安全能力不混成一个笼统概念。', icon: ShieldCheck },
 ];
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-background pt-24">
-      <section className="border-b border-border bg-white py-16">
-        <div className="container mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
-            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">深圳前海瑞孚图腾科技有限公司</h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              ReefTotem 专注于 AI 软件产品和企业自动化能力建设，产品方向包括 ReefTotem AI 公司操作系统、Reeftotem Assistant、量化研究工具、音视频与内容安全能力，以及支撑这些产品的数字员工和公司能力包。
+    <div className="min-h-screen bg-[#07122F] text-white">
+      <section className="brand-grid bg-[linear-gradient(180deg,#07122F_0%,#173157_62%,#F4F7FB_100%)] pt-36">
+        <div className="section-shell grid gap-12 pb-24 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
+            <h1 className="text-[52px] font-semibold leading-tight tracking-tight md:text-[78px]">
+              深圳前海瑞孚图腾科技有限公司
+            </h1>
+            <p className="mt-7 max-w-3xl text-xl leading-9 text-[#DDF9FF]/80">
+              ReefTotem 专注于 AI 软件系统交付，当前产品线包括 OPC 企业平台、星伴 Assistant 和 QuantAgent 自动量化系统。
             </p>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+            <div className="rounded-[34px] border border-white/12 bg-white/8 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
+              <img src="/images/brand/reeftotem-logo-white.png" alt="ReefTotem 官方 logo" className="h-24 w-auto" />
+              <p className="mt-8 text-lg leading-8 text-[#DDF9FF]/80">
+                公司官网承担品牌、产品体系、下载入口、技术文档和联系入口，不再使用旧版空泛宣传结构。
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground">公司定位</h2>
-            <p className="mt-4 text-muted-foreground leading-7">
-              ReefTotem 的官网承担公司介绍、产品矩阵、试用入口、部署咨询和用户文档入口。AI 公司操作系统是其中的核心产品之一，不等同于公司本身。
+      <section className="brand-grid-light bg-[#F4F7FB] py-24 text-[#07122F]">
+        <div className="section-shell">
+          <div className="mb-12 max-w-4xl">
+            <h2 className="text-5xl font-semibold tracking-tight">官网重构原则</h2>
+            <p className="mt-5 text-lg leading-8 text-[#425271]">
+              这次官网不是换一层皮，而是把公司真实产品、下载能力和工程交付状态放到第一层。
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {principles.map((item) => {
-              const Icon = item.icon;
-              return (
-                <article key={item.title} className="rounded-lg border border-border bg-card p-6">
-                  <Icon className="mb-4 h-6 w-6 text-primary" />
-                  <h3 className="font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.text}</p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-border bg-white py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">建设节点</h2>
-          <div className="mt-10 grid gap-4 lg:grid-cols-3">
-            {milestones.map((item) => (
-              <article key={item.title} className="rounded-lg border border-border bg-background p-6">
-                <div className="text-sm font-semibold text-primary">{item.date}</div>
-                <h3 className="mt-3 text-lg font-semibold text-foreground">{item.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.text}</p>
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {principles.map(({ title, text, icon: Icon }) => (
+              <article key={title} className="rounded-[24px] border border-[#07122F]/10 bg-white p-6 shadow-[0_16px_45px_rgba(7,18,47,0.07)]">
+                <Icon className="mb-5 h-6 w-6 text-[#075DFF]" />
+                <h3 className="text-xl font-semibold">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[#50617F]">{text}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="rounded-lg border border-border bg-card p-8">
-            <div className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-primary">
-              <CheckCircle2 className="h-4 w-4" />
-              对外说明口径
-            </div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground">ReefTotem 帮助企业运营 AI 公司，而不是把所有工作塞进一个聊天窗口。</h2>
-            <p className="mt-4 max-w-4xl text-muted-foreground leading-7">
-              用户通过平台创建客户工作区，安装公司包，招聘数字员工，接入通讯工作间，提交业务目标，并通过 WorkProduct 审核结果。后续商业化可以发展员工模板、公司制度包、行业公司包和部署服务，但不能牺牲公司实例的数据安全边界。
+      <section className="bg-white py-24 text-[#07122F]">
+        <div className="section-shell">
+          <div className="rounded-[30px] border border-[#07122F]/10 bg-[#07122F] p-8 text-white md:p-12">
+            <h2 className="max-w-4xl text-4xl font-semibold tracking-tight md:text-5xl">
+              ReefTotem 帮助 AI 从演示工具进入真实软件系统。
+            </h2>
+            <p className="mt-5 max-w-4xl text-lg leading-8 text-[#DDF9FF]/75">
+              当前阶段的核心不是堆砌概念，而是让用户看到真实产品界面、真实下载入口、真实控制台和清晰的后续发布路线。
             </p>
           </div>
         </div>

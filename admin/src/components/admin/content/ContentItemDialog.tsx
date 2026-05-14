@@ -38,7 +38,7 @@ const ContentItemDialog: React.FC<ContentItemDialogProps> = ({ type, item, isOpe
     }
   }, [item, type]);
 
-  const handleChange = (field: keyof ContentItem, value: any) => {
+  const handleChange = <K extends keyof ContentItem>(field: K, value: ContentItem[K]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -47,6 +47,11 @@ const ContentItemDialog: React.FC<ContentItemDialogProps> = ({ type, item, isOpe
       ...prev,
       meta_data: { ...prev.meta_data, [key]: value },
     }));
+  };
+
+  const getMetaString = (key: string) => {
+    const value = formData.meta_data?.[key];
+    return typeof value === 'string' ? value : '';
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -134,7 +139,7 @@ const ContentItemDialog: React.FC<ContentItemDialogProps> = ({ type, item, isOpe
                   <label className="block text-xs text-muted-foreground mb-1">图标名称 (Lucide)</label>
                   <input
                     type="text"
-                    value={formData.meta_data?.icon || ''}
+                    value={getMetaString('icon')}
                     onChange={(e) => handleMetaChange('icon', e.target.value)}
                     placeholder="e.g. Zap"
                     className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
@@ -144,7 +149,7 @@ const ContentItemDialog: React.FC<ContentItemDialogProps> = ({ type, item, isOpe
                   <label className="block text-xs text-muted-foreground mb-1">颜色类名 (Tailwind)</label>
                   <input
                     type="text"
-                    value={formData.meta_data?.color || ''}
+                    value={getMetaString('color')}
                     onChange={(e) => handleMetaChange('color', e.target.value)}
                     placeholder="e.g. text-blue-500"
                     className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"

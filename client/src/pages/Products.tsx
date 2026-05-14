@@ -1,184 +1,111 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ArrowRight,
-  BarChart3,
-  Bot,
-  Building2,
-  CheckCircle2,
-  ExternalLink,
-  MessageSquareText,
-  ShieldCheck,
-} from 'lucide-react';
+import { ArrowRight, CheckCircle2, ExternalLink } from 'lucide-react';
+import { productSystem } from '@/data/site';
 
-const PRODUCT_CONSOLE_URL = 'https://opc.reeftotem.ai/login';
-
-const products = [
+const productDetails = [
   {
-    icon: Building2,
-    maturity: '已部署控制台',
-    name: 'ReefTotem AI 公司操作系统',
-    category: 'AI 公司操作系统',
-    desc: '为团队创建 AI 公司、配置数字员工、管理项目交付和审核结果的企业操作系统。',
-    details: ['OPC 控制台', 'AI 公司与公司包', '数字员工组织', '交付审核与审计'],
-    image: '/images/product/work-board-projects.png',
-    action: '进入 OPC 控制台',
-    href: PRODUCT_CONSOLE_URL,
+    title: 'OPC 企业平台',
+    points: ['AI 公司创建', '数字员工组织', '项目交付记录', 'WorkProduct 审核'],
   },
   {
-    icon: MessageSquareText,
-    maturity: '0.9.22 官网基线',
-    name: 'Reeftotem Assistant',
-    category: 'Live2D 桌面 AI 伴侣',
-    desc: '本地优先的桌面 AI 伴侣，面向聊天、人格、情绪、长期记忆、日历提醒、知识库、Activity 行动记录和自然语言自动化。',
-    details: ['Live2D 桌面常驻', '长期记忆与人格主题', '聊天创建提醒和 Workflow', 'Activity 可解释恢复'],
-    image: '/images/brand/assistant-visual.svg',
-    action: '查看小助手',
-    href: '/assistant',
+    title: '星伴 Assistant',
+    points: ['桌面常驻入口', '聊天与记忆', '提醒与轻量自动化', 'macOS 1.0.0 下载'],
   },
   {
-    icon: BarChart3,
-    maturity: '产品线规划',
-    name: '量化交易软件',
-    category: '量化研究与交易辅助',
-    desc: '面向行情分析、策略研究、回测记录、风险监控和交易流程辅助。该方向坚持工具和风控边界，不做收益承诺。',
-    details: ['行情与数据分析', '策略研究', '回测记录', '风险监控'],
-    image: '/images/brand/quant-visual.svg',
-  },
-  {
-    icon: ShieldCheck,
-    maturity: '行业能力',
-    name: '音视频与内容安全',
-    category: '企业安全与风控',
-    desc: '围绕音视频识别、内容风险、事件追踪和企业安全流程接入形成解决方案。',
-    details: ['内容安全识别', '风险事件追踪', '企业流程接入', '私有化部署'],
-    image: '/images/brand/security-visual.svg',
-  },
-  {
-    icon: Bot,
-    maturity: '平台能力',
-    name: '数字员工与公司能力包',
-    category: 'AI 组织能力',
-    desc: '把岗位、制度、SOP、工具、验收标准和员工模板沉淀为可安装能力，同时保护真实公司记忆和客户数据。',
-    details: ['岗位与制度模板', '工具技能组合', '员工模板', '脱敏后复用'],
-    image: '/images/brand/reeftotem-corporate-visual.svg',
+    title: 'QuantAgent',
+    points: ['策略 Alpha 深研', '证据门禁', '风险约束', '后续官网下载'],
   },
 ];
 
 const Products = () => {
   return (
-    <div className="min-h-screen bg-background pt-24">
-      <section className="border-b border-border bg-white py-16">
-        <div className="container mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
-            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-6xl">产品矩阵</h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              ReefTotem 的产品组合覆盖 AI 公司操作系统、Reeftotem Assistant、量化研究工具、内容安全能力，以及支撑这些产品的数字员工和公司能力包。
+    <div className="min-h-screen bg-[#07122F] text-white">
+      <section className="brand-grid relative overflow-hidden bg-[linear-gradient(180deg,#07122F_0%,#10264C_62%,#F4F7FB_100%)] pt-36">
+        <div className="section-shell pb-20">
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="max-w-5xl">
+            <h1 className="text-[54px] font-semibold leading-tight tracking-tight md:text-[82px]">
+              一个品牌下的三套 AI 产品能力
+            </h1>
+            <p className="mt-7 max-w-3xl text-xl leading-9 text-[#DDF9FF]/80">
+              产品入口不拆在顶部导航里，而是在产品体系页用成熟度、截图和交付状态清楚说明。
             </p>
           </motion.div>
         </div>
-      </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-6">
-            {products.map((product) => {
-              const Icon = product.icon;
-              return (
-                <article key={product.name} className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-                  <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
-                    <div className="p-6 md:p-8">
-                      <div className="mb-5 flex flex-wrap items-center gap-3 text-sm">
-                        <span className="inline-flex items-center gap-2 font-medium text-primary">
-                          <Icon className="h-4 w-4" />
-                          {product.category}
-                        </span>
-                        <span className="rounded-md border border-border bg-background px-2.5 py-1 text-xs font-semibold text-muted-foreground">
-                          {product.maturity}
-                        </span>
-                      </div>
-                      <h2 className="text-3xl font-bold tracking-tight text-foreground">{product.name}</h2>
-                      <p className="mt-4 text-base leading-7 text-muted-foreground">{product.desc}</p>
-                      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                        {product.details.map((detail) => (
-                          <div key={detail} className="flex items-center gap-2 text-sm text-foreground">
-                            <CheckCircle2 className="h-4 w-4 text-primary" />
-                            {detail}
-                          </div>
-                        ))}
-                      </div>
-                      {product.href &&
-                        (product.href.startsWith('http') ? (
-                          <a
-                            href={product.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-foreground px-5 text-sm font-semibold text-background"
-                          >
-                            {product.action}
-                            <ExternalLink className="h-4 w-4" />
-                          </a>
-                        ) : (
-                          <Link
-                            to={product.href}
-                            className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-foreground px-5 text-sm font-semibold text-background"
-                          >
-                            {product.action}
-                            <ArrowRight className="h-4 w-4" />
-                          </Link>
-                        ))}
+        <div className="section-shell pb-24">
+          <div className="grid gap-6 lg:grid-cols-3">
+            {productDetails.map((item) => (
+              <article key={item.title} className="rounded-[26px] border border-white/15 bg-[#07122F]/80 p-7 backdrop-blur-sm">
+                <h2 className="text-2xl font-semibold">{item.title}</h2>
+                <div className="mt-6 grid gap-3">
+                  {item.points.map((point) => (
+                    <div key={point} className="flex items-center gap-3 text-[#DDF9FF]/80">
+                      <CheckCircle2 className="h-4 w-4 text-[#22D5F5]" />
+                      <span className="text-sm">{point}</span>
                     </div>
-                    <div className="min-h-[280px] border-t border-border bg-background lg:border-l lg:border-t-0">
-                      <img src={product.image} alt={product.name} className="h-full min-h-[280px] w-full object-cover" />
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-border bg-white py-20">
-        <div className="container mx-auto grid gap-8 px-4 lg:grid-cols-[0.85fr_1.15fr]">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground">成熟度说明</h2>
-            <p className="mt-4 text-muted-foreground leading-7">
-              官网可以展示完整产品矩阵，但不能把规划中的产品包装成已经完整交付。每个产品都标注成熟度、适用范围和风险边界。
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              ['已部署控制台', '已有线上入口，可进行真实功能验证。'],
-              ['产品线规划', '已有方向和边界，继续补产品定义、页面和交付链路。'],
-              ['行业能力', '以项目、私有部署或公司能力包方式进入客户流程。'],
-            ].map(([title, text]) => (
-              <div key={title} className="rounded-lg border border-border bg-background p-5">
-                <h3 className="font-semibold text-foreground">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">{text}</p>
-              </div>
+                  ))}
+                </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-6 rounded-lg border border-border bg-foreground p-8 text-background lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight">官网负责产品矩阵，OPC 负责公司操作系统。</h2>
-              <p className="mt-4 max-w-3xl text-sm leading-6 text-background/75">
-                Reeftotem Assistant 已补独立产品页；量化研究工具和内容安全能力后续继续补独立产品页；ReefTotem AI 公司操作系统的操作文档继续放在 OPC 和文档入口中。
-              </p>
-            </div>
-            <Link
-              to="/contact"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-background px-6 text-sm font-semibold text-foreground"
-            >
-              联系合作
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+      <section className="brand-grid-light bg-[#F4F7FB] py-24 text-[#07122F]">
+        <div className="section-shell">
+          <div className="grid gap-8">
+            {productSystem.map((product, index) => {
+              const Icon = product.icon;
+              const external = product.href.startsWith('http');
+              const download = product.href.startsWith('/downloads/');
+              const content = (
+                <article className="grid overflow-hidden rounded-[30px] border border-[#07122F]/10 bg-white shadow-[0_18px_55px_rgba(7,18,47,0.08)] lg:grid-cols-[0.9fr_1.1fr]">
+                  <div className="p-8 md:p-10">
+                    <div className="mb-5 flex flex-wrap items-center gap-3">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-[#075DFF]/8 px-4 py-2 text-sm font-semibold text-[#075DFF]">
+                        <Icon className="h-4 w-4" />
+                        {product.category}
+                      </span>
+                      <span className="rounded-full border border-[#07122F]/10 px-4 py-2 text-sm font-semibold text-[#50617F]">
+                        {product.status}
+                      </span>
+                    </div>
+                    <h2 className="text-4xl font-semibold tracking-tight text-[#07122F]">{product.name}</h2>
+                    <p className="mt-5 max-w-2xl text-lg leading-8 text-[#435372]">{product.desc}</p>
+                    <div className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#075DFF]">
+                      {product.action}
+                      {external ? <ExternalLink className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
+                    </div>
+                  </div>
+                  <div className={`min-h-[340px] bg-[#07122F] ${index % 2 === 1 ? 'lg:order-first' : ''}`}>
+                    <img src={product.image} alt={product.name} className="h-full min-h-[340px] w-full object-cover object-top" />
+                  </div>
+                </article>
+              );
+
+              if (external || download) {
+                return (
+                  <a
+                    key={product.name}
+                    href={product.href}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noopener noreferrer' : undefined}
+                    download={download ? true : undefined}
+                    className="block transition hover:-translate-y-1"
+                  >
+                    {content}
+                  </a>
+                );
+              }
+
+              return (
+                <Link key={product.name} to={product.href} className="block transition hover:-translate-y-1">
+                  {content}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -1,6 +1,8 @@
 from datetime import datetime
 import logging
+import os
 from sqlalchemy.orm import Session
+from app import models as _models
 from app.core.database import SessionLocal, engine, Base
 from app.crud.user import create_user, get_user_by_email
 from app.crud.content import create_config, get_config, create_content_item, get_content_items
@@ -14,21 +16,37 @@ from app.schemas.download import DownloadItemCreate, OSType
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+def get_initial_admin_credentials() -> tuple[str, str]:
+    admin_email = os.getenv("REEFTOTEM_ADMIN_EMAIL", "admin@reeftotem.ai")
+    admin_password = os.getenv("REEFTOTEM_ADMIN_PASSWORD")
+    is_production = os.getenv("REEFTOTEM_ENV") == "production"
+
+    if admin_password:
+        return admin_email, admin_password
+
+    if is_production:
+        raise RuntimeError("REEFTOTEM_ADMIN_PASSWORD must be set before production initial_data runs")
+
+    logger.warning("Using development default admin password. Set REEFTOTEM_ADMIN_PASSWORD before production.")
+    return admin_email, "adminpassword"
+
 def init_db():
+    Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
         # 1. Create Superuser
-        user = get_user_by_email(db, email="admin@reeftotem.ai")
+        admin_email, admin_password = get_initial_admin_credentials()
+        user = get_user_by_email(db, email=admin_email)
         if not user:
             user_in = UserCreate(
-                email="admin@reeftotem.ai",
-                password="adminpassword",
+                email=admin_email,
+                password=admin_password,
                 full_name="Admin User",
                 role=UserRole.SUPER_ADMIN,
                 is_active=True
             )
             create_user(db, user=user_in)
-            logger.info("Super user created: admin@reeftotem.ai")
+            logger.info("Super user created: %s", admin_email)
         else:
             logger.info("Super user already exists")
 

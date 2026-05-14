@@ -16,11 +16,12 @@
 所有 HTTP 请求通过封装的 Axios 实例发出。
 
 ### Client Axios (`client/src/api/request.ts`)
-*   基础配置：`baseURL = '/api/v1/public'`
-*   拦截器：处理全局错误提示。
+*   基础配置：`baseURL = '/api/v1'`
+*   请求拦截器：账户钱包第一阶段自动注入 `Authorization: Bearer <customer_token>`。
+*   响应拦截器：处理全局错误提示。
 
 ### Admin Axios (`admin/src/api/request.ts`)
-*   基础配置：`baseURL = '/api/v1/admin'`
+*   基础配置：`baseURL = '/api/v1'`
 *   请求拦截器：自动在 Header 中注入 `Authorization: Bearer <token>`。
 *   响应拦截器：
     *   401 Unauthorized -> 自动跳转登录页或尝试刷新 Token。
@@ -46,6 +47,12 @@
     *   `token`: string | null
     *   `login(token)`: 存储 token 到 localStorage，设置 user。
     *   `logout()`: 清除 token，重置 user。
+
+统一账号中心第一阶段新增账户上下文：
+
+*   官网 `/billing` 登录后读取 `/api/v1/auth/me` 和 `/api/v1/billing/me/portal`。
+*   后端登录响应包含 `session_id`、`account_id` 和可接入应用列表。
+*   OPC、星伴 Assistant、QuantAgent 不直接复用官网 token 作为长期登录态，应分别按 `docs/integrations/*_account_center_phase1.md` 接入。
 
 ## 4. 关键功能实现逻辑
 
@@ -74,6 +81,19 @@
 </Route>
 ```
 `RequireAuth` 逻辑：检查 AuthStore 中是否有 Token，无则 Redirect 到 `/login`。
+
+### 4.4 计费中心后台
+
+后台新增 `BillingCenterView`，通过 `useBillingStore` 调用 `/api/v1/billing/admin-dashboard`。
+
+页面分区：
+
+*   KPI：近 30 天收入、钱包余额、活跃订阅、活跃用户。
+*   图表：收入趋势、产品收入结构、支付通道、订单状态、订阅状态。
+*   报表：收入日报/月报、余额负债、用户生命周期、订阅健康。
+*   用户画像：按生命周期和风险状态管理用户，展示余额、累计付费、订阅数、订单数和运营备注。
+
+图表第一期使用 SVG/CSS 实现，不新增 ECharts/Recharts 依赖。后续如果需要复杂筛选、导出或大屏，可再引入专门图表库。
 
 ## 5. UI/UX 规范
 *   **字体**: 系统默认字体栈 (San Francisco, Inter, etc.)。

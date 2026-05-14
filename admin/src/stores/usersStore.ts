@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import request from '@/api/request';
+import { getErrorMessage } from '@/lib/errors';
 
 export type User = {
   id: string;
@@ -29,14 +30,14 @@ export const useUsersStore = create<UsersState>((set, get) => ({
   fetchUsers: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response: any = await request.get('/users');
+      const response = await request.get<unknown, User[]>('/users');
       if (Array.isArray(response)) {
         set({ users: response, isLoading: false });
       } else {
         set({ users: [], isLoading: false });
       }
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to fetch users' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to fetch users') });
     }
   },
 
@@ -45,8 +46,8 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     try {
       await request.post('/users', user);
       await get().fetchUsers();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to create user' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to create user') });
     }
   },
 
@@ -55,8 +56,8 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     try {
       await request.put(`/users/${id}`, patch);
       await get().fetchUsers();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to update user' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to update user') });
     }
   },
 
@@ -65,8 +66,8 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     try {
       await request.delete(`/users/${id}`);
       await get().fetchUsers();
-    } catch (err: any) {
-      set({ isLoading: false, error: err.message || 'Failed to delete user' });
+    } catch (err: unknown) {
+      set({ isLoading: false, error: getErrorMessage(err, 'Failed to delete user') });
     }
   },
 }));

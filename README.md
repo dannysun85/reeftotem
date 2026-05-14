@@ -13,18 +13,26 @@
 
 ```bash
 cd server
-# Create virtual environment (Python 3.12 recommended)
-python3.12 -m venv .venv
+# Create/update the project virtual environment with uv.
+# Production and development both use Python 3.12 in server/.venv.
+uv sync --frozen --python 3.12
+
+# Optional: activate for interactive commands
 source .venv/bin/activate
 
-# Install dependencies
-pip install -r requirements.txt
-
 # Initialize database
-python app/initial_data.py
+uv run python -m app.initial_data
 
 # Run server
-uvicorn app.main:app --reload --port 8000
+uv run uvicorn app.main:app --reload --port 8000
+```
+
+Production process managers should call the managed virtualenv directly:
+
+```bash
+cd server
+uv sync --frozen --python 3.12
+.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
 ### 2. Frontend (Client)

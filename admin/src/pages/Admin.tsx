@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, Image, Users, Download, Settings, LogOut, Menu, X, Box } from 'lucide-react';
+import { LayoutDashboard, Image, Users, Download, LogOut, Menu, X, Box, ReceiptText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import DashboardView from '@/components/admin/DashboardView';
 import ContentView from '@/components/admin/ContentView';
 import UserView from '@/components/admin/UserView';
 import DownloadView from '@/components/admin/DownloadView';
 import ProductsList from '@/components/admin/products/ProductsList';
+import BillingCenterView from '@/components/admin/BillingCenterView';
 import { useAuthStore } from '@/stores/authStore';
 
-type Tab = 'dashboard' | 'content' | 'products' | 'users' | 'downloads' | 'settings';
+type Tab = 'dashboard' | 'content' | 'products' | 'billing' | 'users' | 'downloads';
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
@@ -20,6 +21,7 @@ const Admin = () => {
     { id: 'dashboard', label: '仪表盘', icon: LayoutDashboard },
     { id: 'content', label: '内容管理', icon: Image },
     { id: 'products', label: '产品管理', icon: Box },
+    { id: 'billing', label: '计费中心', icon: ReceiptText },
     { id: 'downloads', label: '下载管理', icon: Download },
     { id: 'users', label: '用户管理', icon: Users },
   ];
@@ -29,6 +31,7 @@ const Admin = () => {
       case 'dashboard': return <DashboardView />;
       case 'content': return <ContentView />;
       case 'products': return <ProductsList />;
+      case 'billing': return <BillingCenterView />;
       case 'users': return <UserView />;
       case 'downloads': return <DownloadView />;
       default: return <DashboardView />;

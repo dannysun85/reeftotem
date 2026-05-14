@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useContentStore, ContentItem } from '@/stores/contentStore';
 import { Button } from '@/components/common/Button';
-import { Edit2, Trash2, Plus, MoveUp, MoveDown, ToggleLeft, ToggleRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Edit2, Trash2, Plus, ToggleLeft, ToggleRight } from 'lucide-react';
 import ContentItemDialog from './ContentItemDialog';
 
 interface ContentItemListProps {
