@@ -117,6 +117,8 @@ curl -I https://reeftotem.ai/billing
 curl https://reeftotem.ai/api/v1/health
 curl https://reeftotem.ai/api/v1/auth/sso/applications
 curl https://reeftotem.ai/api/v1/billing/payment-routes
+curl -I https://admin.reeftotem.ai/
+curl https://admin.reeftotem.ai/api/v1/health
 ```
 
 浏览器验证：
@@ -129,11 +131,12 @@ curl https://reeftotem.ai/api/v1/billing/payment-routes
 
 ## 7. 当前线上发布状态
 
-更新时间：2026-05-15 02:05 CST
+更新时间：2026-05-15 02:24 CST
 
 当前线上验证版已经发布到：
 
 - DNS：`reeftotem.ai -> 43.160.233.128`
+- DNS：`admin.reeftotem.ai -> 43.160.233.128`
 - SSH：`ubuntu@43.160.233.128`
 - 官网静态目录：`/var/www/reeftotem-site/current`
 - 后台静态目录：`/var/www/reeftotem-admin/current`
@@ -141,6 +144,9 @@ curl https://reeftotem.ai/api/v1/billing/payment-routes
 - 后端服务：`reeftotem-api`
 - Python：`/opt/reeftotem/server/.venv/bin/python`，版本 `3.12.3`
 - API 反代：`https://reeftotem.ai/api/ -> http://127.0.0.1:8000`
+- 后台域名：`https://admin.reeftotem.ai/`
+- 后台 API 反代：`https://admin.reeftotem.ai/api/ -> http://127.0.0.1:8000`
+- 后台 TLS：Let’s Encrypt 证书已签发，证书到期日 `2026-08-12`
 
 服务器 `.env` 必须保留并只允许受限访问，里面包含：
 
@@ -151,4 +157,4 @@ curl https://reeftotem.ai/api/v1/billing/payment-routes
 
 初始后台凭据另存于服务器 `/opt/reeftotem/admin-initial-credentials.txt`，文件权限为 `600`，不要提交到仓库。
 
-`admin.reeftotem.ai` 当前还没有 DNS 解析，后台静态包已经部署到服务器，但需要新增 DNS A 记录并签发 TLS 证书后才能以独立后台域名访问。
+`admin.reeftotem.ai` 已在 GoDaddy 新增 A 记录并完成 TLS 签发。若个别本地网络仍短暂无法解析，优先检查本地 DNS 缓存；权威 DNS、Google DNS 和 Cloudflare DNS 已返回 `43.160.233.128`。
