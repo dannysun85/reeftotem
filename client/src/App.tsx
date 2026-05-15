@@ -63,8 +63,9 @@ const RouteSeo = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const seo = routeSeo[pathname] ?? routeSeo['/'];
-    const canonicalUrl = `https://reeftotem.ai${pathname === '/' ? '/' : pathname}`;
+    const normalizedPath = normalizePathname(pathname);
+    const seo = routeSeo[normalizedPath] ?? routeSeo['/'];
+    const canonicalUrl = `https://reeftotem.ai${normalizedPath === '/' ? '/' : normalizedPath}`;
 
     document.title = seo.title;
     setMeta('description', seo.description);
@@ -82,6 +83,11 @@ const RouteSeo = () => {
 
   return null;
 };
+
+function normalizePathname(pathname: string) {
+  if (pathname === '/') return '/';
+  return pathname.replace(/\/+$/, '');
+}
 
 function setMeta(name: string, content: string) {
   let element = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);

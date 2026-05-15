@@ -22,6 +22,7 @@ export const navLinks = [
 
 export const deliveryProducts = [
   {
+    slug: 'xingban-assistant',
     status: '当前可用',
     name: '星伴 Assistant',
     desc: 'macOS DMG 1.0.0',
@@ -34,6 +35,7 @@ export const deliveryProducts = [
     icon: Download,
   },
   {
+    slug: 'opc',
     status: '演示联系',
     name: 'OPC 企业平台',
     desc: '企业运营自动化',
@@ -46,6 +48,7 @@ export const deliveryProducts = [
     icon: ExternalLink,
   },
   {
+    slug: 'quantagent',
     status: '即将开放',
     name: 'QuantAgent',
     desc: '自动量化系统下载',
@@ -61,6 +64,7 @@ export const deliveryProducts = [
 
 export const productSystem = [
   {
+    slug: 'opc',
     icon: Building2,
     status: '已上线展示',
     name: 'OPC 企业平台',
@@ -71,6 +75,7 @@ export const productSystem = [
     action: '进入 OPC',
   },
   {
+    slug: 'xingban-assistant',
     icon: MessageSquareText,
     status: '1.0.0 可下载',
     name: '星伴 Assistant',
@@ -81,6 +86,7 @@ export const productSystem = [
     action: '下载星伴',
   },
   {
+    slug: 'quantagent',
     icon: BarChart3,
     status: '内测推进',
     name: 'QuantAgent',
@@ -91,6 +97,7 @@ export const productSystem = [
     action: '预约沟通',
   },
   {
+    slug: 'reeftotem-engineering',
     icon: ShieldCheck,
     status: '能力沉淀',
     name: '安全与交付体系',
@@ -101,3 +108,6 @@ export const productSystem = [
     action: '查看文档',
   },
 ];
+
+export type DeliveryProduct = (typeof deliveryProducts)[number];
+export type ProductSystemItem = (typeof productSystem)[number];

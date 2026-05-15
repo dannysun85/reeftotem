@@ -75,7 +75,9 @@ const DashboardView = () => {
   const metric = (key: string) => dashboard?.metrics.find((item) => item.key === key);
   const revenue30d = metric('revenue_30d')?.value || 0;
   const activeSubscriptions = metric('active_subscriptions')?.value || 0;
-  const totalDownloadCount = downloads.reduce((acc, item) => acc + (item.download_count || 0), 0);
+  const publishedProducts = products.filter((item) => item.is_published);
+  const visibleDownloads = downloads.filter((item) => item.is_visible);
+  const totalDownloadCount = visibleDownloads.reduce((acc, item) => acc + (item.download_count || 0), 0);
 
   const errors = [
     billingError && `计费中心：${billingError}`,
@@ -106,19 +108,20 @@ const DashboardView = () => {
     },
     {
       name: '产品管理',
-      status: '后台可写，前台待接',
-      detail: '产品记录已接 /api/v1/products；官网产品展示目前没有完全读取这些记录。',
-      ready: false,
+      status: '已接前台',
+      detail: '官网首页和产品体系页读取 /api/v1/products；后台保存后可进入前台产品矩阵。',
+      ready: true,
     },
     {
       name: '下载管理',
-      status: '后台可写，前台待接',
-      detail: '下载记录已接 /api/v1/downloads；官网下载页当前以真实静态 release 为准，下一步再改成 API 驱动。',
-      ready: false,
+      status: '已接前台',
+      detail: '官网下载页读取 /api/v1/downloads，并在点击下载时回写 /api/v1/downloads/{id}/count。',
+      ready: true,
     },
   ];
 
   const topDownloads = [...downloads]
+    .filter((item) => item.is_visible)
     .sort((a, b) => (b.download_count || 0) - (a.download_count || 0))
     .slice(0, 5);
 
@@ -131,7 +134,7 @@ const DashboardView = () => {
         </div>
         <h2 className="text-2xl font-bold text-foreground mb-2">运营仪表盘</h2>
         <p className="max-w-3xl text-muted-foreground">
-          这里现在只展示后台 API 能拿到的真实记录和接入状态。前台还没消费的 CMS 模块会明确标注为“前台待接”，不再伪装成完整运营闭环。
+          这里现在只展示后台 API 能拿到的真实记录和接入状态。产品和下载已开始驱动官网前台；内容模块仍标注为“前台待接”，不再伪装成完整 CMS 闭环。
         </p>
       </div>
 
@@ -173,15 +176,15 @@ const DashboardView = () => {
         />
         <StatCard
           title="产品记录"
-          value={products.length.toLocaleString()}
-          helper="来自产品管理 API，前台消费状态见下方接入表。"
+          value={publishedProducts.length.toLocaleString()}
+          helper={`官网只读取已发布产品；后台总计 ${products.length.toLocaleString()} 条。`}
           icon={Package}
           tone="slate"
         />
         <StatCard
           title="下载记录"
-          value={downloads.length.toLocaleString()}
-          helper={`下载计数合计 ${totalDownloadCount.toLocaleString()}。`}
+          value={visibleDownloads.length.toLocaleString()}
+          helper={`官网下载页只读取可见项，下载计数合计 ${totalDownloadCount.toLocaleString()}。`}
           icon={Download}
           tone="cyan"
         />

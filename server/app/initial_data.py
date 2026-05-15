@@ -12,6 +12,7 @@ from app.schemas.user import UserCreate, UserRole
 from app.schemas.content import SiteConfigCreate, ContentItemCreate
 from app.schemas.product import ProductCreate
 from app.schemas.download import DownloadItemCreate, OSType
+from app.catalog_data import sync_product_catalog
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -309,6 +310,9 @@ def init_db():
             for s in company_stats:
                 create_content_item(db, ContentItemCreate(type="stat", **s))
             logger.info("Company stats initialized")
+
+        catalog_result = sync_product_catalog(db)
+        logger.info("Product catalog synchronized: %s", catalog_result)
 
         logger.info("Initial data created successfully")
 

@@ -2,12 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
-import {
-  ASSISTANT_DOWNLOAD_URL,
-  ASSISTANT_VERSION,
-  deliveryProducts,
-  productSystem,
-} from '@/data/site';
+import { getAssistantDownloadHref, recordDownloadClick, usePublicCatalog } from '@/api/publicCatalog';
 
 const isExternal = (href: string) => href.startsWith('http');
 const isDownload = (href: string) => href.startsWith('/downloads/');
@@ -17,11 +12,13 @@ const SmartLink = ({
   className,
   children,
   style,
+  onClick,
 }: {
   href: string;
   className: string;
   children: React.ReactNode;
   style?: React.CSSProperties;
+  onClick?: () => void;
 }) => {
   if (isExternal(href) || isDownload(href)) {
     return (
@@ -32,6 +29,7 @@ const SmartLink = ({
         rel={isExternal(href) ? 'noopener noreferrer' : undefined}
         download={isDownload(href) ? true : undefined}
         style={style}
+        onClick={onClick}
       >
         {children}
       </a>
@@ -39,13 +37,17 @@ const SmartLink = ({
   }
 
   return (
-    <Link to={href} className={className} style={style}>
+    <Link to={href} className={className} style={style} onClick={onClick}>
       {children}
     </Link>
   );
 };
 
 const Home = () => {
+  const { deliveryProducts, productSystem, assistantDownload, isApiBacked } = usePublicCatalog();
+  const assistantHref = getAssistantDownloadHref(assistantDownload);
+  const assistantVersion = assistantDownload.packageUrl ? assistantDownload.desc : '1.0.0 · aarch64.dmg';
+
   return (
     <div className="min-h-screen bg-[#07122F] text-white">
       <section className="brand-grid relative overflow-hidden bg-[linear-gradient(180deg,#081734_0%,#1D2D49_58%,#E9EEF5_100%)] pt-32">
@@ -67,8 +69,9 @@ const Home = () => {
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <a
-                href={ASSISTANT_DOWNLOAD_URL}
+                href={assistantHref}
                 download
+                onClick={() => void recordDownloadClick(assistantDownload.downloadId)}
                 className="inline-flex h-16 items-center justify-center gap-3 rounded-full bg-[#22D5F5] px-8 text-lg font-semibold text-[#07122F] transition hover:bg-[#8EF2FF]"
               >
                 下载 macOS 版
@@ -102,7 +105,7 @@ const Home = () => {
               <img src="/images/brand/xingban-icon.png" alt="星伴 logo" className="h-16 w-16 rounded-[18px] sm:h-24 sm:w-24 sm:rounded-[22px]" />
               <div>
                 <div className="font-mono text-lg text-white sm:text-[26px]">Xingban Assistant</div>
-                <div className="mt-2 font-mono text-sm text-[#BEEB4D] sm:text-[22px]">{ASSISTANT_VERSION} · aarch64.dmg</div>
+                <div className="mt-2 font-mono text-sm text-[#BEEB4D] sm:text-[22px]">{assistantVersion}</div>
               </div>
             </div>
           </motion.div>
@@ -126,6 +129,7 @@ const Home = () => {
                   <SmartLink
                     key={item.name}
                     href={item.href}
+                    onClick={() => void recordDownloadClick(item.downloadId)}
                     className="group grid min-h-[132px] grid-cols-[88px_1fr] items-center gap-4 rounded-[22px] border bg-[#0B1D3D] p-4 shadow-[0_16px_45px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-[#112954] sm:grid-cols-[118px_1fr] sm:gap-5 sm:p-5"
                     style={{ borderColor: `${item.accent}70` } as React.CSSProperties}
                   >
@@ -174,7 +178,7 @@ const Home = () => {
             <div className="rounded-[28px] border border-[#075DFF]/15 bg-white/75 p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)]">
               <img src="/images/brand/reeftotem-logo-color.png" alt="ReefTotem 官方 logo" className="h-20 w-auto" />
               <p className="mt-4 text-base leading-7 text-[#41506F]">
-                官网顶部保持公司级导航，产品矩阵在正文中呈现，避免把官网拆成多个产品站点。
+                官网顶部保持公司级导航，产品矩阵在正文中呈现；{isApiBacked ? '当前内容已从后台产品与下载 API 同步。' : 'API 不可用时使用静态降级内容。'}
               </p>
             </div>
           </div>
@@ -223,8 +227,9 @@ const Home = () => {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
-                href={ASSISTANT_DOWNLOAD_URL}
+                href={assistantHref}
                 download
+                onClick={() => void recordDownloadClick(assistantDownload.downloadId)}
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#22D5F5] px-7 text-sm font-semibold text-[#07122F]"
               >
                 下载星伴

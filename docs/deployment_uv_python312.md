@@ -9,6 +9,7 @@
 发布目标不是“最终商业收款完成”，而是先让这些能力在真实域名下可验证：
 
 - 官网新版页面。
+- 官网首页、产品体系页、下载中心读取 `/api/v1/products/` 和 `/api/v1/downloads/`，API 不可用时降级到静态目录。
 - `/billing` 账户钱包。
 - `/api/v1/auth/*` 统一账号中心第一阶段。
 - `/api/v1/billing/*` 订单、钱包、权益、用量冻结/扣费/释放。
@@ -51,6 +52,13 @@ uv sync --frozen --python 3.12
 ```bash
 cd /opt/reeftotem/server
 uv run python -m app.initial_data
+```
+
+如果只需要同步官网产品与下载目录：
+
+```bash
+cd /opt/reeftotem/server
+.venv/bin/python -m app.catalog_data
 ```
 
 ## 4. systemd 示例
@@ -125,6 +133,8 @@ curl https://admin.reeftotem.ai/api/v1/health
 
 - 首页可打开。
 - 下载中心可下载星伴 DMG。
+- `/products` 不再展示旧 Hermes 产品目录。
+- `/downloads` 展示后台下载 API 中的星伴安装包，并且点击下载会回写下载次数。
 - `/billing` 可打开账户钱包。
 - 登录后能读取 `/auth/me` 和 `/billing/me/portal`。
 - 后台计费中心可打开。

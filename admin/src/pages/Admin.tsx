@@ -16,7 +16,7 @@ type AdminTab = {
   id: Tab;
   label: string;
   icon: React.ElementType;
-  badge: '真实数据' | '待接前台' | 'API';
+  badge: '真实数据' | '待接前台' | '已接前台' | 'API';
 };
 
 const Admin = () => {
@@ -27,9 +27,9 @@ const Admin = () => {
   const tabs: AdminTab[] = [
     { id: 'dashboard', label: '仪表盘', icon: LayoutDashboard, badge: '真实数据' },
     { id: 'content', label: '内容管理', icon: Image, badge: '待接前台' },
-    { id: 'products', label: '产品管理', icon: Box, badge: '待接前台' },
+    { id: 'products', label: '产品管理', icon: Box, badge: '已接前台' },
     { id: 'billing', label: '计费中心', icon: ReceiptText, badge: 'API' },
-    { id: 'downloads', label: '下载管理', icon: Download, badge: '待接前台' },
+    { id: 'downloads', label: '下载管理', icon: Download, badge: '已接前台' },
     { id: 'users', label: '用户管理', icon: Users, badge: 'API' },
   ];
 
@@ -88,7 +88,7 @@ const Admin = () => {
                     "rounded-full px-2 py-0.5 text-[10px] font-semibold leading-4",
                     tab.badge === '待接前台'
                       ? "bg-amber-100 text-amber-700"
-                      : tab.badge === '真实数据'
+                      : tab.badge === '真实数据' || tab.badge === '已接前台'
                         ? "bg-emerald-100 text-emerald-700"
                         : "bg-blue-100 text-blue-700"
                   )}

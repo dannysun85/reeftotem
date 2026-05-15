@@ -50,27 +50,32 @@
 ## 2. 公共接口 (Public) - 无需认证
 
 ### 获取站点配置
-*   **GET** `/api/v1/public/config`
+*   **GET** `/api/v1/content/config`
+*   **GET** `/api/v1/content/config/{key}`
 *   **Response**: SiteConfig Object (Logo, Footer info)
 
-### 获取首页数据
-*   **GET** `/api/v1/public/home`
-*   **Response**: { banners: [], stats: {} }
-
 ### 获取产品列表
-*   **GET** `/api/v1/public/products`
+*   **GET** `/api/v1/products/`
 *   **Response**: List[Product]
+*   **官网使用**: 首页产品矩阵、`/products` 产品体系页。
 
 ### 获取产品详情
-*   **GET** `/api/v1/public/products/{slug}`
+*   **GET** `/api/v1/products/{id}`
+*   **说明**: 当前详情接口按产品 ID 查询；前台列表展示使用 `/products/`。
 
 ### 获取下载列表
-*   **GET** `/api/v1/public/downloads`
-*   **Query**: `product_id` (optional), `os_type` (optional)
+*   **GET** `/api/v1/downloads/`
+*   **Query**: `product_id` (optional)
 *   **Response**: List[DownloadItem]
+*   **官网使用**: `/downloads` 下载中心。
 
 ### 记录下载 (计数)
-*   **POST** `/api/v1/public/downloads/{id}/count`
+*   **POST** `/api/v1/downloads/{id}/count`
+
+### 获取内容模块
+*   **GET** `/api/v1/content/items`
+*   **Query**: `type` (optional), `is_active` (default `true`), `limit`, `offset`
+*   **状态**: 后台内容管理已接 API；官网正文仍需后续阶段全面 CMS 化。
 
 ### 提交联系表单
 *   **POST** `/api/v1/public/contact`

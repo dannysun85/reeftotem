@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useProductsStore, Product } from '@/stores/productsStore';
 import { Button } from '@/components/common/Button';
-import { AlertTriangle, Edit2, Trash2, Plus, ToggleLeft, ToggleRight, ExternalLink } from 'lucide-react';
+import { CheckCircle2, Edit2, Trash2, Plus, ToggleLeft, ToggleRight, ExternalLink } from 'lucide-react';
 import ProductDialog from './ProductDialog';
 
 const ProductsList = () => {
@@ -35,10 +35,10 @@ const ProductsList = () => {
         </Button>
       </div>
 
-      <div className="mb-6 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">
-        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+      <div className="mb-6 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-6 text-emerald-800">
+        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
         <div>
-          产品数据已写入后台 API，但官网产品页目前没有完全改成实时读取这里的数据。这里可作为产品数据池维护，前台绑定完成前不要把它当成已上线展示结果。
+          产品数据已接入官网首页和产品体系页。发布状态、排序、名称、说明、图片和文档入口会被前台读取；API 不可用时官网才会降级到静态目录。
         </div>
       </div>
 

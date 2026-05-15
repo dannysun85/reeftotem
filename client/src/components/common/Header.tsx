@@ -24,7 +24,7 @@ const Header = () => {
 
   const isActive = (path: string) => {
     const pathname = path.split('#')[0];
-    return location.pathname === pathname;
+    return normalizePath(location.pathname) === normalizePath(pathname);
   };
 
   return (
@@ -108,5 +108,10 @@ const Header = () => {
     </header>
   );
 };
+
+function normalizePath(pathname: string) {
+  if (pathname === '/') return '/';
+  return pathname.replace(/\/+$/, '');
+}
 
 export default Header;

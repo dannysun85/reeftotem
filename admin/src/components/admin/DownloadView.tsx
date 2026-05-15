@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDownloadsStore, DownloadItem } from '@/stores/downloads';
 import { Button } from '@/components/common/Button';
-import { AlertTriangle, Plus, Trash2, Edit2, Download, Package } from 'lucide-react';
+import { CheckCircle2, Plus, Trash2, Edit2, Download, Package } from 'lucide-react';
 
 const DownloadView = () => {
   const { items, createItem, updateItem, deleteItem } = useDownloadsStore();
@@ -65,10 +65,10 @@ const DownloadView = () => {
         </Button>
       </div>
 
-      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-800">
-        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+      <div className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-sm leading-6 text-emerald-800">
+        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
         <div>
-          下载记录已接后台 API；当前官网下载页仍以已发布的真实安装包和静态发布策略为准。后续把下载页改为读取 /api/v1/downloads 后，这里才会直接控制前台下载列表。
+          下载记录已接入官网下载中心。可见状态、最新版本、下载链接和下载次数会被前台读取；用户点击下载时会回写下载计数。
         </div>
       </div>
 

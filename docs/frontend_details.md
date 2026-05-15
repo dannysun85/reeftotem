@@ -57,15 +57,21 @@
 
 ## 4. 关键功能实现逻辑
 
-### 4.1 下载中心
-当前官网发布版以真实静态 release 信息为准：星伴 macOS 安装包可下载，OPC 是线上控制台，QuantAgent 完成后再开放。
+### 4.1 产品体系与下载中心
+官网首页、`/products` 和 `/downloads` 已进入第一阶段 API 驱动：
 
-后台 `下载管理` 已连接 `/api/v1/downloads`，但前台下载页尚未完全改为 API 驱动。下一阶段如果要把后台下载管理变成前台唯一数据源，应补齐：
+1.  前端读取 `/api/v1/products/` 和 `/api/v1/downloads/`。
+2.  产品按 `is_published`、`sort_order` 和 `slug` 映射到官网产品矩阵。
+3.  下载按 `is_visible`、`is_latest`、`product_id` 和安装包 URL 映射到下载中心。
+4.  下载点击会回写 `POST /api/v1/downloads/{id}/count`，但统计失败不能阻断真实下载。
+5.  API 不可用或线上目录为空时，官网降级到 `client/src/data/site.ts` 的静态安全目录。
 
-1.  前端读取 `/api/v1/downloads`。
-2.  按产品、平台、可见状态和 `is_latest` 过滤。
-3.  下载点击回写 `/api/v1/downloads/{id}/count`。
-4.  后台保存后能在官网 `/downloads` 直接生效。
+服务器产品目录由 `python -m app.catalog_data` 幂等同步，当前真实目录为：
+
+*   `opc`：OPC 企业平台控制台。
+*   `xingban-assistant`：星伴 Assistant macOS Apple Silicon 1.0.0 下载。
+*   `quantagent`：QuantAgent 内测推进。
+*   `reeftotem-engineering`：安全与交付体系。
 
 ### 4.2 图片/文件上传
 1.  **组件**: 使用 Dropzone 或 `<input type="file" />`。
@@ -100,7 +106,7 @@
 
 ### 4.5 Admin CMS 边界
 
-`内容管理`、`产品管理`、`下载管理` 当前是后台 API 数据池，不等于已经完整控制官网前台。后台 UI 必须标注“前台待接”，直到官网首页、产品页、下载页实际改成读取这些 API。
+`产品管理` 和 `下载管理` 已接入官网前台第一阶段。`内容管理` 仍是后台 API 数据池，不等于已经完整控制官网所有文案；后台 UI 必须继续标注内容模块“前台待接”，直到首页、关于、联系等页面全面改成内容 API 驱动。
 
 ## 5. UI/UX 规范
 *   **字体**: 系统默认字体栈 (San Francisco, Inter, etc.)。

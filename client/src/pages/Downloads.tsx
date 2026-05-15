@@ -2,7 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Download, ExternalLink, FileText, ShieldCheck } from 'lucide-react';
-import { ASSISTANT_DOWNLOAD_URL, ASSISTANT_VERSION, PRODUCT_CONSOLE_URL, deliveryProducts } from '@/data/site';
+import {
+  formatReleaseDate,
+  getAssistantDownloadHref,
+  getOpcHref,
+  recordDownloadClick,
+  usePublicCatalog,
+} from '@/api/publicCatalog';
 
 const docs = [
   ['安装与更新', '下载 DMG 后拖入 Applications。后续版本会沿同一下载中心发布，并保留版本说明。'],
@@ -12,6 +18,11 @@ const docs = [
 ];
 
 const Downloads = () => {
+  const { deliveryProducts, assistantDownload, isApiBacked } = usePublicCatalog();
+  const assistantHref = getAssistantDownloadHref(assistantDownload);
+  const opcHref = getOpcHref(deliveryProducts.find((item) => item.slug === 'opc'));
+  const assistantVersion = assistantDownload.packageUrl ? assistantDownload.desc : '1.0.0 · aarch64.dmg';
+
   return (
     <div className="min-h-screen bg-[#07122F] text-white">
       <section className="brand-grid bg-[linear-gradient(180deg,#07122F_0%,#20314E_62%,#E9EEF5_100%)] pt-36">
@@ -19,22 +30,23 @@ const Downloads = () => {
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-[38px] font-semibold leading-[1.1] tracking-tight sm:text-[58px] md:text-[86px]">
               <span className="block">星伴 Assistant</span>
-              <span className="block">{ASSISTANT_VERSION} 官网下载</span>
+              <span className="block">{assistantDownload.status} 官网下载</span>
             </h1>
             <p className="mt-7 max-w-2xl break-words text-lg leading-8 text-[#DDF9FF]/80 [overflow-wrap:anywhere] sm:text-xl sm:leading-9">
-              下载中心是公司产品交付入口。当前开放星伴 macOS Apple Silicon 安装包，OPC 提供线上控制台，QuantAgent 完成后从同一入口发布。
+              下载中心是公司产品交付入口。当前开放星伴 macOS Apple Silicon 安装包，OPC 提供线上控制台，QuantAgent 完成后从同一入口发布。{isApiBacked ? '本页已接入后台下载 API。' : ''}
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <a
-                href={ASSISTANT_DOWNLOAD_URL}
+                href={assistantHref}
                 download
+                onClick={() => void recordDownloadClick(assistantDownload.downloadId)}
                 className="inline-flex h-16 items-center justify-center gap-3 rounded-full bg-[#22D5F5] px-8 text-lg font-semibold text-[#07122F]"
               >
                 下载 macOS 版
                 <Download className="h-5 w-5" />
               </a>
               <a
-                href={PRODUCT_CONSOLE_URL}
+                href={opcHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-16 items-center justify-center gap-3 rounded-full bg-[#07122F]/70 px-8 text-lg font-semibold text-white ring-1 ring-white/20"
@@ -54,11 +66,12 @@ const Downloads = () => {
                 <img src="/images/brand/xingban-icon.png" alt="星伴图标" className="h-20 w-20 rounded-[20px]" />
                 <div>
                   <div className="font-mono text-2xl">Xingban Assistant</div>
-                  <div className="mt-1 font-mono text-[#BEEB4D]">{ASSISTANT_VERSION} · aarch64.dmg</div>
+                  <div className="mt-1 font-mono text-[#BEEB4D]">{assistantVersion}</div>
                 </div>
                 <a
-                  href={ASSISTANT_DOWNLOAD_URL}
+                  href={assistantHref}
                   download
+                  onClick={() => void recordDownloadClick(assistantDownload.downloadId)}
                   className="inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-[#07122F]"
                 >
                   下载
@@ -77,7 +90,15 @@ const Downloads = () => {
             <div className="mt-8 h-px bg-white/12" />
             <div className="mt-8 grid gap-5 lg:grid-cols-3">
               {deliveryProducts.map((item) => (
-                <div key={item.name} className="grid min-h-[128px] grid-cols-[88px_1fr] items-center gap-4 rounded-[22px] border border-white/10 bg-[#0C1E3F] p-4 sm:grid-cols-[116px_1fr] sm:gap-5 sm:p-5">
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  download={item.href.startsWith('/downloads/') ? true : undefined}
+                  onClick={() => void recordDownloadClick(item.downloadId)}
+                  className="grid min-h-[128px] grid-cols-[88px_1fr] items-center gap-4 rounded-[22px] border border-white/10 bg-[#0C1E3F] p-4 transition hover:-translate-y-0.5 hover:bg-[#122A55] sm:grid-cols-[116px_1fr] sm:gap-5 sm:p-5"
+                >
                   <div className="flex h-[76px] w-[88px] items-center justify-center overflow-hidden rounded-[18px] bg-white/5 sm:h-[90px] sm:w-[116px]">
                     <img
                       src={item.image}
@@ -92,7 +113,7 @@ const Downloads = () => {
                     <div className="mt-1 text-[23px] font-semibold">{item.name}</div>
                     <div className="mt-1 text-sm text-[#DDF9FF]/70">{item.desc}</div>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>
@@ -110,9 +131,11 @@ const Downloads = () => {
           <div className="grid gap-4">
             {[
               ['平台', 'macOS Apple Silicon'],
-              ['版本', ASSISTANT_VERSION],
+              ['版本', assistantDownload.status],
               ['格式', 'DMG'],
-              ['文件名', 'Xingban-Assistant-1.0.0-aarch64.dmg'],
+              ['文件名', assistantHref.replace('/downloads/', '')],
+              ['发布日期', formatReleaseDate(assistantDownload.releaseDate)],
+              ['下载次数', assistantDownload.downloadCount === undefined ? '后台统计接入后显示' : `${assistantDownload.downloadCount}`],
             ].map(([label, value]) => (
               <div key={label} className="grid grid-cols-[120px_1fr] rounded-[18px] border border-[#07122F]/10 bg-white px-5 py-4">
                 <div className="text-sm font-semibold text-[#075DFF]">{label}</div>
@@ -120,8 +143,9 @@ const Downloads = () => {
               </div>
             ))}
             <a
-              href={ASSISTANT_DOWNLOAD_URL}
+              href={assistantHref}
               download
+              onClick={() => void recordDownloadClick(assistantDownload.downloadId)}
               className="mt-2 inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#07122F] px-7 text-sm font-semibold text-white"
             >
               立即下载星伴
