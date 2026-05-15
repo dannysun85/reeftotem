@@ -1,111 +1,280 @@
-import React from 'react';
-import { useAdminStore } from '@/stores/adminStore';
+import React, { useEffect } from 'react';
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Database,
+  Download,
+  Image,
+  Package,
+  ReceiptText,
+  Users,
+  type LucideIcon,
+} from 'lucide-react';
+import { useBillingStore } from '@/stores/billingStore';
+import { useContentStore } from '@/stores/contentStore';
 import { useDownloadsStore } from '@/stores/downloads';
-import { Users, Download, Eye, TrendingUp, type LucideIcon } from 'lucide-react';
+import { useProductsStore } from '@/stores/productsStore';
+import { useUsersStore } from '@/stores/usersStore';
 
 type StatCardProps = {
   title: string;
-  value: string | number;
+  value: string;
+  helper: string;
   icon: LucideIcon;
-  color: string;
+  tone: 'blue' | 'cyan' | 'emerald' | 'amber' | 'slate' | 'violet';
 };
 
-const StatCard = ({ title, value, icon: Icon, color }: StatCardProps) => (
-  <div className="bg-card border border-border rounded-[24px] p-6 shadow-sm">
-    <div className="flex items-center justify-between mb-4">
-      <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-md`}>
-        <Icon className="w-6 h-6 text-white" />
+const toneClass: Record<StatCardProps['tone'], string> = {
+  blue: 'bg-blue-50 text-blue-700 ring-blue-100',
+  cyan: 'bg-cyan-50 text-cyan-700 ring-cyan-100',
+  emerald: 'bg-emerald-50 text-emerald-700 ring-emerald-100',
+  amber: 'bg-amber-50 text-amber-700 ring-amber-100',
+  slate: 'bg-slate-50 text-slate-700 ring-slate-100',
+  violet: 'bg-violet-50 text-violet-700 ring-violet-100',
+};
+
+const StatCard = ({ title, value, helper, icon: Icon, tone }: StatCardProps) => (
+  <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+    <div className="mb-5 flex items-start justify-between gap-4">
+      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ring-1 ${toneClass[tone]}`}>
+        <Icon className="h-6 w-6" />
       </div>
-      <span className="text-xs font-medium text-green-500 bg-green-500/10 px-2 py-1 rounded-full flex items-center">
-        <TrendingUp className="w-3 h-3 mr-1" /> +12.5%
+      <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+        API 数据
       </span>
     </div>
-    <h3 className="text-muted-foreground text-sm font-medium">{title}</h3>
-    <p className="text-3xl font-bold text-foreground mt-1 tracking-tight">{value}</p>
+    <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
+    <p className="mt-2 text-3xl font-bold tracking-tight text-foreground">{value}</p>
+    <p className="mt-3 min-h-10 text-sm leading-5 text-muted-foreground">{helper}</p>
   </div>
 );
 
+function money(cents: number) {
+  return new Intl.NumberFormat('zh-CN', {
+    style: 'currency',
+    currency: 'CNY',
+    maximumFractionDigits: 0,
+  }).format(cents / 100);
+}
+
 const DashboardView = () => {
-  const { stats, users } = useAdminStore();
-  const { items: downloads } = useDownloadsStore();
-  
-  // Calculate total downloads from all items
-  const realTotalDownloads = downloads.reduce((acc, item) => acc + (item.download_count || 0), 0);
+  const { dashboard, fetchDashboard, error: billingError } = useBillingStore();
+  const { products, fetchProducts, error: productsError } = useProductsStore();
+  const { items: downloads, fetchItems: fetchDownloads, error: downloadsError } = useDownloadsStore();
+  const { users, fetchUsers, error: usersError } = useUsersStore();
+  const { items: contentItems, fetchItems: fetchContentItems, error: contentError } = useContentStore();
+
+  useEffect(() => {
+    void fetchDashboard();
+    void fetchProducts();
+    void fetchDownloads();
+    void fetchUsers();
+    void fetchContentItems();
+  }, [fetchContentItems, fetchDashboard, fetchDownloads, fetchProducts, fetchUsers]);
+
+  const metric = (key: string) => dashboard?.metrics.find((item) => item.key === key);
+  const revenue30d = metric('revenue_30d')?.value || 0;
+  const activeSubscriptions = metric('active_subscriptions')?.value || 0;
+  const totalDownloadCount = downloads.reduce((acc, item) => acc + (item.download_count || 0), 0);
+
+  const errors = [
+    billingError && `计费中心：${billingError}`,
+    productsError && `产品管理：${productsError}`,
+    downloadsError && `下载管理：${downloadsError}`,
+    usersError && `用户管理：${usersError}`,
+    contentError && `内容管理：${contentError}`,
+  ].filter((item): item is string => Boolean(item));
+
+  const integrationStates = [
+    {
+      name: '计费中心',
+      status: '已接后台 API',
+      detail: '/api/v1/billing/admin-dashboard、订单确认、钱包账本和用户画像来自 Billing Core。',
+      ready: true,
+    },
+    {
+      name: '用户管理',
+      status: '已接后台 API',
+      detail: '/api/v1/users 是当前账号和管理员管理入口。',
+      ready: true,
+    },
+    {
+      name: '内容管理',
+      status: '后台可写，前台待接',
+      detail: '内容配置已写入后端；官网首页/产品页仍主要使用静态发布内容，不能当成实时 CMS 闭环。',
+      ready: false,
+    },
+    {
+      name: '产品管理',
+      status: '后台可写，前台待接',
+      detail: '产品记录已接 /api/v1/products；官网产品展示目前没有完全读取这些记录。',
+      ready: false,
+    },
+    {
+      name: '下载管理',
+      status: '后台可写，前台待接',
+      detail: '下载记录已接 /api/v1/downloads；官网下载页当前以真实静态 release 为准，下一步再改成 API 驱动。',
+      ready: false,
+    },
+  ];
+
+  const topDownloads = [...downloads]
+    .sort((a, b) => (b.download_count || 0) - (a.download_count || 0))
+    .slice(0, 5);
 
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">仪表盘</h2>
-        <p className="text-muted-foreground">网站运营数据概览</p>
+        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+          <Database className="h-3.5 w-3.5" />
+          已移除本地假数据
+        </div>
+        <h2 className="text-2xl font-bold text-foreground mb-2">运营仪表盘</h2>
+        <p className="max-w-3xl text-muted-foreground">
+          这里现在只展示后台 API 能拿到的真实记录和接入状态。前台还没消费的 CMS 模块会明确标注为“前台待接”，不再伪装成完整运营闭环。
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard 
-          title="总访问量" 
-          value={stats.totalVisits.toLocaleString()} 
-          icon={Eye} 
-          color="from-blue-500 to-cyan-500" 
+      {errors.length > 0 && (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-800">
+          <div className="mb-2 flex items-center gap-2 font-semibold">
+            <AlertTriangle className="h-4 w-4" />
+            部分 API 暂时不可用
+          </div>
+          <div className="space-y-1">
+            {errors.map((item) => (
+              <div key={item}>{item}</div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <StatCard
+          title="近 30 天收入"
+          value={money(revenue30d)}
+          helper="来自 Billing Core 订单和入账记录。"
+          icon={ReceiptText}
+          tone="blue"
         />
-        <StatCard 
-          title="活跃用户" 
-          value={users.length} 
-          icon={Users} 
-          color="from-purple-500 to-pink-500" 
+        <StatCard
+          title="活跃订阅"
+          value={activeSubscriptions.toLocaleString()}
+          helper="只统计后端订阅表，不再使用写死数字。"
+          icon={CheckCircle2}
+          tone="emerald"
         />
-        <StatCard 
-          title="总下载量" 
-          value={realTotalDownloads.toLocaleString()} 
-          icon={Download} 
-          color="from-green-500 to-emerald-500" 
+        <StatCard
+          title="后台用户"
+          value={users.length.toLocaleString()}
+          helper="来自用户管理 API。"
+          icon={Users}
+          tone="violet"
         />
-        <StatCard 
-          title="今日新增" 
-          value="128" 
-          icon={TrendingUp} 
-          color="from-orange-500 to-red-500" 
+        <StatCard
+          title="产品记录"
+          value={products.length.toLocaleString()}
+          helper="来自产品管理 API，前台消费状态见下方接入表。"
+          icon={Package}
+          tone="slate"
+        />
+        <StatCard
+          title="下载记录"
+          value={downloads.length.toLocaleString()}
+          helper={`下载计数合计 ${totalDownloadCount.toLocaleString()}。`}
+          icon={Download}
+          tone="cyan"
+        />
+        <StatCard
+          title="内容模块"
+          value={contentItems.length.toLocaleString()}
+          helper="来自内容管理 API，官网前台仍待彻底数据化。"
+          icon={Image}
+          tone="amber"
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-card border border-border rounded-[24px] p-6 shadow-sm">
-          <h3 className="text-lg font-bold text-foreground mb-6">下载排行</h3>
-          <div className="space-y-4">
-            {downloads.sort((a, b) => (b.download_count || 0) - (a.download_count || 0)).slice(0, 5).map((item, index) => (
-              <div key={item.id} className="flex items-center justify-between p-3 rounded-xl hover:bg-secondary transition-colors">
-                <div className="flex items-center space-x-4">
-                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${index < 3 ? 'bg-primary text-white shadow-sm' : 'bg-secondary text-muted-foreground'}`}>
-                    {index + 1}
-                  </span>
+      <div className="grid grid-cols-1 gap-8 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 className="mb-5 text-lg font-bold text-foreground">模块接入状态</h3>
+          <div className="space-y-3">
+            {integrationStates.map((item) => (
+              <div key={item.name} className="rounded-2xl border border-border bg-secondary/30 p-4">
+                <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
                   <div>
-                    <p className="text-foreground font-medium text-sm">{item.name}</p>
-                    <p className="text-muted-foreground text-xs">{item.platform}</p>
+                    <div className="font-semibold text-foreground">{item.name}</div>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.detail}</p>
                   </div>
+                  <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${item.ready ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                    {item.status}
+                  </span>
                 </div>
-                <span className="text-primary font-mono font-bold">{item.download_count?.toLocaleString()}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-card border border-border rounded-[24px] p-6 shadow-sm">
-          <h3 className="text-lg font-bold text-foreground mb-6">最近注册用户</h3>
-          <div className="space-y-4">
-            {users.slice(0, 5).map((user) => (
-              <div key={user.id} className="flex items-center justify-between p-3 rounded-xl hover:bg-secondary transition-colors">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-secondary border border-border flex items-center justify-center text-xs font-bold text-foreground">
-                    {user.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-foreground font-medium text-sm">{user.name}</p>
-                    <p className="text-muted-foreground text-xs">{user.email}</p>
-                  </div>
-                </div>
-                <span className={`text-xs px-2 py-1 rounded-full ${user.status === 'active' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
-                  {user.status === 'active' ? '活跃' : '停用'}
-                </span>
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 className="mb-5 text-lg font-bold text-foreground">Billing 数据质量</h3>
+          <div className="space-y-3">
+            {(dashboard?.data_quality?.length ? dashboard.data_quality : ['billing_dashboard_loaded']).map((item) => (
+              <div key={item} className="flex items-start gap-3 rounded-2xl bg-secondary/30 p-4 text-sm leading-6 text-muted-foreground">
+                <Database className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <span>{item}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 className="mb-5 text-lg font-bold text-foreground">下载记录排行</h3>
+          <div className="space-y-3">
+            {topDownloads.map((item, index) => (
+              <div key={item.id} className="flex items-center justify-between rounded-2xl bg-secondary/30 p-4">
+                <div className="flex items-center gap-4">
+                  <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${index < 3 ? 'bg-primary text-white' : 'bg-background text-muted-foreground'}`}>
+                    {index + 1}
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{item.name}</p>
+                    <p className="text-xs text-muted-foreground">{item.platform || item.os_type}</p>
+                  </div>
+                </div>
+                <span className="font-mono text-sm font-bold text-primary">{item.download_count?.toLocaleString() || 0}</span>
+              </div>
+            ))}
+            {topDownloads.length === 0 && (
+              <div className="rounded-2xl border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
+                暂无下载记录。
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <h3 className="mb-5 text-lg font-bold text-foreground">最近订单</h3>
+          <div className="space-y-3">
+            {(dashboard?.recent_orders || []).slice(0, 5).map((order) => (
+              <div key={order.id} className="rounded-2xl bg-secondary/30 p-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="break-all font-mono text-xs text-foreground">{order.order_no}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{order.product_code || order.order_type}</div>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <div className="text-xs text-muted-foreground">{order.status}</div>
+                    <div className="mt-1 font-mono text-sm font-semibold text-foreground">{money(order.amount_cents)}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {(!dashboard || dashboard.recent_orders.length === 0) && (
+              <div className="rounded-2xl border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
+                暂无订单，接入真实充值或后台确认入账后会显示。
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -138,7 +138,8 @@ QuantAgent
 
 ```text
 用户访问 /billing
-  -> 未登录：调用 /auth/login
+  -> 未登录：只展示计费体系说明、登录表单和软件接入边界
+  -> 用户提交登录：调用 /auth/login
   -> 后端创建 account_sessions
   -> 返回 access_token + session_id + applications
   -> 官网读取 /auth/me

@@ -36,7 +36,7 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
   fetchProducts: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await request.get<unknown, Product[]>('/products');
+      const response = await request.get<unknown, Product[]>('/products/');
       if (Array.isArray(response)) {
         set({ products: response, isLoading: false });
       } else {
@@ -50,7 +50,7 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
   createProduct: async (product) => {
     set({ isLoading: true, error: null });
     try {
-      await request.post('/products', product);
+      await request.post('/products/', product);
       await get().fetchProducts();
     } catch (err: unknown) {
       set({ isLoading: false, error: getErrorMessage(err, 'Failed to create product') });

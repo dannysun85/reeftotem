@@ -12,18 +12,25 @@ import { useAuthStore } from '@/stores/authStore';
 
 type Tab = 'dashboard' | 'content' | 'products' | 'billing' | 'users' | 'downloads';
 
+type AdminTab = {
+  id: Tab;
+  label: string;
+  icon: React.ElementType;
+  badge: '真实数据' | '待接前台' | 'API';
+};
+
 const Admin = () => {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { logout } = useAuthStore();
 
-  const tabs = [
-    { id: 'dashboard', label: '仪表盘', icon: LayoutDashboard },
-    { id: 'content', label: '内容管理', icon: Image },
-    { id: 'products', label: '产品管理', icon: Box },
-    { id: 'billing', label: '计费中心', icon: ReceiptText },
-    { id: 'downloads', label: '下载管理', icon: Download },
-    { id: 'users', label: '用户管理', icon: Users },
+  const tabs: AdminTab[] = [
+    { id: 'dashboard', label: '仪表盘', icon: LayoutDashboard, badge: '真实数据' },
+    { id: 'content', label: '内容管理', icon: Image, badge: '待接前台' },
+    { id: 'products', label: '产品管理', icon: Box, badge: '待接前台' },
+    { id: 'billing', label: '计费中心', icon: ReceiptText, badge: 'API' },
+    { id: 'downloads', label: '下载管理', icon: Download, badge: '待接前台' },
+    { id: 'users', label: '用户管理', icon: Users, badge: 'API' },
   ];
 
   const renderContent = () => {
@@ -49,12 +56,12 @@ const Admin = () => {
       {/* Sidebar */}
       <motion.aside
         initial={false}
-        animate={{ width: isSidebarOpen ? 260 : 80 }}
+        animate={{ width: isSidebarOpen ? 286 : 80 }}
         className="fixed top-0 left-0 bottom-0 z-40 bg-card border-r border-border flex flex-col transition-all duration-300 shadow-sm"
       >
         <div className="h-20 flex items-center px-6 border-b border-border">
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-8 h-8 rounded-lg bg-primary shrink-0 flex items-center justify-center text-white font-bold">R</div>
+            <img src="/favicon.svg" alt="ReefTotem" className="h-9 w-9 shrink-0 rounded-xl" />
             <span className={cn("font-bold text-foreground text-lg whitespace-nowrap transition-opacity duration-200", !isSidebarOpen && "opacity-0")}>
               ReefTotem Admin
             </span>
@@ -68,14 +75,26 @@ const Admin = () => {
               onClick={() => setActiveTab(tab.id as Tab)}
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
-                activeTab === tab.id 
+                activeTab === tab.id
                   ? "bg-primary/10 text-primary" 
                   : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               )}
             >
               <tab.icon className={cn("w-5 h-5 shrink-0", activeTab === tab.id && "text-primary")} />
-              <span className={cn("font-medium whitespace-nowrap transition-opacity duration-200", !isSidebarOpen && "opacity-0 hidden")}>
-                {tab.label}
+              <span className={cn("flex min-w-0 flex-1 items-center justify-between gap-2 transition-opacity duration-200", !isSidebarOpen && "opacity-0 hidden")}>
+                <span className="truncate font-medium whitespace-nowrap">{tab.label}</span>
+                <span
+                  className={cn(
+                    "rounded-full px-2 py-0.5 text-[10px] font-semibold leading-4",
+                    tab.badge === '待接前台'
+                      ? "bg-amber-100 text-amber-700"
+                      : tab.badge === '真实数据'
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "bg-blue-100 text-blue-700"
+                  )}
+                >
+                  {tab.badge}
+                </span>
               </span>
               
               {/* Tooltip for collapsed state */}
@@ -105,12 +124,12 @@ const Admin = () => {
       <main 
         className={cn(
           "flex-1 min-h-screen transition-all duration-300 pt-20",
-          isSidebarOpen ? "ml-[260px]" : "ml-[80px]"
+          isSidebarOpen ? "ml-[286px]" : "ml-[80px]"
         )}
       >
         {/* Top Header */}
         <header className="fixed top-0 right-0 z-30 bg-background/80 backdrop-blur-md border-b border-border h-20 flex items-center justify-between px-8"
-          style={{ left: isSidebarOpen ? 260 : 80, transition: 'left 300ms' }}
+          style={{ left: isSidebarOpen ? 286 : 80, transition: 'left 300ms' }}
         >
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}

@@ -38,7 +38,7 @@ export const useDownloadsStore = create<DownloadsState>((set, get) => ({
   fetchItems: async () => {
     set({ isLoading: true, error: null });
     try {
-      const data = await request.get<unknown, DownloadItem[]>('/downloads');
+      const data = await request.get<unknown, DownloadItem[]>('/downloads/');
       if (Array.isArray(data)) {
         set({ items: data, isLoading: false });
       } else {
@@ -52,7 +52,7 @@ export const useDownloadsStore = create<DownloadsState>((set, get) => ({
   createItem: async (item) => {
     set({ isLoading: true, error: null });
     try {
-      await request.post('/downloads', item);
+      await request.post('/downloads/', item);
       await get().fetchItems();
     } catch (err: unknown) {
       set({ isLoading: false, error: getErrorMessage(err, 'Failed to create download') });

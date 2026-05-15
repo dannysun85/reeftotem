@@ -321,8 +321,8 @@ const Billing = () => {
               官网负责用户充值、订阅购买、消费账单和权益查询；OPC、星伴、QuantAgent 通过同一套 Billing Core 校验权限、冻结额度、完成扣费。
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a href="#recharge" className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[#22D5F5] px-8 text-base font-semibold text-[#07122F]">
-                充值与购买
+              <a href={isSignedIn ? '#recharge' : '#account-login'} className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[#22D5F5] px-8 text-base font-semibold text-[#07122F]">
+                {isSignedIn ? '充值与购买' : '登录账户'}
                 <CreditCard className="h-5 w-5" />
               </a>
               <a href="#software-access" className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[#07122F]/70 px-8 text-base font-semibold text-white ring-1 ring-white/20">
@@ -378,7 +378,7 @@ const Billing = () => {
       <section className="bg-[#E9EEF5] py-20 text-[#07122F]">
         <div className="section-shell grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
           <aside className="space-y-5">
-            <div className="rounded-[28px] border border-[#07122F]/10 bg-white p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)]">
+            <div id="account-login" className="rounded-[28px] border border-[#07122F]/10 bg-white p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)]">
               <div className="mb-4 flex items-center gap-3">
                 <KeyRound className="h-5 w-5 text-[#075DFF]" />
                 <h2 className="text-2xl font-semibold">账户登录</h2>
@@ -430,59 +430,63 @@ const Billing = () => {
               )}
             </div>
 
-            <div className="rounded-[28px] border border-[#07122F]/10 bg-white p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)]">
-              <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-2xl font-semibold">钱包概览</h2>
-                <button
-                  onClick={() => loadPortal().catch(() => setError('钱包刷新失败。'))}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F4F7FB]"
-                  aria-label="刷新钱包"
-                >
-                  <RefreshCw className="h-4 w-4" />
-                </button>
-              </div>
-              <div className="grid gap-3">
-                {[
-                  ['可用余额', money(availableCents)],
-                  ['总余额', portal ? money(portal.wallet.balance_cents) : '未登录'],
-                  ['冻结额度', portal ? money(portal.wallet.reserved_cents) : money(0)],
-                ].map(([label, value]) => (
-                  <div key={label} className="flex items-center justify-between rounded-[18px] bg-[#F4F7FB] px-4 py-3">
-                    <span className="text-sm text-[#50617F]">{label}</span>
-                    <span className="font-mono text-sm font-semibold">{value}</span>
+            {isSignedIn && (
+              <>
+                <div className="rounded-[28px] border border-[#07122F]/10 bg-white p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)]">
+                  <div className="mb-4 flex items-center justify-between">
+                    <h2 className="text-2xl font-semibold">钱包概览</h2>
+                    <button
+                      onClick={() => loadPortal().catch(() => setError('钱包刷新失败。'))}
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F4F7FB]"
+                      aria-label="刷新钱包"
+                    >
+                      <RefreshCw className="h-4 w-4" />
+                    </button>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[28px] border border-[#07122F]/10 bg-white p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)]">
-              <div className="mb-4 flex items-center gap-3">
-                <PlugZap className="h-5 w-5 text-[#075DFF]" />
-                <h2 className="text-2xl font-semibold">应用入口</h2>
-              </div>
-              <div className="space-y-3">
-                {(accountContext?.applications || []).map((application) => (
-                  <a
-                    key={application.client_id}
-                    href={application.launch_url}
-                    className="block rounded-[18px] bg-[#F4F7FB] p-4 transition hover:bg-[#EEF3FA]"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <div className="font-semibold">{application.name}</div>
-                        <div className="mt-1 text-xs text-[#50617F]">{application.login_method}</div>
+                  <div className="grid gap-3">
+                    {[
+                      ['可用余额', money(availableCents)],
+                      ['总余额', portal ? money(portal.wallet.balance_cents) : '未登录'],
+                      ['冻结额度', portal ? money(portal.wallet.reserved_cents) : money(0)],
+                    ].map(([label, value]) => (
+                      <div key={label} className="flex items-center justify-between rounded-[18px] bg-[#F4F7FB] px-4 py-3">
+                        <span className="text-sm text-[#50617F]">{label}</span>
+                        <span className="font-mono text-sm font-semibold">{value}</span>
                       </div>
-                      <ExternalLink className="h-4 w-4 shrink-0 text-[#075DFF]" />
-                    </div>
-                  </a>
-                ))}
-                {!accountContext && (
-                  <div className="rounded-[18px] bg-[#F4F7FB] p-4 text-sm text-[#50617F]">
-                    登录后显示 OPC、星伴、QuantAgent 的统一账号入口。
+                    ))}
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
+
+                <div className="rounded-[28px] border border-[#07122F]/10 bg-white p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)]">
+                  <div className="mb-4 flex items-center gap-3">
+                    <PlugZap className="h-5 w-5 text-[#075DFF]" />
+                    <h2 className="text-2xl font-semibold">应用入口</h2>
+                  </div>
+                  <div className="space-y-3">
+                    {(accountContext?.applications || []).map((application) => (
+                      <a
+                        key={application.client_id}
+                        href={application.launch_url}
+                        className="block rounded-[18px] bg-[#F4F7FB] p-4 transition hover:bg-[#EEF3FA]"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <div className="font-semibold">{application.name}</div>
+                            <div className="mt-1 text-xs text-[#50617F]">{application.login_method}</div>
+                          </div>
+                          <ExternalLink className="h-4 w-4 shrink-0 text-[#075DFF]" />
+                        </div>
+                      </a>
+                    ))}
+                    {!accountContext && (
+                      <div className="rounded-[18px] bg-[#F4F7FB] p-4 text-sm text-[#50617F]">
+                        登录后显示 OPC、星伴、QuantAgent 的统一账号入口。
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
           </aside>
 
           <div className="space-y-8">
@@ -492,6 +496,33 @@ const Billing = () => {
               </div>
             )}
 
+            {!isSignedIn ? (
+              <section className="rounded-[30px] border border-[#07122F]/10 bg-white p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)] md:p-8">
+                <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-[22px] bg-[#07122F] text-white">
+                  <ShieldCheck className="h-7 w-7" />
+                </div>
+                <h2 className="max-w-3xl text-4xl font-semibold tracking-tight">未登录只展示计费体系说明</h2>
+                <p className="mt-5 max-w-3xl text-base leading-8 text-[#50617F]">
+                  钱包余额、充值下单、订单记录、消费账本、产品权益和应用入口都属于账号数据，必须登录统一账号中心后才显示。公开页面只说明 Billing Core 的作用和三款软件的接入边界。
+                </p>
+                <div className="mt-8 grid gap-4 md:grid-cols-3">
+                  {[
+                    ['公开可见', '计费体系说明、软件接入原则、支付通道边界。'],
+                    ['登录后可见', '钱包余额、充值、订阅、订单、账本、权益和应用入口。'],
+                    ['软件侧职责', 'OPC、星伴、QuantAgent 只校验权益并提交用量扣费，不自行处理支付。'],
+                  ].map(([title, text]) => (
+                    <div key={title} className="rounded-[22px] border border-[#07122F]/10 bg-[#F4F7FB] p-5">
+                      <div className="font-semibold">{title}</div>
+                      <p className="mt-3 text-sm leading-6 text-[#50617F]">{text}</p>
+                    </div>
+                  ))}
+                </div>
+                <a href="#account-login" className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#07122F] px-7 text-sm font-semibold text-white">
+                  登录后进入钱包
+                </a>
+              </section>
+            ) : (
+              <>
             <section id="recharge" className="rounded-[30px] border border-[#07122F]/10 bg-white p-6 shadow-[0_18px_60px_rgba(7,18,47,0.08)] md:p-8">
               <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
                 <div>
@@ -700,6 +731,8 @@ const Billing = () => {
                 </div>
               </div>
             </section>
+              </>
+            )}
           </div>
         </div>
       </section>

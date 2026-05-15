@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useProductsStore, Product } from '@/stores/productsStore';
 import { Button } from '@/components/common/Button';
-import { Edit2, Trash2, Plus, ToggleLeft, ToggleRight, ExternalLink } from 'lucide-react';
+import { AlertTriangle, Edit2, Trash2, Plus, ToggleLeft, ToggleRight, ExternalLink } from 'lucide-react';
 import ProductDialog from './ProductDialog';
 
 const ProductsList = () => {
@@ -33,6 +33,13 @@ const ProductsList = () => {
           <Plus className="w-4 h-4 mr-2" />
           添加新产品
         </Button>
+      </div>
+
+      <div className="mb-6 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">
+        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+        <div>
+          产品数据已写入后台 API，但官网产品页目前没有完全改成实时读取这里的数据。这里可作为产品数据池维护，前台绑定完成前不要把它当成已上线展示结果。
+        </div>
       </div>
 
       <div className="space-y-4">

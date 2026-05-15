@@ -30,7 +30,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
   fetchUsers: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await request.get<unknown, User[]>('/users');
+      const response = await request.get<unknown, User[]>('/users/');
       if (Array.isArray(response)) {
         set({ users: response, isLoading: false });
       } else {
@@ -44,7 +44,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
   createUser: async (user) => {
     set({ isLoading: true, error: null });
     try {
-      await request.post('/users', user);
+      await request.post('/users/', user);
       await get().fetchUsers();
     } catch (err: unknown) {
       set({ isLoading: false, error: getErrorMessage(err, 'Failed to create user') });

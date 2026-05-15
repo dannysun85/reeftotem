@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDownloadsStore, DownloadItem } from '@/stores/downloads';
 import { Button } from '@/components/common/Button';
-import { Plus, Trash2, Edit2, Download, Package } from 'lucide-react';
+import { AlertTriangle, Plus, Trash2, Edit2, Download, Package } from 'lucide-react';
 
 const DownloadView = () => {
   const { items, createItem, updateItem, deleteItem } = useDownloadsStore();
@@ -63,6 +63,13 @@ const DownloadView = () => {
           <Plus className="w-4 h-4 mr-2" />
           发布新版本
         </Button>
+      </div>
+
+      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-800">
+        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+        <div>
+          下载记录已接后台 API；当前官网下载页仍以已发布的真实安装包和静态发布策略为准。后续把下载页改为读取 /api/v1/downloads 后，这里才会直接控制前台下载列表。
+        </div>
       </div>
 
       {isEditing && (

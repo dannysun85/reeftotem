@@ -1,6 +1,7 @@
 import React from 'react';
 import SiteConfigForm from './content/SiteConfigForm';
 import ContentItemList from './content/ContentItemList';
+import { AlertTriangle } from 'lucide-react';
 
 const ContentView = () => {
   return (
@@ -8,6 +9,13 @@ const ContentView = () => {
       <div>
         <h2 className="text-2xl font-bold text-foreground mb-2">内容管理</h2>
         <p className="text-muted-foreground">管理网站的全局配置和动态内容模块</p>
+      </div>
+
+      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-800">
+        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+        <div>
+          当前模块已连接后台内容 API，但官网前台仍主要按静态发布内容渲染。这里保存的数据不会自动改写所有首页/产品页文案，必须等前台页面改成 API 驱动后才算完整 CMS 闭环。
+        </div>
       </div>
 
       <div className="space-y-8">

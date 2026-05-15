@@ -50,19 +50,22 @@
 
 统一账号中心第一阶段新增账户上下文：
 
-*   官网 `/billing` 登录后读取 `/api/v1/auth/me` 和 `/api/v1/billing/me/portal`。
+*   官网 `/billing` 未登录时只展示计费体系说明、登录入口和软件接入边界。
+*   官网 `/billing` 登录后读取 `/api/v1/auth/me` 和 `/api/v1/billing/me/portal`，再展示钱包、订单、账本、权益、充值和应用入口。
 *   后端登录响应包含 `session_id`、`account_id` 和可接入应用列表。
 *   OPC、星伴 Assistant、QuantAgent 不直接复用官网 token 作为长期登录态，应分别按 `docs/integrations/*_account_center_phase1.md` 接入。
 
 ## 4. 关键功能实现逻辑
 
-### 4.1 下载中心 (自动 OS 识别)
-1.  **前端**: `useOS()` Hook 检测 `navigator.userAgent`。
-2.  **API**: 调用 `/api/v1/public/downloads` 获取所有下载项。
-3.  **渲染**:
-    *   根据 `useOS` 返回的类型 (e.g., 'mac') 过滤 API 返回的数据。
-    *   将匹配 OS 的最新版作为 "推荐下载"。
-    *   其他版本放入 "更多版本" 折叠面板。
+### 4.1 下载中心
+当前官网发布版以真实静态 release 信息为准：星伴 macOS 安装包可下载，OPC 是线上控制台，QuantAgent 完成后再开放。
+
+后台 `下载管理` 已连接 `/api/v1/downloads`，但前台下载页尚未完全改为 API 驱动。下一阶段如果要把后台下载管理变成前台唯一数据源，应补齐：
+
+1.  前端读取 `/api/v1/downloads`。
+2.  按产品、平台、可见状态和 `is_latest` 过滤。
+3.  下载点击回写 `/api/v1/downloads/{id}/count`。
+4.  后台保存后能在官网 `/downloads` 直接生效。
 
 ### 4.2 图片/文件上传
 1.  **组件**: 使用 Dropzone 或 `<input type="file" />`。
@@ -84,7 +87,7 @@
 
 ### 4.4 计费中心后台
 
-后台新增 `BillingCenterView`，通过 `useBillingStore` 调用 `/api/v1/billing/admin-dashboard`。
+后台 `仪表盘` 和 `BillingCenterView` 通过 `useBillingStore` 调用 `/api/v1/billing/admin-dashboard`。仪表盘不得使用本地假访问量、假用户或假增长率；没有真实数据时显示 0、空状态或数据质量提示。
 
 页面分区：
 
@@ -94,6 +97,10 @@
 *   用户画像：按生命周期和风险状态管理用户，展示余额、累计付费、订阅数、订单数和运营备注。
 
 图表第一期使用 SVG/CSS 实现，不新增 ECharts/Recharts 依赖。后续如果需要复杂筛选、导出或大屏，可再引入专门图表库。
+
+### 4.5 Admin CMS 边界
+
+`内容管理`、`产品管理`、`下载管理` 当前是后台 API 数据池，不等于已经完整控制官网前台。后台 UI 必须标注“前台待接”，直到官网首页、产品页、下载页实际改成读取这些 API。
 
 ## 5. UI/UX 规范
 *   **字体**: 系统默认字体栈 (San Francisco, Inter, etc.)。
